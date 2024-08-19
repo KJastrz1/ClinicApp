@@ -1,0 +1,50 @@
+using ClinicApp.Domain.Models.Patients;
+using ClinicApp.Domain.Models.Patients.ValueObjects;
+using ClinicApp.Domain.Models.User.ValueObjects;
+using ClinicApp.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
+
+namespace ClinicApp.Infrastructure.Database.Repositories;
+
+public class PatientRepository : IPatientRepository
+{
+    private readonly ApplicationDbContext _context;
+
+    public PatientRepository(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<PatientBase?> GetByIdAsync(PatientId id, CancellationToken cancellationToken)
+    {
+        return await _context.Patients
+            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<PatientBase>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        return await _context.Patients
+            .ToListAsync(cancellationToken);
+    }
+
+    public void Add(PatientBase patient)
+    {
+        _context.Patients.Add(patient);
+    }
+
+    public void Update(PatientBase patient)
+    {
+        _context.Patients.Update(patient);
+    }
+
+    public void Remove(PatientBase patient)
+    {
+        _context.Patients.Remove(patient);
+    }
+
+    public async Task<bool> IsEmailUniqueAsync(Email email, CancellationToken cancellationToken)
+    {
+        return !await _context.Patients
+            .AnyAsync(p => p.Email == email, cancellationToken);
+    }
+}
