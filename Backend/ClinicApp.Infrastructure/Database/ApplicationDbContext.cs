@@ -1,5 +1,4 @@
 ﻿using ClinicApp.Domain.Models.Patients;
-using ClinicApp.Domain.Models.UserBase;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicApp.Infrastructure.Database;
@@ -11,7 +10,7 @@ public sealed class ApplicationDbContext : DbContext
     {
     }
 
-    public DbSet<PatientBase> Patients { get; set; }
+    public DbSet<PatientEntity> Patients { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -22,7 +22,7 @@ internal sealed class GetPatientByIdQueryHandler
         GetPatientByIdQuery request,
         CancellationToken cancellationToken)
     {
-        PatientBase? patient = await _patientRepository.GetByIdAsync(
+        PatientEntity? patient = await _patientRepository.GetByIdAsync(
             new PatientId(request.PatientId),
             cancellationToken);
 

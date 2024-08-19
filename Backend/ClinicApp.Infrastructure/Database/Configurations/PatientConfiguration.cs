@@ -1,16 +1,15 @@
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
-using ClinicApp.Domain.Models.UserBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ClinicApp.Infrastructure.Database.Configurations;
 
-public class PatientConfiguration : IEntityTypeConfiguration<PatientBase>
+public class PatientConfiguration : IEntityTypeConfiguration<PatientEntity>
 {
-    public void Configure(EntityTypeBuilder<PatientBase> builder)
+    public void Configure(EntityTypeBuilder<PatientEntity> builder)
     {
-        // new UserEntityConfiguration<PatientBase,PatientId>().Configure(builder);
+      
         builder.ToTable("Patients");
         
         builder.HasKey(u => u.Id);

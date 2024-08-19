@@ -55,7 +55,7 @@ internal sealed class CreatePatientCommandHandler : ICommandHandler<CreatePatien
             return Result.Failure<Guid>(UserBaseErrors.EmailErrors.EmailAlreadyInUse);
         }
 
-        var patient = PatientBase.Create(
+        var patient = PatientEntity.Create(
             Guid.NewGuid(),
             firstNameResult.Value,
             lastNameResult.Value,

@@ -1,5 +1,4 @@
 ﻿using ClinicApp.Domain.Models.User.ValueObjects;
-using ClinicApp.Domain.Models.UserBase;
 using ClinicApp.Domain.Primitives;
 
 namespace ClinicApp.Domain.Models.User;

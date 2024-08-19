@@ -1,5 +1,4 @@
 ﻿using ClinicApp.Domain.Models.User;
-using ClinicApp.Domain.Models.UserBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Permission = ClinicApp.Domain.Enums.Permission;

@@ -3,8 +3,6 @@ using ClinicApp.Domain.Models.Patients.DomainEvents;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 using ClinicApp.Domain.Models.User;
 using ClinicApp.Domain.Models.User.ValueObjects;
-using ClinicApp.Domain.Models.UserBase;
-using ClinicApp.Domain.Primitives;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Domain.Models.Patients;
@@ -15,7 +13,7 @@ public class PatientEntity : UserBase<PatientId>
     public DateOfBirth DateOfBirth { get; private set; }
 
 
-    private PatientBase(
+    private PatientEntity(
         PatientId id,
         FirstName firstName,
         LastName lastName,
@@ -29,10 +27,10 @@ public class PatientEntity : UserBase<PatientId>
     }
 
 
-    private PatientBase() { }
+    private PatientEntity() { }
 
 
-    public static PatientBase Create(
+    public static PatientEntity Create(
         PatientId id,
         FirstName firstName,
         LastName lastName,
@@ -40,12 +38,12 @@ public class PatientEntity : UserBase<PatientId>
         SocialSecurityNumber ssn,
         DateOfBirth dateOfBirth)
     {
-        var patient = new PatientBase(id, firstName, lastName, email, ssn, dateOfBirth);
+        var patient = new PatientEntity(id, firstName, lastName, email, ssn, dateOfBirth);
         patient.RaiseDomainEvent(new PatientRegisteredDomainEvent(id.Value));
         return patient;
     }
 
-    public Result<PatientBase> ChangeSocialSecurityNumber(SocialSecurityNumber newSsn)
+    public Result<PatientEntity> ChangeSocialSecurityNumber(SocialSecurityNumber newSsn)
     {
         if (SocialSecurityNumber.Equals(newSsn))
         {
@@ -57,7 +55,7 @@ public class PatientEntity : UserBase<PatientId>
         return Result.Success(this);
     }
 
-    public Result<PatientBase> ChangeDateOfBirth(DateOfBirth newDateOfBirth)
+    public Result<PatientEntity> ChangeDateOfBirth(DateOfBirth newDateOfBirth)
     {
         if (DateOfBirth.Equals(newDateOfBirth))
         {

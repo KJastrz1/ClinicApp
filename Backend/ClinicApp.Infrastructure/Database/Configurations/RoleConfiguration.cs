@@ -1,5 +1,4 @@
 ﻿using ClinicApp.Domain.Models.User;
-using ClinicApp.Domain.Models.UserBase;
 using ClinicApp.Infrastructure.Database.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

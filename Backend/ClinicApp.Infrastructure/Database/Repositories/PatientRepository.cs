@@ -15,29 +15,29 @@ public class PatientRepository : IPatientRepository
         _context = context;
     }
 
-    public async Task<PatientBase?> GetByIdAsync(PatientId id, CancellationToken cancellationToken)
+    public async Task<PatientEntity?> GetByIdAsync(PatientId id, CancellationToken cancellationToken)
     {
         return await _context.Patients
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
-    public async Task<IReadOnlyList<PatientBase>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<PatientEntity>> GetAllAsync(CancellationToken cancellationToken)
     {
         return await _context.Patients
             .ToListAsync(cancellationToken);
     }
 
-    public void Add(PatientBase patient)
+    public void Add(PatientEntity patient)
     {
         _context.Patients.Add(patient);
     }
 
-    public void Update(PatientBase patient)
+    public void Update(PatientEntity patient)
     {
         _context.Patients.Update(patient);
     }
 
-    public void Remove(PatientBase patient)
+    public void Remove(PatientEntity patient)
     {
         _context.Patients.Remove(patient);
     }
