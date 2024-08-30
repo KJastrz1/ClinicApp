@@ -9,16 +9,6 @@ public class PatientConfiguration : IEntityTypeConfiguration<PatientEntity>
 {
     public void Configure(EntityTypeBuilder<PatientEntity> builder)
     {
-      
-        builder.ToTable("Patients");
-        
-        builder.HasKey(u => u.Id);
-        
-        builder.Property(p => p.Id)
-            .HasConversion(
-                id => id.Value,
-                value => new PatientId(value));
-
         builder.Property(p => p.SocialSecurityNumber)
             .HasConversion(ssn => ssn.Value, v => SocialSecurityNumber.Create(v).Value);
 

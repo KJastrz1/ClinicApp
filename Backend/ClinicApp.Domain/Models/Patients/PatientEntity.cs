@@ -7,14 +7,14 @@ using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Domain.Models.Patients;
 
-public class PatientEntity : UserBase<PatientId>
+public class PatientEntity : UserBase
 {
     public SocialSecurityNumber SocialSecurityNumber { get; private set; }
     public DateOfBirth DateOfBirth { get; private set; }
 
 
     private PatientEntity(
-        PatientId id,
+        UserId id,
         FirstName firstName,
         LastName lastName,
         Email email,
@@ -31,7 +31,7 @@ public class PatientEntity : UserBase<PatientId>
 
 
     public static PatientEntity Create(
-        PatientId id,
+        UserId id,
         FirstName firstName,
         LastName lastName,
         Email email,

@@ -14,12 +14,14 @@ public class UserId : ValueObject
         }
         Value = value;
     }
-    private UserId() { }
-
+    public static UserId New() => new(Guid.NewGuid());
+    
+    public static implicit operator UserId(Guid value) => new(value);
+    public static implicit operator Guid(UserId userId) => userId.Value;
     public override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;
     }
 
-    public static implicit operator Guid(UserId userId) => userId.Value;
+
 }

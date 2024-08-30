@@ -5,13 +5,12 @@ using ClinicApp.Domain.Primitives;
 
 namespace ClinicApp.Domain.Models.User;
 
-public abstract class UserBase<TId> : AggregateRoot<TId>, IAuditableEntity
-    where TId : UserId
+public abstract class UserBase : AggregateRoot<UserId>, IAuditableEntity
 {
     private readonly List<Role> _roles;
 
     protected UserBase(
-        TId id,
+        UserId id,
         Email email,
         FirstName firstName,
         LastName lastName,
