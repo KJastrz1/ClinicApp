@@ -1,9 +1,13 @@
-﻿using ClinicApp.Application.Features.Patient.CreatePatient;
-using ClinicApp.Application.Features.Patient.GetPatientById;
+﻿using ClinicApp.Application.Actions.Patients.Command.CreatePatient;
+using ClinicApp.Application.Actions.Patients.Query.GetPatientById;
+using ClinicApp.Application.Actions.Patients.Query.GetPatients;
+using ClinicApp.Domain.Enums;
 using ClinicApp.Domain.Shared;
+using ClinicApp.Infrastructure.Authentication;
 using ClinicApp.Presentation.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Contracts;
 using Shared.Contracts.Patient;
 
 namespace ClinicApp.Presentation.Controllers;
@@ -25,14 +29,34 @@ public sealed class PatientsController : ApiController
     
         return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetPatients(
+        [FromQuery] PatientFilter filter,
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] int pageSize = 20,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetPatientsQuery
+        {
+            Filter = filter,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+
+        Result<PagedResult<PatientResponse>> response = await Sender.Send(query, cancellationToken);
+
+        return response.IsSuccess ? Ok(response.Value) : BadRequest(response.Error);
+    }
+    
 
     [HttpPost]
+    [HasPermission(PermissionEnum.CreatePatient)]
     public async Task<IActionResult> RegisterPatient(
         [FromBody] CreatePatientRequest request,
         CancellationToken cancellationToken)
     {
         var command = new CreatePatientCommand(
-            request.Email,
             request.FirstName,
             request.LastName,
             request.SocialSecurityNumber,

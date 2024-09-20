@@ -8,6 +8,11 @@ public static class ClinicErrors
     public static Error NotFound(Guid id) => new(
         "Clinic.NotFound",
         $"Clinic with ID {id} was not found.");
+    
+    public static Error EmptyId => new(
+        "Clinic.EmptyId",
+        "Clinic ID is empty.");
+    
     public static class AddressErrors
     {
         public static readonly Error Required = new(

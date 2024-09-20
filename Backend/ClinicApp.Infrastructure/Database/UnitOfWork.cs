@@ -1,5 +1,6 @@
 ﻿using ClinicApp.Domain.Primitives;
 using ClinicApp.Domain.Repositories;
+using ClinicApp.Infrastructure.Database.Contexts;
 using ClinicApp.Infrastructure.Database.Outbox;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -9,9 +10,9 @@ namespace ClinicApp.Infrastructure.Database;
 
 internal sealed class UnitOfWork : IUnitOfWork
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly WriteDbContext _dbContext;
 
-    public UnitOfWork(ApplicationDbContext dbContext)
+    public UnitOfWork(WriteDbContext dbContext)
     {
         _dbContext = dbContext;
     }

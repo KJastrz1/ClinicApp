@@ -8,6 +8,10 @@ public static class AppointmentErrors
         "Appointment.NotFound",
         $"Appointment with ID {id} was not found.");
     
+    public static Error EmptyId => new(
+        "Appointment.EmptyId",
+        "Appointment ID is empty.");
+    
     public static readonly Error AppointmentInPast = new(
         "Appointment.AppointmentInPast",
         "Cannot schedule an appointment in the past.");

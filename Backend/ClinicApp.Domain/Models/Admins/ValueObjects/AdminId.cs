@@ -1,22 +1,31 @@
-using ClinicApp.Domain.Models.User.ValueObjects;
+using ClinicApp.Domain.Errors;
+using ClinicApp.Domain.Primitives;
+using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Domain.Models.Admins.ValueObjects;
 
-public class AdminId : UserId
+public class AdminId : ValueObject
 {
-    public AdminId(Guid value) : base(Validate(value)) { }
+    public Guid Value { get; }
+
+    private AdminId(Guid value)
+    {
+        Value = value;
+    }
+
+    public static Result<AdminId> Create(Guid value)
+    {
+        return Result.Create(value)
+            .Ensure(id => id != Guid.Empty, UserBaseErrors.EmptyId)
+            .Map(id => new AdminId(id));
+    }
 
     public static AdminId New() => new(Guid.NewGuid());
-    
-    public static implicit operator AdminId(Guid value) => new(value);
 
-    private static Guid Validate(Guid value)
+    public static implicit operator Guid(AdminId adminId) => adminId.Value;
+
+    public override IEnumerable<object> GetAtomicValues()
     {
-        if (value == Guid.Empty)
-        {
-            throw new ArgumentException("Admin ID cannot be an empty GUID.", nameof(value));
-        }
-
-        return value;
+        yield return Value;
     }
 }

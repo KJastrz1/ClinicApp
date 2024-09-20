@@ -2,13 +2,13 @@
   "profiles": {
     "ClinicApp.App": {
       "commandName": "Project",
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7114;http://localhost:5114"
+      "applicationUrl": "http://localhost:5114"
     },
     "IIS Express": {
       "commandName": "IISExpress",

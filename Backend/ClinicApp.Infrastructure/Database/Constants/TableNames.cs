@@ -2,7 +2,13 @@
 
 internal static class TableNames
 {
+    internal const string Accounts = nameof(Accounts);
+    
+    internal const string AccountRoles = nameof(AccountRoles);
+    
     internal const string Users = nameof(Users);
+    
+    internal const string Patients = nameof(Patients);
 
     internal const string Appointments = nameof(Appointments);
 
@@ -13,4 +19,6 @@ internal static class TableNames
     internal const string Roles = nameof(Roles);
 
     internal const string Permissions = nameof(Permissions);
+    
+    internal const string RolePermissions = nameof(RolePermissions);
 }

@@ -1,0 +1,48 @@
+using ClinicApp.Domain.Models.Accounts;
+using ClinicApp.Domain.Models.Accounts.ValueObjects;
+using ClinicApp.Domain.Models.Roles;
+using ClinicApp.Infrastructure.Database.Constants;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace ClinicApp.Infrastructure.Database.Configurations.Write;
+
+public class AccountConfiguration : IEntityTypeConfiguration<Account>
+{
+    public void Configure(EntityTypeBuilder<Account> builder)
+    {
+        builder.ToTable(TableNames.Accounts);
+
+        builder.HasKey(a => a.Id);
+
+        builder.Property(a => a.Id)
+            .HasConversion(
+                id => id.Value,
+                value => AccountId.Create(value).Value)
+            .IsRequired();
+
+        builder.Property(a => a.Email)
+            .HasConversion(
+                email => email.Value,
+                value => Email.Create(value).Value)
+            .IsRequired();
+
+        builder.Property(a => a.PasswordHash)
+            .HasConversion(
+                passwordHash => passwordHash.Value,
+                value => PasswordHash.Create(value).Value)
+            .IsRequired();
+
+        builder.Property(a => a.IsActivated)
+            .IsRequired();
+
+        builder.Property(a => a.CreatedOnUtc)
+            .IsRequired();
+
+        builder.Property(a => a.ModifiedOnUtc);
+
+        builder.HasMany(x => x.Roles)
+            .WithMany(x => x.Accounts)
+            .UsingEntity<AccountRole>();
+    }
+}

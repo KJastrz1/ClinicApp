@@ -1,6 +1,7 @@
 ﻿using ClinicApp.Application.Abstractions.Messaging;
 using ClinicApp.Domain.Primitives;
 using ClinicApp.Infrastructure.Database;
+using ClinicApp.Infrastructure.Database.Contexts;
 using ClinicApp.Infrastructure.Database.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,11 @@ public sealed class IdempotentDomainEventHandler<TDomainEvent> : IDomainEventHan
     where TDomainEvent : IDomainEvent
 {
     private readonly INotificationHandler<TDomainEvent> _decorated;
-    private readonly ApplicationDbContext _dbContext;
+    private readonly WriteDbContext _dbContext;
 
     public IdempotentDomainEventHandler(
         INotificationHandler<TDomainEvent> decorated,
-        ApplicationDbContext dbContext)
+        WriteDbContext dbContext)
     {
         _decorated = decorated;
         _dbContext = dbContext;

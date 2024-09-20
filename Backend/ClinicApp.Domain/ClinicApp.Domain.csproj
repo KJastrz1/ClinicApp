@@ -10,4 +10,12 @@
     <PackageReference Include="MediatR.Contracts" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Doctors\ValueObjects\" />
+  </ItemGroup>
+
 </Project>

@@ -1,50 +1,38 @@
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
-using ClinicApp.Domain.Models.User.ValueObjects;
 using ClinicApp.Domain.Repositories;
+using ClinicApp.Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicApp.Infrastructure.Database.Repositories;
 
 public class PatientRepository : IPatientRepository
 {
-    private readonly ApplicationDbContext _context;
+    private readonly WriteDbContext _writeContext;
 
-    public PatientRepository(ApplicationDbContext context)
+    public PatientRepository(WriteDbContext writeContext)
     {
-        _context = context;
+        _writeContext = writeContext;
     }
 
-    public async Task<PatientEntity?> GetByIdAsync(PatientId id, CancellationToken cancellationToken)
+    public async Task<Patient?> GetByIdAsync(PatientId id, CancellationToken cancellationToken)
     {
-        return await _context.Patients
-            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+        return await _writeContext.Patients
+            .FirstOrDefaultAsync(p => p.Id.Value == id.Value, cancellationToken);
     }
 
-    public async Task<IReadOnlyList<PatientEntity>> GetAllAsync(CancellationToken cancellationToken)
+    public void Add(Patient patient)
     {
-        return await _context.Patients
-            .ToListAsync(cancellationToken);
+        _writeContext.Patients.Add(patient);
     }
 
-    public void Add(PatientEntity patient)
+    public void Update(Patient patient)
     {
-        _context.Patients.Add(patient);
+        _writeContext.Patients.Update(patient);
     }
 
-    public void Update(PatientEntity patient)
+    public void Remove(Patient patient)
     {
-        _context.Patients.Update(patient);
-    }
-
-    public void Remove(PatientEntity patient)
-    {
-        _context.Patients.Remove(patient);
-    }
-
-    public async Task<bool> IsEmailUniqueAsync(Email email, CancellationToken cancellationToken)
-    {
-        return !await _context.Patients
-            .AnyAsync(p => p.Email == email, cancellationToken);
+        _writeContext.Patients.Remove(patient);
     }
 }

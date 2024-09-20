@@ -1,19 +1,20 @@
+using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
-using ClinicApp.Domain.Models.User.ValueObjects;
+using Shared.Contracts;
+using Shared.Contracts.Patient;
 
 namespace ClinicApp.Domain.Repositories;
 
 public interface IPatientRepository
 {
-    Task<PatientEntity?> GetByIdAsync(PatientId id, CancellationToken cancellationToken);
+    Task<Patient?> GetByIdAsync(
+        PatientId id,
+        CancellationToken cancellationToken);
+  
+    void Add(Patient patient);
 
-    Task<IReadOnlyList<PatientEntity>> GetAllAsync(CancellationToken cancellationToken);
-    void Add(PatientEntity patient);
+    void Update(Patient patient);
 
-    void Update(PatientEntity patient);
-
-    void Remove(PatientEntity patient);
-
-    Task<bool> IsEmailUniqueAsync(Email email, CancellationToken cancellationToken);
+    void Remove(Patient patient);
 }

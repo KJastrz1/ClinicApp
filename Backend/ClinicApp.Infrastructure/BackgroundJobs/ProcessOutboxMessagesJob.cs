@@ -1,5 +1,6 @@
 ﻿using ClinicApp.Domain.Primitives;
 using ClinicApp.Infrastructure.Database;
+using ClinicApp.Infrastructure.Database.Contexts;
 using ClinicApp.Infrastructure.Database.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,10 @@ namespace ClinicApp.Infrastructure.BackgroundJobs;
 [DisallowConcurrentExecution]
 public class ProcessOutboxMessagesJob : IJob
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly WriteDbContext _dbContext;
     private readonly IPublisher _publisher;
 
-    public ProcessOutboxMessagesJob(ApplicationDbContext dbContext, IPublisher publisher)
+    public ProcessOutboxMessagesJob(WriteDbContext dbContext, IPublisher publisher)
     {
         _dbContext = dbContext;
         _publisher = publisher;

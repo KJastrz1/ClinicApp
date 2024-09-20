@@ -6,8 +6,12 @@ namespace ClinicApp.Domain.Errors;
 public static class PatientErrors
 {
     public static Error NotFound(Guid id) => new(
-        "Patient.NotFound",
+        "Patients.NotFound",
         $"The patient with Id {id} was not found");
+    
+    public static Error EmptyId => new(
+        "Patients.EmptyId",
+        "Patients Id is empty.");
     
     public static class SocialSecurityNumberErrors
     {

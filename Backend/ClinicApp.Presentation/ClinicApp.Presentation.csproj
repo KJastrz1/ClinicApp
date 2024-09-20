@@ -14,6 +14,7 @@
     <ProjectReference Include="..\..\Shared\Shared.csproj" />
     <ProjectReference Include="..\ClinicApp.Application\ClinicApp.Application.csproj" />
     <ProjectReference Include="..\ClinicApp.Infrastructure\ClinicApp.Infrastructure.csproj" />
+
   </ItemGroup>
 
 </Project>
