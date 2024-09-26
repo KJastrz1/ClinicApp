@@ -73,4 +73,15 @@ public static class AccountErrors
             "PasswordHash.InvalidFormat",
             "Password hash has an invalid format.");
     }
+
+    public static class LoginErrors
+    {
+        public static readonly Error InvalidCredentials = new(
+            "Login.InvalidCredentials",
+            "Invalid username or password.");
+        
+        public static readonly Error AccountNotActivated = new(
+            "Login.AccountNotActivated",
+            "Account is not activated.");
+    }
 }

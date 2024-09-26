@@ -6,4 +6,4 @@ public sealed record CreatePatientCommand(
     string FirstName,
     string LastName,
     string SocialSecurityNumber,
-    DateTime DateOfBirth) : ICommand<Guid>;
+    DateOnly DateOfBirth) : ICommand<Guid>;

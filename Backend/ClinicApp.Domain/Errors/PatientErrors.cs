@@ -36,6 +36,6 @@ public static class PatientErrors
 
         public static readonly Error InvalidPastDate = new(
             "DateOfBirth.InvalidPastDate",
-            $"Date of birth is too far in the past. The year must be {DateOfBirth.MinYear} or later.");
+            $"Date of birth is too far in the past. The year must be {DateOfBirth.MinDate} or later.");
     }
 }

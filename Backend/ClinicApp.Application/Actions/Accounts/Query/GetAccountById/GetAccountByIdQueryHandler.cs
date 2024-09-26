@@ -1,18 +1,18 @@
 using ClinicApp.Application.Abstractions.Messaging;
+using ClinicApp.Application.ReadRepositories;
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Accounts.ValueObjects;
-using ClinicApp.Domain.Repositories.Read;
 using ClinicApp.Domain.Shared;
-using Shared.Contracts.Auth;
+using Shared.Contracts.Account.Responses;
 
 namespace ClinicApp.Application.Actions.Accounts.Query.GetAccountById;
 
 internal sealed class GetAccountByIdQueryHandler
     : IQueryHandler<GetAccountByIdQuery, AccountResponse>
 {
-    private readonly IAccountReadRepository _accountReadRepository;
+    private readonly IAccountReadDapperRepository _accountReadRepository;
 
-    public GetAccountByIdQueryHandler(IAccountReadRepository accountReadRepository)
+    public GetAccountByIdQueryHandler(IAccountReadDapperRepository accountReadRepository)
     {
         _accountReadRepository = accountReadRepository;
     }

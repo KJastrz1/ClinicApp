@@ -3,17 +3,18 @@ using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Users;
 using ClinicApp.Domain.Models.Users.ValueObjects;
-using ClinicApp.Infrastructure.Database.Constants;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ClinicApp.Infrastructure.Database.Configurations.Write;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class UserConfiguration : IWriteEntityConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.HasKey(u => u.Id);
+
+        builder.HasDiscriminator("Discriminator", typeof(UserType))
+            .HasValue<Patient>(UserType.Patient);
 
         builder.Property(u => u.Id)
             .HasConversion(
@@ -38,14 +39,16 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.ModifiedOnUtc);
 
         builder
-            .HasOne(up => up.Account)
+            .HasOne(u => u.Account)
             .WithOne(a => a.User)
-            .HasForeignKey<User>(up => up.AccountId);
+            .HasForeignKey<User>(u => u.AccountId)
+            .IsRequired(false);
 
         builder
-            .Property(up => up.AccountId)
+            .Property(u => u.AccountId)
             .HasConversion(
-                id => id.Value,
-                value => AccountId.Create(value).Value);
+                id => id == null ? Guid.Empty : id.Value,
+                value => value == Guid.Empty ? null : AccountId.Create(value).Value)
+            .IsRequired(false);
     }
 }

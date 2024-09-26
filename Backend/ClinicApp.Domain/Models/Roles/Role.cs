@@ -1,21 +1,59 @@
 ﻿using ClinicApp.Domain.Models.Accounts;
+using ClinicApp.Domain.Models.Roles.DomainEvents;
+using ClinicApp.Domain.Models.Roles.ValueObjects;
 using ClinicApp.Domain.Primitives;
 
 namespace ClinicApp.Domain.Models.Roles;
 
-public sealed class Role : Enumeration<Role>
+public sealed class Role : AggregateRoot<RoleId>
 {
-    public static readonly Role Admin = new(1, nameof(Admin));
-    public static readonly Role Doctor = new(2, nameof(Doctor));
-    public static readonly Role Patient = new(3, nameof(Patient));
-    public static readonly Role SuperAdmin = new(4, nameof(SuperAdmin));
+    private List<Permission> _permissions;
 
-    public Role(int id, string name)
-        : base(id, name)
+    private Role()
     {
+        _permissions = new List<Permission>();
     }
 
-    public ICollection<Permission> Permissions { get; set; }
+    private Role(RoleId id, RoleName name, List<Permission> permissions) : base(id)
+    {
+        Name = name;
+        _permissions = permissions ?? new List<Permission>();
+    }
 
-    public ICollection<Account> Accounts { get; set; }
+    public RoleName Name { get; private set; }
+
+    public IReadOnlyCollection<Permission> Permissions => _permissions.AsReadOnly();
+
+    public static Role Create(RoleId id, RoleName name, List<Permission> permissions = null)
+    {
+        var role = new Role(id, name, permissions ?? new List<Permission>());
+
+        role.RaiseDomainEvent(new RoleCreatedDomainEvent(role.Id.Value));
+        
+        foreach (Permission permission in role._permissions)
+        {
+            role.RaiseDomainEvent(new RolePermissionAddedDomainEvent(role.Id.Value, permission.Id));
+        }
+        
+        return role;
+    }
+
+    public void AddPermission(Permission permission)
+    {
+        if (!_permissions.Contains(permission))
+        {
+            _permissions.Add(permission);
+            RaiseDomainEvent(new RolePermissionAddedDomainEvent(Id.Value, permission.Id));
+        }
+    }
+
+    public void RemovePermission(Permission permission)
+    {
+        if (_permissions.Remove(permission))
+        {
+            RaiseDomainEvent(new RolePermissionRemovedDomainEvent(Id.Value, permission.Id));
+        }
+    }
+
+    public bool HasPermission(Permission permission) => _permissions.Contains(permission);
 }

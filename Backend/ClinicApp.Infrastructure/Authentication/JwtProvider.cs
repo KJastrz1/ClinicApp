@@ -3,7 +3,9 @@ using System.Security.Claims;
 using System.Text;
 using ClinicApp.Application.Abstractions;
 using ClinicApp.Application.Abstractions.Authentication;
+using ClinicApp.Application.Actions.Accounts.Query.LoginAccount;
 using ClinicApp.Domain.Models.Accounts;
+using ClinicApp.Domain.Models.Roles;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -20,12 +22,12 @@ internal sealed class JwtProvider : IJwtProvider
 
     public string Generate(Account account)
     {
-        var claims = new Claim[]
+        var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, account.Id.Value.ToString()),
             new(JwtRegisteredClaimNames.Email, account.Email.Value)
         };
-
+        
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_options.SecretKey)),

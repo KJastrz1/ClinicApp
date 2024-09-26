@@ -28,9 +28,9 @@ internal class CreatePatientCommandValidator : AbstractValidator<CreatePatientCo
             .WithMessage(PatientErrors.SocialSecurityNumberErrors.InvalidFormat.Message);
 
         RuleFor(x => x.DateOfBirth)
-            .LessThanOrEqualTo(DateTime.Today)
+            .Must(date => date <= DateOnly.FromDateTime(DateTime.Today))
             .WithMessage(PatientErrors.DateOfBirthErrors.InvalidFutureDate.Message)
-            .Must(date => date.Year >= DateOfBirth.MinYear)
+            .Must(date => date >= DateOfBirth.MinDate)
             .WithMessage(PatientErrors.DateOfBirthErrors.InvalidPastDate.Message);
     }
 }

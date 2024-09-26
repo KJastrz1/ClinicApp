@@ -29,8 +29,8 @@ public abstract class User : AggregateRoot<UserId>, IAuditableEntity
     public DateTime CreatedOnUtc { get; set; }
     public DateTime? ModifiedOnUtc { get; set; }
     
-    public AccountId AccountId { get; set; }
-    public Account Account { get; private set; }
+    public AccountId? AccountId { get; set; }
+    public Account? Account { get; private set; }
 
     public void ChangeName(FirstName firstName, LastName lastName)
     {

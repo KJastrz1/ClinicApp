@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ClinicApp.Infrastructure.Database.Configurations.Write;
 
-public class AccountConfiguration : IEntityTypeConfiguration<Account>
+internal sealed  class AccountConfiguration : IWriteEntityConfiguration<Account>
 {
     public void Configure(EntityTypeBuilder<Account> builder)
     {
@@ -42,7 +42,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.Property(a => a.ModifiedOnUtc);
 
         builder.HasMany(x => x.Roles)
-            .WithMany(x => x.Accounts)
+            .WithMany()
             .UsingEntity<AccountRole>();
     }
 }

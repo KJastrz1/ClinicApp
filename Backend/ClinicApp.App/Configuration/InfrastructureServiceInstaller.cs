@@ -1,5 +1,4 @@
 ﻿using ClinicApp.Domain.Repositories;
-using ClinicApp.Domain.Repositories.Read;
 using ClinicApp.Infrastructure;
 using ClinicApp.Infrastructure.Database;
 using ClinicApp.Infrastructure.Database.Contexts;
@@ -21,6 +20,9 @@ public class InfrastructureServiceInstaller : IServiceInstaller
         
         services.AddDbContext<WriteDbContext>(
             optionsBuilder => optionsBuilder.UseNpgsql(connectionString));
+        
+        services.AddDbContext<ReadDbContext>(
+            optionsBuilder => optionsBuilder.UseNpgsql(connectionString));
 
         services
             .Scan(
@@ -35,9 +37,5 @@ public class InfrastructureServiceInstaller : IServiceInstaller
         services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
 
         services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
-
-
-        // services.AddDbContext<ReadDbContext>(
-        //     optionsBuilder => optionsBuilder.UseNpgsql(connectionString));
     }
 }

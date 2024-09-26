@@ -1,4 +1,4 @@
-namespace Shared.Contracts.Auth;
+namespace Shared.Contracts.Account;
 
 public record AccountFilter(
     string? Email = null,

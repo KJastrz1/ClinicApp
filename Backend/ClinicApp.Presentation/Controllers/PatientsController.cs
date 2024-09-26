@@ -51,7 +51,7 @@ public sealed class PatientsController : ApiController
     
 
     [HttpPost]
-    [HasPermission(PermissionEnum.CreatePatient)]
+    // [HasPermission(PermissionEnum.CreatePatient)]
     public async Task<IActionResult> RegisterPatient(
         [FromBody] CreatePatientRequest request,
         CancellationToken cancellationToken)

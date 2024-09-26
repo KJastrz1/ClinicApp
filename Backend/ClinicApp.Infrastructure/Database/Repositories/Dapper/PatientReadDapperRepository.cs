@@ -1,20 +1,20 @@
 using System.Text;
+using ClinicApp.Application.ReadRepositories;
+using ClinicApp.Domain.Enums;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
-using ClinicApp.Domain.Repositories;
-using ClinicApp.Domain.Repositories.Read;
 using ClinicApp.Infrastructure.Database.Constants;
 using Dapper;
 using Npgsql;
 using Shared.Contracts;
 using Shared.Contracts.Patient;
 
-namespace ClinicApp.Infrastructure.Database.Repositories.Read;
+namespace ClinicApp.Infrastructure.Database.Repositories.Dapper;
 
-public class PatientReadRepository : IPatientReadRepository
+public class PatientReadDapperRepository : IPatientReadDapperRepository
 {
     private readonly string _connectionString;
 
-    public PatientReadRepository(string connectionString)
+    public PatientReadDapperRepository(string connectionString)
     {
         _connectionString = connectionString;
     }
@@ -25,12 +25,12 @@ public class PatientReadRepository : IPatientReadRepository
         await connection.OpenAsync(cancellationToken);
 
         string query = $@"
-        SELECT ""Id"", ""Email"", ""FirstName"", ""LastName"", ""SocialSecurityNumber"", ""DateOfBirth"", 
-               ""IsActivated"", ""CreatedOnUtc"", ""ModifiedOnUtc""
-        FROM ""{TableNames.Patients}""
-        WHERE ""Id"" = @PatientId";
+            SELECT u.""Id"", u.""Email"", u.""FirstName"", u.""LastName"", u.""SocialSecurityNumber"", u.""DateOfBirth"",
+                   u.""IsActivated"", u.""CreatedOnUtc"", u.""ModifiedOnUtc""
+            FROM ""{TableNames.Users}"" u
+            WHERE u.""Id"" = @PatientId AND u.""Discriminator"" = @PatientType";
 
-        var parameters = new { PatientId = patientId.Value };
+        var parameters = new { PatientId = patientId.Value, PatientType = nameof(UserType.Patient) };
 
         PatientResponse? patient = await connection.QuerySingleOrDefaultAsync<PatientResponse>(
             new CommandDefinition(query, parameters, cancellationToken: cancellationToken));
@@ -39,8 +39,8 @@ public class PatientReadRepository : IPatientReadRepository
     }
 
     public async Task<PagedResult<PatientResponse>> GetByFilterAsync(
-        PatientFilter filter, 
-        int pageNumber, 
+        PatientFilter filter,
+        int pageNumber,
         int pageSize,
         CancellationToken cancellationToken)
     {
@@ -48,12 +48,13 @@ public class PatientReadRepository : IPatientReadRepository
         await connection.OpenAsync(cancellationToken);
 
         var queryBuilder = new StringBuilder($@"
-            SELECT ""Id"", ""Email"", ""FirstName"", ""LastName"", ""SocialSecurityNumber"", ""DateOfBirth"", 
-                   ""IsActivated"", ""CreatedOnUtc"", ""ModifiedOnUtc""
-            FROM ""{TableNames.Patients}""
-            WHERE 1=1");
+                SELECT u.""Id"", u.""Email"", u.""FirstName"", u.""LastName"", u.""SocialSecurityNumber"", u.""DateOfBirth"",
+                       u.""IsActivated"", u.""CreatedOnUtc"", u.""ModifiedOnUtc""
+                FROM ""{TableNames.Users}"" u
+                WHERE u.""Discriminator"" = @PatientType");
 
         var parameters = new DynamicParameters();
+        parameters.Add("@PatientType", nameof(UserType.Patient));
 
         if (!string.IsNullOrEmpty(filter.Email))
         {

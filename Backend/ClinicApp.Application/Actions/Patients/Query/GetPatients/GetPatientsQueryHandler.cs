@@ -1,6 +1,6 @@
 using ClinicApp.Application.Abstractions.Messaging;
+using ClinicApp.Application.ReadRepositories;
 using ClinicApp.Domain.Repositories;
-using ClinicApp.Domain.Repositories.Read;
 using ClinicApp.Domain.Shared;
 using Shared.Contracts;
 using Shared.Contracts.Patient;
@@ -9,9 +9,9 @@ namespace ClinicApp.Application.Actions.Patients.Query.GetPatients;
 
 internal sealed class GetPatientsQueryHandler : IQueryHandler<GetPatientsQuery, PagedResult<PatientResponse>>
 {
-    private readonly IPatientReadRepository _patientReadRepository;
+    private readonly IPatientReadDapperRepository _patientReadRepository;
 
-    public GetPatientsQueryHandler(IPatientReadRepository patientReadRepository)
+    public GetPatientsQueryHandler(IPatientReadDapperRepository patientReadRepository)
     {
         _patientReadRepository = patientReadRepository;
     }

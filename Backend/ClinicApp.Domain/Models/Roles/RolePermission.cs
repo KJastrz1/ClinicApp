@@ -1,8 +1,10 @@
-﻿namespace ClinicApp.Domain.Models.Roles;
+﻿using ClinicApp.Domain.Models.Roles.ValueObjects;
+
+namespace ClinicApp.Domain.Models.Roles;
 
 public class RolePermission
 {
-    public int RoleId { get; set; }
+    public RoleId RoleId { get; set; }
 
     public int PermissionId { get; set; }
 }

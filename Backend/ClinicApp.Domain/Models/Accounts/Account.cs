@@ -1,4 +1,3 @@
-using ClinicApp.Domain.Enums;
 using ClinicApp.Domain.Models.Accounts.DomainEvents;
 using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Domain.Models.Roles;
@@ -104,6 +103,7 @@ public class Account : AggregateRoot<AccountId>, IAuditableEntity
             _roles.Clear();
             RaiseDomainEvent(new AccountRolesClearedDomainEvent(Id.Value));
         }
+        
     }
 
     public bool HasRole(Role role) => _roles.Contains(role);

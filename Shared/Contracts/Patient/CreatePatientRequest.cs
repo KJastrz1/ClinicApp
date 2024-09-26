@@ -6,7 +6,7 @@ public sealed record CreatePatientRequest
     string FirstName,
     string LastName,
     string SocialSecurityNumber,
-    DateTime DateOfBirth
+    DateOnly DateOfBirth
 );
     
 

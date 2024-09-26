@@ -1,8 +1,11 @@
+using ClinicApp.Domain.Models.Accounts.ValueObjects;
+using ClinicApp.Domain.Models.Roles.ValueObjects;
+
 namespace ClinicApp.Domain.Models.Roles;
 
 public class AccountRole
 {
-    public Guid AccountId { get; set; }
+    public AccountId AccountId { get; set; }
 
-    public int RoleId { get; set; }
+    public RoleId RoleId { get; set; }
 }

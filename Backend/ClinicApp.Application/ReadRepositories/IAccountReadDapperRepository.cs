@@ -1,10 +1,11 @@
 using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using Shared.Contracts;
-using Shared.Contracts.Auth;
+using Shared.Contracts.Account;
+using Shared.Contracts.Account.Responses;
 
-namespace ClinicApp.Domain.Repositories.Read;
+namespace ClinicApp.Application.ReadRepositories;
 
-public interface IAccountReadRepository
+public interface IAccountReadDapperRepository
 {
     Task<AccountResponse?> GetByIdAsync(AccountId accountId, CancellationToken cancellationToken);
 

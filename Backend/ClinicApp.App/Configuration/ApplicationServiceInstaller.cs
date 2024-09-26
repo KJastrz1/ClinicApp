@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 using ClinicApp.Application.Behaviors;
-using ClinicApp.Application.Mappings;
-using ClinicApp.Infrastructure.Idempotence;
 using MediatR;
 
 namespace ClinicApp.App.Configuration;

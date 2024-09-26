@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ClinicApp.Infrastructure.Database.Configurations.Write;
 
-internal sealed class OutboxMessageConsumerConfiguration : IEntityTypeConfiguration<OutboxMessageConsumer>
+internal sealed class OutboxMessageConsumerConfiguration : IWriteEntityConfiguration<OutboxMessageConsumer>
 {
     public void Configure(EntityTypeBuilder<OutboxMessageConsumer> builder)
     {
