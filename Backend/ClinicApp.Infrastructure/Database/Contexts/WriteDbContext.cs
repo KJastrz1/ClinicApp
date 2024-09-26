@@ -28,7 +28,7 @@ public sealed class WriteDbContext : DbContext
                 i.IsGenericType &&
                 i.GetGenericTypeDefinition() == typeof(IWriteEntityConfiguration<>)));
         
-        ApplySeedersFromAssembly(modelBuilder);
+        // ApplySeedersFromAssembly(modelBuilder);
     }
 
     private void ApplySeedersFromAssembly(ModelBuilder modelBuilder)
