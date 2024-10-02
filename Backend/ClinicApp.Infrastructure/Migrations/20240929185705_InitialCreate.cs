@@ -165,7 +165,7 @@ namespace ClinicApp.Infrastructure.Migrations
                     { 2, "RevokeRole" },
                     { 3, "CreateRole" },
                     { 4, "DeleteRole" },
-                    { 5, "AddPermissionToRole" },
+                    { 5, "AddPermissionsToRole" },
                     { 6, "RemovePermissionFromRole" },
                     { 7, "ReadPatient" },
                     { 8, "CreatePatient" },

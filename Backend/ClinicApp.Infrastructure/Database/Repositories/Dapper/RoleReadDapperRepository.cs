@@ -3,6 +3,7 @@ using ClinicApp.Application.ReadRepositories;
 using ClinicApp.Application.ReadRepositories.Dapper;
 using ClinicApp.Domain.Models.Roles.ValueObjects;
 using ClinicApp.Infrastructure.Database.Constants;
+using ClinicApp.Infrastructure.Database.ReadModels.Auth;
 using Dapper;
 using Npgsql;
 using Shared.Contracts;
@@ -53,7 +54,6 @@ public class RoleReadDapperRepository : IRoleReadDapperRepository
         return null;
     }
 
-
     public async Task<PagedResult<RoleResponse>> GetByFilterAsync(
         RoleFilter filter,
         int pageNumber,
@@ -64,28 +64,35 @@ public class RoleReadDapperRepository : IRoleReadDapperRepository
         await connection.OpenAsync(cancellationToken);
 
         var queryBuilder = new StringBuilder($@"
-        SELECT r.""Id"", r.""Name""
-        FROM ""{TableNames.Roles}"" r");
+SELECT r.""Id"", r.""Name""
+FROM ""{TableNames.Roles}"" r");
 
         var parameters = new DynamicParameters();
+        bool whereAdded = false;
 
         if (!string.IsNullOrEmpty(filter.Name))
         {
             queryBuilder.Append(@" WHERE r.""Name"" ILIKE @Name");
             parameters.Add("@Name", $"%{filter.Name}%");
+            whereAdded = true;
         }
 
         if (!string.IsNullOrEmpty(filter.PermissionName))
         {
+            queryBuilder.Append(whereAdded ? @" AND" : @" WHERE");
+            whereAdded = true;
+
             queryBuilder.Append(@"
-            JOIN ""{TableNames.RolePermissions}"" rp ON rp.""RoleId"" = r.""Id""
-            JOIN ""{TableNames.Permissions}"" p ON p.""Id"" = rp.""PermissionId""
-            WHERE p.""Name"" ILIKE @PermissionName");
+    EXISTS (
+        SELECT 1
+        FROM ""{TableNames.RolePermissions}"" rp
+        JOIN ""{TableNames.Permissions}"" p ON p.""Id"" = rp.""PermissionId""
+        WHERE rp.""RoleId"" = r.""Id"" AND p.""Name"" ILIKE @PermissionName)");
 
             parameters.Add("@PermissionName", $"%{filter.PermissionName}%");
         }
 
-        string countQuery = $@"SELECT COUNT(DISTINCT r.""Id"") FROM ({{queryBuilder}}) AS CountQuery";
+        string countQuery = $@"SELECT COUNT(*) FROM ({queryBuilder}) AS CountQuery";
 
         int totalCount = await connection.ExecuteScalarAsync<int>(
             new CommandDefinition(countQuery, parameters, cancellationToken: cancellationToken));
@@ -94,32 +101,29 @@ public class RoleReadDapperRepository : IRoleReadDapperRepository
         parameters.Add("@Offset", (pageNumber - 1) * pageSize);
         parameters.Add("@PageSize", pageSize);
 
-        IEnumerable<RoleResponse> items = await connection.QueryAsync<RoleResponse>(
+        IEnumerable<RoleReadModel> roles = await connection.QueryAsync<RoleReadModel>(
             new CommandDefinition(queryBuilder.ToString(), parameters, cancellationToken: cancellationToken));
 
-
-        var rolesWithPermissions = new List<RoleResponse>();
-        foreach (RoleResponse role in items)
+        var rolesWithPermissions = new List<RoleReadModel>();
+        foreach (RoleReadModel role in roles)
         {
             string permissionsQuery = $@"
-            SELECT p.""Id"", p.""Name""
-            FROM ""{TableNames.RolePermissions}"" rp
-            JOIN ""{TableNames.Permissions}"" p ON p.""Id"" = rp.""PermissionId""
-            WHERE rp.""RoleId"" = @RoleId";
+    SELECT p.""Id"", p.""Name""
+    FROM ""{TableNames.RolePermissions}"" rp
+    JOIN ""{TableNames.Permissions}"" p ON p.""Id"" = rp.""PermissionId""
+    WHERE rp.""RoleId"" = @RoleId";
 
-            IEnumerable<PermissionResponse> permissions = await connection.QueryAsync<PermissionResponse>(
+            IEnumerable<PermissionReadModel> permissions = await connection.QueryAsync<PermissionReadModel>(
                 new CommandDefinition(permissionsQuery, new { RoleId = role.Id },
                     cancellationToken: cancellationToken));
 
-            rolesWithPermissions.Add(role with
-            {
-                Permissions = permissions.ToList()
-            });
+            role.Permissions = permissions.ToList();
+            rolesWithPermissions.Add(role);
         }
 
         return new PagedResult<RoleResponse>
         {
-            Items = rolesWithPermissions,
+            Items = rolesWithPermissions.Select(r => r.ToResponse()).ToList(),
             TotalCount = totalCount,
             PageSize = pageSize,
             CurrentPage = pageNumber

@@ -8,17 +8,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00f2dadc-c596-4f13-804c-08cbcb0778d3" name="Changes" comment="role management">
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRole/CreateRoleCommandHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRole/CreateRoleCommandValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/Dapper/IPermissionReadDapperRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/IPermissionReadRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Errors/PermissionErrors.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Dapper/PermissionReadDapperRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Read/PermissionReadRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Requests/PermissionFilter.cs" afterDir="false" />
+    <list default="true" id="00f2dadc-c596-4f13-804c-08cbcb0778d3" name="Changes" comment="create role">
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/AddPermissionsToRole/AddPermissionsToRoleCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/AddPermissionsToRole/AddPermissionsToRoleCommandHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/RemovePermissionsFromRole/RemovePermissionsFromRoleCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/RemovePermissionsFromRole/RemovePermissionsFromRoleCommandHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/RemovePermissionsFromRole/RemovePermissionsFromRoleCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Presentation/Controllers/PermissionsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ClinicApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ClinicApp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRoleCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRole/CreateRoleCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRole/CreateRoleCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRole/CreateRoleCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Query/GetRoleById/GetRoleByIdQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Query/GetRoleById/GetRoleByIdQueryHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Query/GetRoles/GetRolesQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Query/GetRoles/GetRolesQueryHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Errors/RoleErrors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Errors/RoleErrors.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Models/Roles/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Models/Roles/Role.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/ReadModels/Auth/RoleReadModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/ReadModels/Auth/RoleReadModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Dapper/RoleReadDapperRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Dapper/RoleReadDapperRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/RoleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/RoleRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Migrations/20240929185705_InitialCreate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Migrations/20240929185705_InitialCreate.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Migrations/WriteDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Migrations/WriteDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Presentation/Controllers/RoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Presentation/Controllers/RolesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shared/Contracts/Role/Requests/AddPermissionsToRoleRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Requests/AddPermissionsToRoleRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shared/Contracts/Role/Requests/RemovePermissionsFromRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Requests/RemovePermissionsFromRoleRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shared/Contracts/Role/Responses/RoleResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Responses/RoleResponse.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +60,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3e6cfa91023d4528a577156f118914ae141b0/7f/a8f28939/JwtSecurityToken.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/94000967eb3343f5a99c6081eb64a838157000/5b/fa55e754/NpgsqlDataReader.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cd79480462a3483b991d033234884520cb08/e4/2a34c348/JwtBearerDefaults.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/66efbec125c33fdfb3a1bec1ed20a19604e9735174ac7196e96ed9476726/Mediator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Backend/ClinicApp.App/Configuration/InfrastructureServiceInstaller.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Patients/Command/CreatePatient/CreatePatientCommandHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Backend/ClinicApp.Domain/Models/Patients/ValueObjects/DateOfBirth.cs" root0="FORCE_HIGHLIGHTING" />
@@ -77,28 +89,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.ClinicApp.App.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.kubernetes.view.ui.settings.KubernetesViewConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.ClinicApp.App.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.intellij.kubernetes.view.ui.settings.KubernetesViewConfigurable",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\kris102\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\kris102\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\kris102\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\kris102\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\kris102\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\kris102\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ClinicApp.App">
     <configuration name="ClinicApp.App" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Backend/ClinicApp.App/ClinicApp.App.csproj" />
@@ -170,7 +182,7 @@
       <workItem from="1727464339934" duration="4217000" />
       <workItem from="1727616958317" duration="2359000" />
       <workItem from="1727700246289" duration="13462000" />
-      <workItem from="1727858659450" duration="2741000" />
+      <workItem from="1727858659450" duration="14677000" />
     </task>
     <task id="LOCAL-00001" summary="role management">
       <option name="closed" value="true" />
@@ -180,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727858833644</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="create role">
+      <option name="closed" value="true" />
+      <created>1727862023565</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1727862023565</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,6 +222,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="role management" />
-    <option name="LAST_COMMIT_MESSAGE" value="role management" />
+    <MESSAGE value="create role" />
+    <option name="LAST_COMMIT_MESSAGE" value="create role" />
   </component>
 </project>

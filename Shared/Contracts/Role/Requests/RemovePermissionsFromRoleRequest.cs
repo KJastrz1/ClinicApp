@@ -1,6 +1,5 @@
 namespace Shared.Contracts.Role.Requests;
 
-public sealed record RemovePermissionsFromRole(
-    Guid Id,
+public sealed record RemovePermissionsFromRoleRequest(
     List<int> PermissionsIds
 );

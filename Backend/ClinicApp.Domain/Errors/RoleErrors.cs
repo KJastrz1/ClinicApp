@@ -5,9 +5,9 @@ namespace ClinicApp.Domain.Errors;
 
 public static class RoleErrors
 {
-    public static Error NotFound(Guid id) => new(
+    public static Error NotFound(RoleId id) => new(
         "Roles.NotFound",
-        $"The role with Id {id} was not found");
+        $"The role with Id {id.Value} was not found");
 
     public static Error EmptyId = new(
         "Roles.EmptyId",

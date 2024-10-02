@@ -105,7 +105,7 @@ namespace ClinicApp.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            Name = "AddPermissionToRole"
+                            Name = "AddPermissionsToRole"
                         },
                         new
                         {

@@ -19,11 +19,13 @@ internal sealed class GetRoleByIdQueryHandler : IQueryHandler<GetRoleByIdQuery, 
 
     public async Task<Result<RoleResponse>> Handle(GetRoleByIdQuery request, CancellationToken cancellationToken)
     {
-        RoleResponse? role = await _roleReadRepository.GetByIdAsync(RoleId.Create(request.Id).Value, cancellationToken);
+        RoleId roleId = RoleId.Create(request.Id).Value;
+
+        RoleResponse? role = await _roleReadRepository.GetByIdAsync(roleId, cancellationToken);
 
         if (role is null)
         {
-            return Result.Failure<RoleResponse>(RoleErrors.NotFound(request.Id));
+            return Result.Failure<RoleResponse>(RoleErrors.NotFound(roleId));
         }
 
         return role;

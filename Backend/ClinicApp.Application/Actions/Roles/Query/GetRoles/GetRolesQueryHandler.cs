@@ -23,6 +23,6 @@ internal sealed class GetRolesQueryHandler : IQueryHandler<GetRolesQuery, PagedR
             request.PageSize,
             cancellationToken);
 
-        return Result.Success(result);
+        return result;
     }
 }

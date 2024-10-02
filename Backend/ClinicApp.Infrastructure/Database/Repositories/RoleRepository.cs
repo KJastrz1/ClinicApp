@@ -14,7 +14,6 @@ public class RoleRepository : IRoleRepository
     {
         _context = context;
     }
-
     public async Task<Role?> GetByIdAsync(RoleId id, CancellationToken cancellationToken)
     {
         return await _context.Roles

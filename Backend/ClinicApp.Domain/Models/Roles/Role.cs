@@ -29,12 +29,12 @@ public sealed class Role : AggregateRoot<RoleId>
         var role = new Role(id, name, permissions ?? new List<Permission>());
 
         role.RaiseDomainEvent(new RoleCreatedDomainEvent(role.Id.Value));
-        
+
         foreach (Permission permission in role._permissions)
         {
             role.RaiseDomainEvent(new RolePermissionAddedDomainEvent(role.Id.Value, permission.Id));
         }
-        
+
         return role;
     }
 
@@ -52,6 +52,41 @@ public sealed class Role : AggregateRoot<RoleId>
         if (_permissions.Remove(permission))
         {
             RaiseDomainEvent(new RolePermissionRemovedDomainEvent(Id.Value, permission.Id));
+        }
+    }
+
+    public void RemovePermissionById(int permissionId)
+    {
+        Permission? permission = _permissions.FirstOrDefault(p => p.Id == permissionId);
+        if (permission != null)
+        {
+            RemovePermission(permission); 
+        }
+    }
+
+    public void RemovePermissionByName(string permissionName)
+    {
+        Permission? permission =
+            _permissions.FirstOrDefault(p => p.Name.Equals(permissionName, StringComparison.OrdinalIgnoreCase));
+        if (permission != null)
+        {
+            RemovePermission(permission);
+        }
+    }
+
+    public void RemovePermissionsByIds(List<int> permissionIds)
+    {
+        foreach (int permissionId in permissionIds)
+        {
+            RemovePermissionById(permissionId); 
+        }
+    }
+
+    public void RemovePermissionsByNames(List<string> permissionNames)
+    {
+        foreach (string permissionName in permissionNames)
+        {
+            RemovePermissionByName(permissionName); 
         }
     }
 
