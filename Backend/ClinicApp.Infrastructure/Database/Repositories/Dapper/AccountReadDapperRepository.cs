@@ -1,5 +1,6 @@
 using System.Text;
 using ClinicApp.Application.ReadRepositories;
+using ClinicApp.Application.ReadRepositories.Dapper;
 using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Infrastructure.Database.Constants;
 using ClinicApp.Infrastructure.Database.ReadModels.Auth;

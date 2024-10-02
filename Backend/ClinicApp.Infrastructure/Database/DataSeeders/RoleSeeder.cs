@@ -1,68 +1,96 @@
-// using ClinicApp.Domain.Enums;
-// using ClinicApp.Domain.Models.Roles;
-// using ClinicApp.Domain.Models.Roles.ValueObjects;
-// using Microsoft.EntityFrameworkCore;
-//
-// namespace ClinicApp.Infrastructure.Database.DataSeeders;
-//
-// public class RoleSeeder : IDataSeeder
-// {
-//     public void Seed(ModelBuilder modelBuilder)
-//     {
-//         SeedRoles(modelBuilder);
-//         SeedPermissions(modelBuilder);
-//         // SeedRolePermissions(modelBuilder);
-//     }
-//
-//     private void SeedRoles(ModelBuilder modelBuilder)
-//     {
-//         Role[] roles = BasicRoles.All
-//             .Select(r => Role.Create(RoleId.Create(r.Id).Value, RoleName.Create(r.Name).Value))
-//             .ToArray();
-//
-//         modelBuilder.Entity<Role>().HasData(roles);
-//     }
-//
-//     private void SeedPermissions(ModelBuilder modelBuilder)
-//     {
-//         IEnumerable<Permission> permissions = Enum
-//             .GetValues<PermissionEnum>()
-//             .Select(p => new Permission
-//             {
-//                 Id = (int)p,
-//                 Name = p.ToString()
-//             });
-//
-//         modelBuilder.Entity<Permission>().HasData(permissions);
-//     }
-//
-//     private void SeedRolePermissions(ModelBuilder modelBuilder)
-//     {
-//         modelBuilder.Entity<RolePermission>().HasData(
-//             Enum.GetValues(typeof(PermissionEnum))
-//                 .Cast<PermissionEnum>()
-//                 .Select(p => Create(BasicRoles.SuperAdmin.Id, p))
-//                 .ToArray(),
-//             Enum.GetValues(typeof(PermissionEnum))
-//                 .Cast<PermissionEnum>()
-//                 .Where(p => p != PermissionEnum.AssignAdmin && p != PermissionEnum.RemoveAdmin)
-//                 .Select(p => Create(BasicRoles.Admin.Id, p))
-//                 .ToArray(),
-//             Create(BasicRoles.Doctor.Id, PermissionEnum.ReadPatient),
-//             Create(BasicRoles.Doctor.Id, PermissionEnum.CreatePatient),
-//             Create(BasicRoles.Doctor.Id, PermissionEnum.UpdatePatient),
-//             Create(BasicRoles.Doctor.Id, PermissionEnum.DeletePatient),
-//             Create(BasicRoles.Doctor.Id, PermissionEnum.ReadDoctor),
-//             Create(BasicRoles.Patient.Id, PermissionEnum.ReadDoctor)
-//         );
-//     }
-//
-//     private static RolePermission Create(Guid roleId, PermissionEnum permission)
-//     {
-//         return new RolePermission
-//         {
-//             RoleId = RoleId.Create(roleId).Value,
-//             PermissionId = (int)permission
-//         };
-//     }
-// }
+using ClinicApp.Domain.Enums;
+using ClinicApp.Domain.Models.Roles;
+using ClinicApp.Domain.Models.Roles.ValueObjects;
+using Microsoft.EntityFrameworkCore;
+
+namespace ClinicApp.Infrastructure.Database.DataSeeders;
+
+public class RoleSeeder : IEFDataSeeder
+{
+    public void Seed(ModelBuilder modelBuilder)
+    {
+        SeedRoles(modelBuilder);
+        SeedPermissions(modelBuilder);
+        SeedRolePermissions(modelBuilder);
+    }
+
+    private void SeedRoles(ModelBuilder modelBuilder)
+    {
+        Role[] roles = BasicRoles.All
+            .Select(r => Role.Create(RoleId.Create(r.Id).Value, RoleName.Create(r.Name).Value))
+            .ToArray();
+
+        modelBuilder.Entity<Role>().HasData(roles);
+    }
+
+    private void SeedPermissions(ModelBuilder modelBuilder)
+    {
+        IEnumerable<Permission> permissions = Enum
+            .GetValues<PermissionEnum>()
+            .Select(p => new Permission
+            {
+                Id = (int)p,
+                Name = p.ToString()
+            });
+
+        modelBuilder.Entity<Permission>().HasData(permissions);
+    }
+
+    private void SeedRolePermissions(ModelBuilder modelBuilder)
+    {
+        var rolePermissions = new List<RolePermission>();
+       
+        foreach (PermissionEnum permission in Enum.GetValues(typeof(PermissionEnum)).Cast<PermissionEnum>())
+        {
+            rolePermissions.Add(new RolePermission 
+            { 
+                RoleId = RoleId.Create(BasicRoles.SuperAdmin.Id).Value, 
+                PermissionId = (int)permission 
+            });
+        }
+       
+        IEnumerable<PermissionEnum> adminPermissions = Enum.GetValues(typeof(PermissionEnum))
+            .Cast<PermissionEnum>()
+            .Where(p => p != PermissionEnum.AssignRole &&
+                        p != PermissionEnum.RevokeRole &&
+                        p != PermissionEnum.CreateRole &&
+                        p != PermissionEnum.DeleteRole &&
+                        p != PermissionEnum.AddPermissionToRole &&
+                        p != PermissionEnum.RemovePermissionFromRole);
+
+        foreach (PermissionEnum permission in adminPermissions)
+        {
+            rolePermissions.Add(new RolePermission 
+            { 
+                RoleId = RoleId.Create(BasicRoles.Admin.Id).Value, 
+                PermissionId = (int)permission 
+            });
+        }
+
+        PermissionEnum[] doctorPermissions = new[] 
+        {
+            PermissionEnum.ReadPatient,
+            PermissionEnum.CreatePatient,
+            PermissionEnum.UpdatePatient,
+            PermissionEnum.DeletePatient,
+            PermissionEnum.ReadDoctor
+        };
+
+        foreach (PermissionEnum permission in doctorPermissions)
+        {
+            rolePermissions.Add(new RolePermission 
+            { 
+                RoleId = RoleId.Create(BasicRoles.Doctor.Id).Value, 
+                PermissionId = (int)permission 
+            });
+        }
+      
+        rolePermissions.Add(new RolePermission 
+        { 
+            RoleId = RoleId.Create(BasicRoles.Patient.Id).Value, 
+            PermissionId = (int)PermissionEnum.ReadDoctor 
+        });
+
+        modelBuilder.Entity<RolePermission>().HasData(rolePermissions);
+    }
+}

@@ -8,11 +8,11 @@ using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Domain.Models.Patients;
 
-public class Patient:User
+public class Patient : User
 {
     public SocialSecurityNumber SocialSecurityNumber { get; private set; }
     public DateOfBirth DateOfBirth { get; private set; }
-    
+
     private Patient() { }
 
     private Patient(
@@ -20,7 +20,8 @@ public class Patient:User
         FirstName firstName,
         LastName lastName,
         SocialSecurityNumber ssn,
-        DateOfBirth dateOfBirth) : base(id, firstName, lastName, UserType.Patient)
+        DateOfBirth dateOfBirth,
+        AccountId? accountid) : base(id, firstName, lastName, UserType.Patient, accountid)
     {
         SocialSecurityNumber = ssn;
         DateOfBirth = dateOfBirth;
@@ -31,9 +32,10 @@ public class Patient:User
         FirstName firstName,
         LastName lastName,
         SocialSecurityNumber ssn,
-        DateOfBirth dateOfBirth)
+        DateOfBirth dateOfBirth,
+        AccountId? accountId)
     {
-        var patient = new Patient(id, firstName, lastName, ssn, dateOfBirth);
+        var patient = new Patient(id, firstName, lastName, ssn, dateOfBirth, accountId);
         patient.RaiseDomainEvent(new PatientRegisteredDomainEvent(id.Value));
         return patient;
     }

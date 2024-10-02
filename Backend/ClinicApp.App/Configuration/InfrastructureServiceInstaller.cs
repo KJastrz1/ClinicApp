@@ -1,9 +1,7 @@
-﻿using ClinicApp.Domain.Repositories;
-using ClinicApp.Infrastructure;
-using ClinicApp.Infrastructure.Database;
+﻿using ClinicApp.Infrastructure;
 using ClinicApp.Infrastructure.Database.Contexts;
+using ClinicApp.Infrastructure.Database.DataSeeders;
 using ClinicApp.Infrastructure.Database.Interceptors;
-using ClinicApp.Infrastructure.Database.Repositories.Read;
 using Microsoft.EntityFrameworkCore;
 using Scrutor;
 
@@ -17,10 +15,10 @@ public class InfrastructureServiceInstaller : IServiceInstaller
                                   throw new InvalidOperationException("Connection string 'Database' not found.");
 
         services.AddSingleton(connectionString);
-        
+
         services.AddDbContext<WriteDbContext>(
             optionsBuilder => optionsBuilder.UseNpgsql(connectionString));
-        
+
         services.AddDbContext<ReadDbContext>(
             optionsBuilder => optionsBuilder.UseNpgsql(connectionString));
 

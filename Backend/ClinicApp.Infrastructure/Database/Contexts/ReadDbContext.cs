@@ -1,5 +1,6 @@
 using ClinicApp.Domain.Models.Accounts;
 using ClinicApp.Domain.Models.Patients;
+using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Infrastructure.Database.Configurations.Read;
 using ClinicApp.Infrastructure.Database.Configurations.Write;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +9,15 @@ namespace ClinicApp.Infrastructure.Database.Contexts;
 
 public sealed class ReadDbContext : DbContext
 {
-    public DbSet<Account> Accounts { get; set; } = null!;
-    public DbSet<Patient> Patients { get; set; } = null!;
+    private DbSet<Account> AccountsDbSet { get; set; } = null!;
+    private DbSet<Patient> PatientsDbSet { get; set; } = null!;
+    private DbSet<Role> RolesDbSet { get; set; } = null!;
+    private DbSet<Permission> PermissionsDbSet { get; set; } = null!;
+
+    public IQueryable<Account> Accounts => AccountsDbSet.AsNoTracking();
+    public IQueryable<Patient> Patients => PatientsDbSet.AsNoTracking();
+    public IQueryable<Role> Roles => RolesDbSet.AsNoTracking();
+    public IQueryable<Permission> Permissions => PermissionsDbSet.AsNoTracking();
 
     public ReadDbContext(DbContextOptions<ReadDbContext> options)
         : base(options)
@@ -26,9 +34,6 @@ public sealed class ReadDbContext : DbContext
             )
         );
     }
-
-    public IQueryable<Account> AccountsQueryable => Accounts.AsNoTracking();
-    public IQueryable<Patient> PatientsQueryable => Patients.AsNoTracking();
 
     public override int SaveChanges()
     {

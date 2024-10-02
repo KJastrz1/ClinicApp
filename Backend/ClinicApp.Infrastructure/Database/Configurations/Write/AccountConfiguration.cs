@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ClinicApp.Infrastructure.Database.Configurations.Write;
 
-internal sealed  class AccountConfiguration : IWriteEntityConfiguration<Account>
+internal sealed class AccountConfiguration : IWriteEntityConfiguration<Account>
 {
     public void Configure(EntityTypeBuilder<Account> builder)
     {
@@ -24,7 +24,7 @@ internal sealed  class AccountConfiguration : IWriteEntityConfiguration<Account>
         builder.Property(a => a.Email)
             .HasConversion(
                 email => email.Value,
-                value => Email.Create(value).Value)
+                value => Email.Create(value).Value).HasMaxLength(Email.MaxLength)
             .IsRequired();
 
         builder.Property(a => a.PasswordHash)
@@ -41,7 +41,8 @@ internal sealed  class AccountConfiguration : IWriteEntityConfiguration<Account>
 
         builder.Property(a => a.ModifiedOnUtc);
 
-        builder.HasMany(x => x.Roles)
+        builder
+            .HasMany(a => a.Roles)
             .WithMany()
             .UsingEntity<AccountRole>();
     }

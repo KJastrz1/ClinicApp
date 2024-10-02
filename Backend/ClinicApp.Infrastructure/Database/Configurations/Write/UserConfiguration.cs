@@ -13,13 +13,16 @@ public class UserConfiguration : IWriteEntityConfiguration<User>
     {
         builder.HasKey(u => u.Id);
 
-        builder.HasDiscriminator("Discriminator", typeof(UserType))
-            .HasValue<Patient>(UserType.Patient);
-
         builder.Property(u => u.Id)
             .HasConversion(
                 id => id.Value,
                 value => UserId.Create(value).Value);
+
+        builder.Property(u => u.UserType)
+            .HasConversion(
+                userType => userType.ToString(),
+                value => Enum.Parse<UserType>(value))
+            .IsRequired();
 
         builder.Property(u => u.FirstName)
             .HasConversion(

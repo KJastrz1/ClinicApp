@@ -1,5 +1,6 @@
 using ClinicApp.Domain.Models.Accounts;
 using Shared.Contracts.Account.Responses;
+using Shared.Contracts.Role.Responses;
 
 namespace ClinicApp.Application.Mappings;
 
@@ -19,8 +20,9 @@ public static class AccountMappings
             CreatedOnUtc: account.CreatedOnUtc,
             ModifiedOnUtc: account.ModifiedOnUtc,
             Roles: account.Roles.Select(role => new RoleResponse(
+                Id: role.Id.Value,
                 Name: role.Name.Value,
-                Permissions: role.Permissions.Select(p => new PermissionResponse(p.Name)).ToList()
+                Permissions: role.Permissions.Select(p => new PermissionResponse(p.Id, p.Name)).ToList()
             )).ToList()
         );
     }

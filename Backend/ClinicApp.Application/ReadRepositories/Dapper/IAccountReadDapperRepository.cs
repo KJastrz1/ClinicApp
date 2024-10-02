@@ -3,7 +3,7 @@ using Shared.Contracts;
 using Shared.Contracts.Account;
 using Shared.Contracts.Account.Responses;
 
-namespace ClinicApp.Application.ReadRepositories;
+namespace ClinicApp.Application.ReadRepositories.Dapper;
 
 public interface IAccountReadDapperRepository
 {

@@ -12,7 +12,6 @@ public class PresentationServiceInstaller : IServiceInstaller
 
         services.AddSwaggerGen(c =>
         {
-            // Definicja tokenu Bearer
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Name = "Authorization",

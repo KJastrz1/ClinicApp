@@ -1,3 +1,5 @@
+using Shared.Contracts.Role.Responses;
+
 namespace Shared.Contracts.Account.Responses;
 public record AccountResponse(
     Guid Id,

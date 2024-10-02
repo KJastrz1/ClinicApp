@@ -1,5 +1,6 @@
 using System.Text;
 using ClinicApp.Application.ReadRepositories;
+using ClinicApp.Application.ReadRepositories.Dapper;
 using ClinicApp.Domain.Enums;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 using ClinicApp.Infrastructure.Database.Constants;
@@ -141,5 +142,24 @@ public class PatientReadDapperRepository : IPatientReadDapperRepository
             PageSize = pageSize,
             CurrentPage = pageNumber
         };
+    }
+    
+    public async Task<PatientResponse?> GetByAccountIdAsync(Guid accountId, CancellationToken cancellationToken)
+    {
+        await using var connection = new NpgsqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        string query = $@"
+        SELECT u.""Id"", u.""Email"", u.""FirstName"", u.""LastName"", u.""SocialSecurityNumber"", u.""DateOfBirth"",
+               u.""IsActivated"", u.""CreatedOnUtc"", u.""ModifiedOnUtc""
+        FROM ""{TableNames.Users}"" u
+        WHERE u.""AccountId"" = @AccountId AND u.""Discriminator"" = @PatientType";
+
+        var parameters = new { AccountId = accountId, PatientType = nameof(UserType.Patient) };
+
+        PatientResponse? patient = await connection.QuerySingleOrDefaultAsync<PatientResponse>(
+            new CommandDefinition(query, parameters, cancellationToken: cancellationToken));
+
+        return patient;
     }
 }

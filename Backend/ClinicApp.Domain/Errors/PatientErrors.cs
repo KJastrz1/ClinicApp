@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.JavaScript;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 
@@ -8,11 +9,15 @@ public static class PatientErrors
     public static Error NotFound(Guid id) => new(
         "Patients.NotFound",
         $"The patient with Id {id} was not found");
-    
+
     public static Error EmptyId => new(
         "Patients.EmptyId",
         "Patients Id is empty.");
-    
+
+    public static Error PatientExists => new(
+        "Patients.AccountExists",
+        "Patient profile for this account already exists.");
+
     public static class SocialSecurityNumberErrors
     {
         public static readonly Error Empty = new(

@@ -1,10 +1,8 @@
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 using Shared.Contracts;
-using System.Threading;
-using System.Threading.Tasks;
 using Shared.Contracts.Patient;
 
-namespace ClinicApp.Application.ReadRepositories;
+namespace ClinicApp.Application.ReadRepositories.Dapper;
 
 public interface IPatientReadDapperRepository
 {

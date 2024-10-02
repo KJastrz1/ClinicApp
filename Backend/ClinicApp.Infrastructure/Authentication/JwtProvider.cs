@@ -1,11 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ClinicApp.Application.Abstractions;
 using ClinicApp.Application.Abstractions.Authentication;
-using ClinicApp.Application.Actions.Accounts.Query.LoginAccount;
 using ClinicApp.Domain.Models.Accounts;
-using ClinicApp.Domain.Models.Roles;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -24,26 +21,30 @@ internal sealed class JwtProvider : IJwtProvider
     {
         var claims = new List<Claim>
         {
-            new(JwtRegisteredClaimNames.Sub, account.Id.Value.ToString()),
-            new(JwtRegisteredClaimNames.Email, account.Email.Value)
+            new(JwtRegisteredClaimNames.Sub, account.Id.Value.ToString()), 
+            new(JwtRegisteredClaimNames.Email, account.Email.Value) 
         };
-        
+   
+        IEnumerable<Claim> roleClaims = account.Roles.Select(role => new Claim(ClaimTypes.Role, role.Name.Value));
+        claims.AddRange(roleClaims);
+     
+        IEnumerable<Claim> permissionClaims = account.Roles
+            .SelectMany(role => role.Permissions)
+            .Select(permission => new Claim("permission", permission.Name));
+        claims.AddRange(permissionClaims);
+    
         var signingCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_options.SecretKey)),
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
             SecurityAlgorithms.HmacSha256);
-
+   
         var token = new JwtSecurityToken(
             _options.Issuer,
             _options.Audience,
             claims,
-            null,
-            DateTime.UtcNow.AddHours(1),
-            signingCredentials);
-
-        string tokenValue = new JwtSecurityTokenHandler()
-            .WriteToken(token);
-
+            expires: DateTime.UtcNow.AddHours(1),
+            signingCredentials: signingCredentials);
+      
+        string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
         return tokenValue;
     }
 }

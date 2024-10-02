@@ -13,22 +13,24 @@ public abstract class User : AggregateRoot<UserId>, IAuditableEntity
         UserId id,
         FirstName firstName,
         LastName lastName,
-        UserType userType) : base(id)
+        UserType userType,
+        AccountId? accountId) : base(id)
     {
         FirstName = firstName;
         LastName = lastName;
         CreatedOnUtc = DateTime.UtcNow;
         UserType = userType;
+        AccountId = accountId;
     }
 
     protected User() { }
-    
+
     public FirstName FirstName { get; private set; }
     public LastName LastName { get; private set; }
     public UserType UserType { get; private set; }
     public DateTime CreatedOnUtc { get; set; }
     public DateTime? ModifiedOnUtc { get; set; }
-    
+
     public AccountId? AccountId { get; set; }
     public Account? Account { get; private set; }
 

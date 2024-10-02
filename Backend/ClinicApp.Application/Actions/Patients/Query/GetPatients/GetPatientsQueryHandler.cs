@@ -1,5 +1,6 @@
 using ClinicApp.Application.Abstractions.Messaging;
 using ClinicApp.Application.ReadRepositories;
+using ClinicApp.Application.ReadRepositories.Dapper;
 using ClinicApp.Domain.Repositories;
 using ClinicApp.Domain.Shared;
 using Shared.Contracts;
