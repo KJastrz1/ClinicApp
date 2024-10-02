@@ -8,68 +8,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="00f2dadc-c596-4f13-804c-08cbcb0778d3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Patients/Command/RegisterPatient/RegisterPatientCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Patients/Command/RegisterPatient/RegisterPatientCommandHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Patients/Command/RegisterPatient/RegisterPatientCommandValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRoleCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Query/GetPermissions/GetPermissionsQuery.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Query/GetRoleById/GetRoleByIdQuery.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Query/GetRoleById/GetRoleByIdQueryHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Query/GetRoles/GetRolesQuery.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Query/GetRoles/GetRolesQueryHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/Dapper/IRoleReadDapperRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/IRoleReadRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Authentication/UserContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/DataSeeders/AccountSeeder.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/DataSeeders/IEFDataSeeder.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Dapper/RoleReadDapperRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Read/PatientReadRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Presentation/Controllers/RoleController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Shared/Contracts/Patient/RegisterPatientRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Requests/AddPermissionsToRoleRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Requests/CreateRoleRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Requests/RemovePermissionsFromRole.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Requests/RoleFilter.cs" afterDir="false" />
+    <list default="true" id="00f2dadc-c596-4f13-804c-08cbcb0778d3" name="Changes" comment="role management">
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRole/CreateRoleCommandHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRole/CreateRoleCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/Dapper/IPermissionReadDapperRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/IPermissionReadRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Errors/PermissionErrors.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Dapper/PermissionReadDapperRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Read/PermissionReadRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Requests/PermissionFilter.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ClinicApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ClinicApp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.App/Configuration/AuthenticationAndAuthorizationServiceInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.App/Configuration/AuthenticationAndAuthorizationServiceInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.App/Configuration/InfrastructureServiceInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.App/Configuration/InfrastructureServiceInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.App/Configuration/PresentationServiceInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.App/Configuration/PresentationServiceInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.App/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.App/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Abstractions/Authentication/IUserContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Abstractions/Authentication/IUserContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Accounts/Query/GetAccountById/GetAccountByIdQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Accounts/Query/GetAccountById/GetAccountByIdQueryHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Accounts/Query/LoginAccount/AccountWithPassword.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Accounts/Query/LoginAccount/AccountWithPassword.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Patients/Command/CreatePatient/CreatePatientCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Patients/Command/CreatePatient/CreatePatientCommandHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Patients/Query/GetPatientById/GetPatientByIdQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Patients/Query/GetPatientById/GetPatientByIdQueryHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Patients/Query/GetPatients/GetPatientsQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Patients/Query/GetPatients/GetPatientsQueryHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Mappings/AccountMappings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Mappings/AccountMappings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/IAccountReadDapperRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/Dapper/IAccountReadDapperRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/IPatientReadDapperRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/Dapper/IPatientReadDapperRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/IPatientReadRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/ReadRepositories/IPatientReadRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Enums/PermissionEnum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Enums/PermissionEnum.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Errors/PatientErrors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Errors/PatientErrors.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Errors/RoleErrors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Errors/RoleErrors.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Models/Patients/Patient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Models/Patients/Patient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Models/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Domain/Models/Users/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Authentication/JwtProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Authentication/JwtProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Configurations/Write/AccountConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Configurations/Write/AccountConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Configurations/Write/RoleConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Configurations/Write/RoleConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Configurations/Write/UserConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Configurations/Write/UserConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Contexts/ReadDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Contexts/ReadDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Contexts/WriteDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Contexts/WriteDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/DataSeeders/IDataSeeder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/DataSeeders/IDataSeeder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/DataSeeders/RoleSeeder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/DataSeeders/RoleSeeder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/ReadModels/Auth/AccountReadModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/ReadModels/Auth/AccountReadModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/ReadModels/Auth/PermissionReadModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/ReadModels/Auth/PermissionReadModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/ReadModels/Auth/RoleReadModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/ReadModels/Auth/RoleReadModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Dapper/AccountReadDapperRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Dapper/AccountReadDapperRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Dapper/PatientReadDapperRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Repositories/Dapper/PatientReadDapperRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Presentation/Controllers/PatientsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Presentation/Controllers/PatientsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shared/Contracts/Account/Responses/AccountResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Shared/Contracts/Account/Responses/AccountResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shared/Contracts/Account/Responses/PermissionResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Responses/PermissionResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shared/Contracts/Account/Responses/RoleResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Shared/Contracts/Role/Responses/RoleResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shared/Contracts/Patient/CreatePatientRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Shared/Contracts/Patient/CreatePatientRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Shared/Shared.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Shared/Shared.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRoleCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/ClinicApp.Application/Actions/Roles/Command/CreateRole/CreateRoleCommand.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,6 +54,7 @@
     <setting file="file://$PROJECT_DIR$/Backend/ClinicApp.Domain/Models/Patients/ValueObjects/DateOfBirth.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Backend/ClinicApp.Domain/Primitives/ValueObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Backend/ClinicApp.Infrastructure/Database/Configurations/Read/UserBaseReadConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/kris102/Desktop/sem7/aaaaaaaadyplom/ClinicApp/Backend/ClinicApp.Infrastructure/Database/Configurations/Write/AccountConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Backend/ClinicApp.Presentation/Controllers/PatientsController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Shared/Contracts/PagedResult.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Shared/Contracts/Patient/PatientFilter.cs" root0="FORCE_HIGHLIGHTING" />
@@ -220,7 +170,17 @@
       <workItem from="1727464339934" duration="4217000" />
       <workItem from="1727616958317" duration="2359000" />
       <workItem from="1727700246289" duration="13462000" />
+      <workItem from="1727858659450" duration="2741000" />
     </task>
+    <task id="LOCAL-00001" summary="role management">
+      <option name="closed" value="true" />
+      <created>1727858833644</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727858833644</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,5 +201,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="role management" />
+    <option name="LAST_COMMIT_MESSAGE" value="role management" />
   </component>
 </project>
