@@ -27,28 +27,29 @@ public class RoleReadDapperRepository : IRoleReadDapperRepository
         await connection.OpenAsync(cancellationToken);
 
         string query = $@"
-        SELECT r.""Id"", r.""Name""
-        FROM ""{TableNames.Roles}"" r
-        WHERE r.""Id"" = @RoleId";
+    SELECT r.""Id"", r.""Name""
+    FROM ""{TableNames.Roles}"" r
+    WHERE r.""Id"" = @RoleId";
 
         var parameters = new { RoleId = roleId.Value };
 
-        RoleResponse? role = await connection.QuerySingleOrDefaultAsync<RoleResponse>(
+        RoleReadModel? roleReadModel = await connection.QuerySingleOrDefaultAsync<RoleReadModel>(
             new CommandDefinition(query, parameters, cancellationToken: cancellationToken));
 
-        if (role != null)
+        if (roleReadModel != null)
         {
             string permissionsQuery = $@"
-            SELECT p.""Id"", p.""Name""
-            FROM ""{TableNames.RolePermissions}"" rp
-            JOIN ""{TableNames.Permissions}"" p ON p.""Id"" = rp.""PermissionId""
-            WHERE rp.""RoleId"" = @RoleId";
+        SELECT p.""Id"", p.""Name""
+        FROM ""{TableNames.RolePermissions}"" rp
+        JOIN ""{TableNames.Permissions}"" p ON p.""Id"" = rp.""PermissionId""
+        WHERE rp.""RoleId"" = @RoleId";
 
-            IEnumerable<PermissionResponse> permissions = await connection.QueryAsync<PermissionResponse>(
+            IEnumerable<PermissionReadModel> permissionReadModels = await connection.QueryAsync<PermissionReadModel>(
                 new CommandDefinition(permissionsQuery, parameters, cancellationToken: cancellationToken));
 
+            roleReadModel.Permissions = permissionReadModels.ToList();
 
-            return role with { Permissions = permissions.ToList() };
+            return roleReadModel.ToResponse();
         }
 
         return null;
