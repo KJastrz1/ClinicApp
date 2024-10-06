@@ -18,6 +18,7 @@ public class AccountRepository : IAccountRepository
     public async Task<Account?> GetByIdAsync(AccountId id, CancellationToken cancellationToken)
     {
         return await _writeContext.Accounts
+            .Include(a => a.Roles)
             .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
     }
 
