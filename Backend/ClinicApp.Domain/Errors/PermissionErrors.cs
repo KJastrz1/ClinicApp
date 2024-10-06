@@ -11,4 +11,8 @@ public static class PermissionErrors
     public static Error InvalidId = new(
         "Permission.InvalidId",
         "The permission ID must be greater than 0.");
+
+    public static Error EmptyId = new(
+        "Permission.EmptyId",
+        "Permission's ID is empty");
 }

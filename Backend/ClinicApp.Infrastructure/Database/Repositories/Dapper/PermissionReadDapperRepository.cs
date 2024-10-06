@@ -5,6 +5,7 @@ using Dapper;
 using Npgsql;
 using Shared.Contracts.Role.Requests;
 using System.Text;
+using ClinicApp.Domain.Models.Permissions;
 
 
 namespace ClinicApp.Infrastructure.Database.Repositories.Dapper;

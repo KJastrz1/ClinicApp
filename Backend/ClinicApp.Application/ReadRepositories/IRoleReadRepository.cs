@@ -6,4 +6,6 @@ namespace ClinicApp.Application.ReadRepositories;
 public interface IRoleReadRepository
 {
     Task<Role?> GetByIdAsync(RoleId roleId, CancellationToken cancellationToken);
+
+    Task<Role?> GetByNameAsync(RoleName roleName, CancellationToken cancellationToken);
 }

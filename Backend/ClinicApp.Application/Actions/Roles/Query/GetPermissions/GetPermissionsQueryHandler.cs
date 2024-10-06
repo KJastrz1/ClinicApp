@@ -1,5 +1,6 @@
 using ClinicApp.Application.Abstractions.Messaging;
 using ClinicApp.Application.ReadRepositories.Dapper;
+using ClinicApp.Domain.Models.Permissions;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Domain.Shared;
 using Shared.Contracts.Role.Requests;

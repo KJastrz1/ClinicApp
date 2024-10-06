@@ -11,24 +11,26 @@ builder.Services
 
 WebApplication app = builder.Build();
 
-using (IServiceScope scope = app.Services.CreateScope())
-{
-    IServiceProvider services = scope.ServiceProvider;
 
-    try
-    {
-        AccountSeeder userSeeder = services.GetRequiredService<AccountSeeder>();
-        await userSeeder.SeedAsync();
-    }
-    catch (Exception ex)
-    {
-     
-    }
-}
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    
+    using (IServiceScope scope = app.Services.CreateScope())
+    {
+        IServiceProvider services = scope.ServiceProvider;
+
+        try
+        {
+            AccountSeeder userSeeder = services.GetRequiredService<AccountSeeder>();
+            await userSeeder.SeedAsync();
+        }
+        catch (Exception ex)
+        {
+     
+        }
+    }
 }
 
 app.UseHttpsRedirection();

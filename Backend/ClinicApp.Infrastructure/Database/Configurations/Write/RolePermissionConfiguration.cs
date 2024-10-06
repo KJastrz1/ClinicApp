@@ -1,4 +1,5 @@
 ﻿using ClinicApp.Domain.Enums;
+using ClinicApp.Domain.Models.Permissions.ValueObjects;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Domain.Models.Roles.ValueObjects;
 using ClinicApp.Infrastructure.Database.Constants;
@@ -18,6 +19,12 @@ internal sealed class RolePermissionConfiguration
             .HasConversion(
                 id => id.Value,
                 value => RoleId.Create(value).Value);
+
+
+        builder.Property(p => p.PermissionId)
+            .HasConversion(
+                id => id.Value,
+                value => PermissionId.Create(value).Value);
 
         builder.ToTable(TableNames.RolePermissions);
     }

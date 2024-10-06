@@ -1,5 +1,5 @@
 namespace Shared.Contracts.Account.Requests;
 
-public sealed record AddRolesToAccountRequest(
+public sealed record RemoveRolesFromAccountRequest(
     List<Guid> RolesIds
 );

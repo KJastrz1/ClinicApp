@@ -12,9 +12,7 @@ public sealed class RoleId : ValueObject
     {
         Value = value;
     }
-
-    private RoleId() { }
-
+    
     public static Result<RoleId> Create(Guid value)
     {
         return Result.Create(value)

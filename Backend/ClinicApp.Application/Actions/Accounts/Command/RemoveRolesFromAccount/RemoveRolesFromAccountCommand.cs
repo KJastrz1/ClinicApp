@@ -1,6 +1,8 @@
+using ClinicApp.Application.Abstractions.Messaging;
+
 namespace ClinicApp.Application.Actions.Accounts.Command.RemoveRolesFromAccount;
 
-public class AddRolesToAccountCommand
-{
-    
-}
+public sealed record RemoveRolesFromAccountCommand(
+    Guid AccountId,
+    List<Guid> RolesIds)
+    : ICommand<Guid>;

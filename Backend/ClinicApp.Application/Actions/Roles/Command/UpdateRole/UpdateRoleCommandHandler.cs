@@ -1,56 +1,54 @@
 using ClinicApp.Application.Abstractions.Messaging;
 using ClinicApp.Application.ReadRepositories;
 using ClinicApp.Domain.Errors;
-using ClinicApp.Domain.Models.Roles;
-using ClinicApp.Domain.Models.Roles.ValueObjects;
 using ClinicApp.Domain.Repositories;
 using ClinicApp.Domain.Shared;
+using ClinicApp.Domain.Models.Roles;
+using ClinicApp.Domain.Models.Roles.ValueObjects;
 
-namespace ClinicApp.Application.Actions.Roles.Command.CreateRole;
+namespace ClinicApp.Application.Actions.Roles.Command.UpdateRole;
 
-internal sealed class UpdateRoleCommandHandler : ICommandHandler<CreateRoleCommand, Guid>
+internal sealed class UpdateRoleCommandHandler : ICommandHandler<UpdateRoleCommand, Guid>
 {
     private readonly IRoleRepository _roleRepository;
-    private readonly IPermissionReadRepository _permissionReadRepository;
+    private readonly IRoleReadRepository _roleReadRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public UpdateRoleCommandHandler(
         IRoleRepository roleRepository,
-        IPermissionReadRepository permissionReadRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IRoleReadRepository roleReadRepository)
     {
         _roleRepository = roleRepository;
-        _permissionReadRepository = permissionReadRepository;
         _unitOfWork = unitOfWork;
+        _roleReadRepository = roleReadRepository;
     }
 
-    public async Task<Result<Guid>> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
     {
-        Result<RoleName> roleNameResult = RoleName.Create(request.Name);
-        if (roleNameResult.IsFailure)
+        RoleId roleId = RoleId.Create(request.Id).Value;
+
+        Role? role = await _roleRepository.GetByIdAsync(roleId, cancellationToken);
+        if (role == null)
         {
-            return Result.Failure<Guid>(roleNameResult.Error);
+            return Result.Failure<Guid>(RoleErrors.NotFound(roleId));
         }
 
-
-        List<Permission> permissions = new();
-        foreach (int permissionId in request.PermissionsIds)
+        Result<RoleName> roleName = RoleName.Create(request.Name);
+        if (roleName.IsFailure)
         {
-            Permission? permission = await _permissionReadRepository.GetByIdAsync(permissionId, cancellationToken);
-            if (permission == null)
-            {
-                return Result.Failure<Guid>(PermissionErrors.NotFound(permissionId));
-            }
-
-            permissions.Add(permission);
+            return Result.Failure<Guid>(roleName.Error);
         }
 
-        var role = Role.Create(RoleId.New(), roleNameResult.Value, permissions);
+        Role? existingRole = await _roleReadRepository.GetByNameAsync(roleName.Value, cancellationToken);
+        if (existingRole is not null && !existingRole.Id.Equals(role.Id))
+        {
+            return Result.Failure<Guid>(RoleErrors.NameAlreadyExists);
+        }
 
-        _roleRepository.Add(role);
+        role.UpdateName(roleName.Value);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
         return role.Id.Value;
     }
 }

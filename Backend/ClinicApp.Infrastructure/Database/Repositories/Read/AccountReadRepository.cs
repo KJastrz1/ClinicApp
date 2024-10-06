@@ -20,7 +20,7 @@ public class AccountReadRepository : IAccountReadRepository
     public async Task<Account?> GetByEmailAsync(Email email, CancellationToken cancellationToken)
     {
         return await _context.Accounts
-            .FirstOrDefaultAsync(a => a.Email == email, cancellationToken);
+            .FirstOrDefaultAsync(a => a.Email.Equals(email), cancellationToken);
     }
 
     public async Task<Account?> GetByEmailWithRolesAsync(Email email, CancellationToken cancellationToken)
@@ -28,6 +28,6 @@ public class AccountReadRepository : IAccountReadRepository
         return await _context.Accounts
             .Include(a => a.Roles)
             .ThenInclude(r => r.Permissions)
-            .FirstOrDefaultAsync(a => a.Email == email, cancellationToken);
+            .FirstOrDefaultAsync(a => a.Email.Equals(email), cancellationToken);
     }
 }

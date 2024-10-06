@@ -1,8 +1,8 @@
 using ClinicApp.Application.Abstractions.Messaging;
 
-namespace ClinicApp.Application.Actions.Roles.Command.CreateRole;
+namespace ClinicApp.Application.Actions.Roles.Command.UpdateRole;
 
-public sealed record CreateRoleCommand(
-    string Name,
-    List<int> PermissionsIds
+public sealed record UpdateRoleCommand(
+    Guid Id,
+    string Name
 ) : ICommand<Guid>;

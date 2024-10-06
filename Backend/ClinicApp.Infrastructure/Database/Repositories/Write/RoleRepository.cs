@@ -4,7 +4,7 @@ using ClinicApp.Domain.Repositories;
 using ClinicApp.Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClinicApp.Infrastructure.Database.Repositories;
+namespace ClinicApp.Infrastructure.Database.Repositories.Write;
 
 public class RoleRepository : IRoleRepository
 {

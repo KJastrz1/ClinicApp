@@ -1,8 +1,9 @@
+using ClinicApp.Application.Actions.Roles.Command.CreateRole;
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Roles.ValueObjects;
 using FluentValidation;
 
-namespace ClinicApp.Application.Actions.Roles.Command.CreateRole;
+namespace ClinicApp.Application.Actions.Roles.Command.UpdateRole;
 
 internal class UpdateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
 {
@@ -13,9 +14,5 @@ internal class UpdateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
             .WithMessage(RoleErrors.RoleNameErrors.Empty.Message)
             .MaximumLength(RoleName.MaxLength)
             .WithMessage(RoleErrors.RoleNameErrors.TooLong.Message);
-
-        RuleForEach(x => x.PermissionsIds)
-            .GreaterThan(0)
-            .WithMessage(PermissionErrors.InvalidId.Message);
     }
 }

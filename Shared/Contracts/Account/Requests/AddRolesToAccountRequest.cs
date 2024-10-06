@@ -1,6 +1,5 @@
 namespace Shared.Contracts.Account.Requests;
 
-public class AddRolesToAccountRequest
-{
-    
-}
+public sealed record AddRolesToAccountRequest(
+    List<Guid> RolesIds
+);

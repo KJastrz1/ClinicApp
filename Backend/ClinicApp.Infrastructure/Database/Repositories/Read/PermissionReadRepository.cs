@@ -1,4 +1,5 @@
 using ClinicApp.Application.ReadRepositories;
+using ClinicApp.Domain.Models.Permissions;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;

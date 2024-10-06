@@ -83,7 +83,7 @@ FROM ""{TableNames.Roles}"" r");
             queryBuilder.Append(whereAdded ? @" AND" : @" WHERE");
             whereAdded = true;
 
-            queryBuilder.Append(@"
+            queryBuilder.Append($@"
     EXISTS (
         SELECT 1
         FROM ""{TableNames.RolePermissions}"" rp
@@ -93,7 +93,7 @@ FROM ""{TableNames.Roles}"" r");
             parameters.Add("@PermissionName", $"%{filter.PermissionName}%");
         }
 
-        string countQuery = $@"SELECT COUNT(*) FROM ({queryBuilder}) AS CountQuery";
+        string countQuery = $"SELECT COUNT(*) FROM ({queryBuilder}) AS CountQuery";
 
         int totalCount = await connection.ExecuteScalarAsync<int>(
             new CommandDefinition(countQuery, parameters, cancellationToken: cancellationToken));

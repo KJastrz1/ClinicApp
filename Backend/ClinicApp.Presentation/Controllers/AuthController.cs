@@ -18,16 +18,6 @@ public sealed class AuthController : ApiController
     {
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetAccountById(Guid id, CancellationToken cancellationToken)
-    {
-        var query = new GetAccountByIdQuery(id);
-
-        Result<AccountResponse> response = await Sender.Send(query, cancellationToken);
-
-        return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
-    }
-
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAccount(
         [FromBody] RegisterAccountRequest request,
@@ -46,7 +36,7 @@ public sealed class AuthController : ApiController
         }
 
         return CreatedAtAction(
-            nameof(GetAccountById),
+            nameof(LoginAccount),
             new { id = result.Value },
             result.Value);
     }

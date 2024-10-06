@@ -1,3 +1,4 @@
+using ClinicApp.Domain.Models.Permissions;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Domain.Models.Roles.ValueObjects;
 using Shared.Contracts;

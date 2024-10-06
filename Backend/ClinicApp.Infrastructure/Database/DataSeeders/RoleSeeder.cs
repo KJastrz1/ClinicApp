@@ -1,4 +1,6 @@
 using ClinicApp.Domain.Enums;
+using ClinicApp.Domain.Models.Permissions;
+using ClinicApp.Domain.Models.Permissions.ValueObjects;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Domain.Models.Roles.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +31,7 @@ public class RoleSeeder : IEFDataSeeder
             .GetValues<PermissionEnum>()
             .Select(p => new Permission
             {
-                Id = (int)p,
+                Id = PermissionId.Create((int)p).Value,
                 Name = p.ToString()
             });
 
@@ -39,16 +41,16 @@ public class RoleSeeder : IEFDataSeeder
     private void SeedRolePermissions(ModelBuilder modelBuilder)
     {
         var rolePermissions = new List<RolePermission>();
-       
+
         foreach (PermissionEnum permission in Enum.GetValues(typeof(PermissionEnum)).Cast<PermissionEnum>())
         {
-            rolePermissions.Add(new RolePermission 
-            { 
-                RoleId = RoleId.Create(BasicRoles.SuperAdmin.Id).Value, 
-                PermissionId = (int)permission 
+            rolePermissions.Add(new RolePermission
+            {
+                RoleId = RoleId.Create(BasicRoles.SuperAdmin.Id).Value,
+                PermissionId = PermissionId.Create((int)permission).Value
             });
         }
-       
+
         IEnumerable<PermissionEnum> adminPermissions = Enum.GetValues(typeof(PermissionEnum))
             .Cast<PermissionEnum>()
             .Where(p => p != PermissionEnum.AssignRole &&
@@ -60,14 +62,14 @@ public class RoleSeeder : IEFDataSeeder
 
         foreach (PermissionEnum permission in adminPermissions)
         {
-            rolePermissions.Add(new RolePermission 
-            { 
-                RoleId = RoleId.Create(BasicRoles.Admin.Id).Value, 
-                PermissionId = (int)permission 
+            rolePermissions.Add(new RolePermission
+            {
+                RoleId = RoleId.Create(BasicRoles.Admin.Id).Value,
+                PermissionId = PermissionId.Create((int)permission).Value
             });
         }
 
-        PermissionEnum[] doctorPermissions = new[] 
+        PermissionEnum[] doctorPermissions = new[]
         {
             PermissionEnum.ReadPatient,
             PermissionEnum.CreatePatient,
@@ -78,17 +80,17 @@ public class RoleSeeder : IEFDataSeeder
 
         foreach (PermissionEnum permission in doctorPermissions)
         {
-            rolePermissions.Add(new RolePermission 
-            { 
-                RoleId = RoleId.Create(BasicRoles.Doctor.Id).Value, 
-                PermissionId = (int)permission 
+            rolePermissions.Add(new RolePermission
+            {
+                RoleId = RoleId.Create(BasicRoles.Doctor.Id).Value,
+                PermissionId = PermissionId.Create((int)permission).Value
             });
         }
-      
-        rolePermissions.Add(new RolePermission 
-        { 
-            RoleId = RoleId.Create(BasicRoles.Patient.Id).Value, 
-            PermissionId = (int)PermissionEnum.ReadDoctor 
+
+        rolePermissions.Add(new RolePermission
+        {
+            RoleId = RoleId.Create(BasicRoles.Patient.Id).Value,
+            PermissionId = PermissionId.Create((int)PermissionEnum.ReadDoctor).Value
         });
 
         modelBuilder.Entity<RolePermission>().HasData(rolePermissions);

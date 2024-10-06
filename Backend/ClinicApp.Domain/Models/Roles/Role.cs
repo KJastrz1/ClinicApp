@@ -1,4 +1,6 @@
 ﻿using ClinicApp.Domain.Models.Accounts;
+using ClinicApp.Domain.Models.Permissions;
+using ClinicApp.Domain.Models.Permissions.ValueObjects;
 using ClinicApp.Domain.Models.Roles.DomainEvents;
 using ClinicApp.Domain.Models.Roles.ValueObjects;
 using ClinicApp.Domain.Primitives;
@@ -38,6 +40,15 @@ public sealed class Role : AggregateRoot<RoleId>
         return role;
     }
 
+    public void UpdateName(RoleName newName)
+    {
+        if (!Name.Equals(newName))
+        {
+            Name = newName;
+            RaiseDomainEvent(new RoleNameUpdatedDomainEvent(Id.Value, newName.Value));
+        }
+    }
+
     public void AddPermission(Permission permission)
     {
         if (!_permissions.Contains(permission))
@@ -52,41 +63,6 @@ public sealed class Role : AggregateRoot<RoleId>
         if (_permissions.Remove(permission))
         {
             RaiseDomainEvent(new RolePermissionRemovedDomainEvent(Id.Value, permission.Id));
-        }
-    }
-
-    public void RemovePermissionById(int permissionId)
-    {
-        Permission? permission = _permissions.FirstOrDefault(p => p.Id == permissionId);
-        if (permission != null)
-        {
-            RemovePermission(permission); 
-        }
-    }
-
-    public void RemovePermissionByName(string permissionName)
-    {
-        Permission? permission =
-            _permissions.FirstOrDefault(p => p.Name.Equals(permissionName, StringComparison.OrdinalIgnoreCase));
-        if (permission != null)
-        {
-            RemovePermission(permission);
-        }
-    }
-
-    public void RemovePermissionsByIds(List<int> permissionIds)
-    {
-        foreach (int permissionId in permissionIds)
-        {
-            RemovePermissionById(permissionId); 
-        }
-    }
-
-    public void RemovePermissionsByNames(List<string> permissionNames)
-    {
-        foreach (string permissionName in permissionNames)
-        {
-            RemovePermissionByName(permissionName); 
         }
     }
 

@@ -1,28 +1,27 @@
 using ClinicApp.Application.Abstractions.Messaging;
-using ClinicApp.Domain.Repositories;
-using ClinicApp.Domain.Shared;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using ClinicApp.Application.ReadRepositories;
 using ClinicApp.Domain.Errors;
+using ClinicApp.Domain.Models.Permissions;
+using ClinicApp.Domain.Models.Permissions.ValueObjects;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Domain.Models.Roles.ValueObjects;
+using ClinicApp.Domain.Repositories;
+using ClinicApp.Domain.Shared;
+
+namespace ClinicApp.Application.Actions.Roles.Command.AddPermissionsToRole;
 
 internal sealed class AddPermissionsToRoleCommandHandler : ICommandHandler<AddPermissionsToRoleCommand, Guid>
 {
     private readonly IRoleRepository _roleRepository;
-    private readonly IPermissionReadRepository _permissionReadRepository;
+    private readonly IPermissionRepository _permissionRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public AddPermissionsToRoleCommandHandler(
         IRoleRepository roleRepository,
-        IPermissionReadRepository permissionReadRepository,
+        IPermissionRepository permissionRepository,
         IUnitOfWork unitOfWork)
     {
         _roleRepository = roleRepository;
-        _permissionReadRepository = permissionReadRepository;
+        _permissionRepository = permissionRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -38,10 +37,11 @@ internal sealed class AddPermissionsToRoleCommandHandler : ICommandHandler<AddPe
 
         foreach (int permissionId in request.PermissionsIds)
         {
-            Permission? permission = await _permissionReadRepository.GetByIdAsync(permissionId, cancellationToken);
+            PermissionId permissionIdValue = PermissionId.Create(permissionId).Value;
+            Permission? permission = await _permissionRepository.GetByIdAsync(permissionIdValue, cancellationToken);
             if (permission == null)
             {
-                return Result.Failure<Guid>(PermissionErrors.NotFound(permissionId));
+                return Result.Failure<Guid>(PermissionErrors.NotFound(permissionIdValue));
             }
 
             role.AddPermission(permission);

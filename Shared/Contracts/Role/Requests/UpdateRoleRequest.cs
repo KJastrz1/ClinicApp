@@ -1,6 +1,5 @@
 namespace Shared.Contracts.Role.Requests;
 
-public class UpdateRoleRequest
-{
-    
-}
+public sealed record UpdateRoleRequest(
+    string Name
+);

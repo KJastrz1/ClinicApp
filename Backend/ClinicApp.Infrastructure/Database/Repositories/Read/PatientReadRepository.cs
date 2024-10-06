@@ -21,6 +21,6 @@ public class PatientReadRepository : IPatientReadRepository
     public async Task<Patient?> GetByAccountIdAsync(AccountId accountId, CancellationToken cancellationToken)
     {
         return await _context.Patients
-            .FirstOrDefaultAsync(p => p.AccountId == accountId, cancellationToken);
+            .FirstOrDefaultAsync(p => p.AccountId.Equals(accountId), cancellationToken);
     }
 }

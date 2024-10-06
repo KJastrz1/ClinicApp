@@ -41,6 +41,9 @@ internal sealed class AccountConfiguration : IWriteEntityConfiguration<Account>
 
         builder.Property(a => a.ModifiedOnUtc);
 
+        builder.HasIndex(x => x.Email)
+            .IsUnique();
+
         builder
             .HasMany(a => a.Roles)
             .WithMany()

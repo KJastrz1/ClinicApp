@@ -25,6 +25,9 @@ internal sealed class RoleConfiguration : IWriteEntityConfiguration<Role>
             .IsRequired()
             .HasMaxLength(RoleName.MaxLength);
 
+        builder.HasIndex(x => x.Name)
+            .IsUnique();
+        
         builder
             .HasMany(r => r.Permissions)
             .WithMany()

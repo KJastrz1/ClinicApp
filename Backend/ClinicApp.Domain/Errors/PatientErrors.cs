@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.JavaScript;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 

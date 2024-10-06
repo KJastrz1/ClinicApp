@@ -1,4 +1,7 @@
+using ClinicApp.Application.Actions.Roles.Command.AddPermissionsToRole;
 using ClinicApp.Application.Actions.Roles.Command.CreateRole;
+using ClinicApp.Application.Actions.Roles.Command.RemovePermissionsFromRole;
+using ClinicApp.Application.Actions.Roles.Command.UpdateRole;
 using ClinicApp.Application.Actions.Roles.Query.GetPermissions;
 using ClinicApp.Application.Actions.Roles.Query.GetRoleById;
 using ClinicApp.Application.Actions.Roles.Query.GetRoles;
@@ -53,6 +56,30 @@ public sealed class RolesController : ApiController
         var command = new CreateRoleCommand(
             request.Name,
             request.PermissionsIds
+        );
+
+        Result<Guid> result = await Sender.Send(command, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return HandleFailure(result);
+        }
+
+        return CreatedAtAction(
+            nameof(GetRoleByIdWithPermissions),
+            new { id = result.Value },
+            result.Value);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateRole(
+        Guid id,
+        [FromBody] UpdateRoleRequest request,
+        CancellationToken cancellationToken)
+    {
+        var command = new UpdateRoleCommand(
+            id,
+            request.Name
         );
 
         Result<Guid> result = await Sender.Send(command, cancellationToken);

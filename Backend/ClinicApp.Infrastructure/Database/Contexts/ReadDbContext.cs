@@ -1,5 +1,6 @@
 using ClinicApp.Domain.Models.Accounts;
 using ClinicApp.Domain.Models.Patients;
+using ClinicApp.Domain.Models.Permissions;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Infrastructure.Database.Configurations.Read;
 using ClinicApp.Infrastructure.Database.Configurations.Write;
