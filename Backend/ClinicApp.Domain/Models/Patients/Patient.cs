@@ -76,4 +76,10 @@ public class Patient : User
         RaiseDomainEvent(new PatientDateOfBirthChangedDomainEvent(Id, newDateOfBirth));
         return Result.Success(this);
     }
+    
+    public Result<bool> Delete()
+    {
+        RaiseDomainEvent(new PatientDeletedDomainEvent(Id.Value));
+        return Result.Success(true);
+    }
 }
