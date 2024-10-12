@@ -38,7 +38,7 @@ public abstract class User : AggregateRoot<UserId>, IAuditableEntity
     {
         if (!FirstName.Equals(firstName) || !LastName.Equals(lastName))
         {
-            RaiseDomainEvent(new UserNameChangedDomainEvent(Guid.NewGuid(), Id.Value));
+            RaiseDomainEvent(new UsersFullNameChangedDomainEvent(Guid.NewGuid(), Id.Value));
         }
 
         FirstName = firstName;

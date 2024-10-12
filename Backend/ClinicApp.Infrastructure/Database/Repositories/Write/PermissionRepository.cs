@@ -14,7 +14,7 @@ public class PermissionRepository : IPermissionRepository
     {
         _writeContext = writeContext;
     }
-
+  
     public async Task<Permission?> GetByIdAsync(PermissionId id, CancellationToken cancellationToken)
     {
         return await _writeContext.Permissions

@@ -23,13 +23,14 @@ internal sealed class GetPatientByIdQueryHandler
         GetPatientByIdQuery request,
         CancellationToken cancellationToken)
     {
+        PatientId patientId = PatientId.Create(request.PatientId).Value;
         PatientResponse? response = await _patientRepository.GetByIdAsync(
-            PatientId.Create(request.PatientId).Value,
+            patientId,
             cancellationToken);
 
         if (response is null)
         {
-            return Result.Failure<PatientResponse>(PatientErrors.NotFound(request.PatientId));
+            return Result.Failure<PatientResponse>(PatientErrors.NotFound(patientId));
         }
 
         return response;
