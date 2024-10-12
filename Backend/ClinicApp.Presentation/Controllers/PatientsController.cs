@@ -1,4 +1,5 @@
 ﻿using ClinicApp.Application.Actions.Patients.Command.CreatePatient;
+using ClinicApp.Application.Actions.Patients.Command.DeletePatient;
 using ClinicApp.Application.Actions.Patients.Command.RegisterPatient;
 using ClinicApp.Application.Actions.Patients.Command.UpdatePatient;
 using ClinicApp.Application.Actions.Patients.Query.GetPatientById;
@@ -125,6 +126,22 @@ public sealed class PatientsController : ApiController
         Result result = await Sender.Send(
             command,
             cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return HandleFailure(result);
+        }
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id:guid}")]
+    [HasPermission(PermissionEnum.DeletePatient)]
+    public async Task<IActionResult> DeletePatient(Guid id, CancellationToken cancellationToken)
+    {
+        var command = new DeletePatientCommand(id);
+
+        Result result = await Sender.Send(command, cancellationToken);
 
         if (result.IsFailure)
         {
