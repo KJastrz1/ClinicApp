@@ -40,6 +40,19 @@ public class Patient : User
         return patient;
     }
 
+    public Result<Patient> Update(
+        FirstName newFirstName,
+        LastName newLastName,
+        SocialSecurityNumber newSsn,
+        DateOfBirth newDateOfBirth)
+    {
+        ChangeName(newFirstName, newLastName);
+        ChangeSocialSecurityNumber(newSsn);
+        ChangeDateOfBirth(newDateOfBirth);
+
+        return Result.Success(this);
+    }
+    
     public Result<Patient> ChangeSocialSecurityNumber(SocialSecurityNumber newSsn)
     {
         if (SocialSecurityNumber.Equals(newSsn))

@@ -1,4 +1,3 @@
-using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 

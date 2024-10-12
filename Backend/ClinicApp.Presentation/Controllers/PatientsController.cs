@@ -1,5 +1,6 @@
 ﻿using ClinicApp.Application.Actions.Patients.Command.CreatePatient;
 using ClinicApp.Application.Actions.Patients.Command.RegisterPatient;
+using ClinicApp.Application.Actions.Patients.Command.UpdatePatient;
 using ClinicApp.Application.Actions.Patients.Query.GetPatientById;
 using ClinicApp.Application.Actions.Patients.Query.GetPatients;
 using ClinicApp.Domain.Enums;
@@ -106,29 +107,30 @@ public sealed class PatientsController : ApiController
             result.Value);
     }
 
-    // [HasPermission(Permission.UpdatePatient)]
-    // [HttpPut("{id:guid}")]
-    // public async Task<IActionResult> UpdatePatient(
-    //     Guid id,
-    //     [FromBody] UpdatePatientRequest request,
-    //     CancellationToken cancellationToken)
-    // {
-    //     var command = new UpdatePatientCommand(
-    //         id,
-    //         request.FirstName,
-    //         request.LastName,
-    //         request.SocialSecurityNumber,
-    //         request.DateOfBirth);
-    //
-    //     Result result = await Sender.Send(
-    //         command,
-    //         cancellationToken);
-    //
-    //     if (result.IsFailure)
-    //     {
-    //         return HandleFailure(result);
-    //     }
-    //
-    //     return NoContent();
-    // }
+
+    [HttpPut("{id:guid}")]
+    [HasPermission(PermissionEnum.UpdatePatient)]
+    public async Task<IActionResult> UpdatePatient(
+        Guid id,
+        [FromBody] UpdatePatientRequest request,
+        CancellationToken cancellationToken)
+    {
+        var command = new UpdatePatientCommand(
+            id,
+            request.FirstName,
+            request.LastName,
+            request.SocialSecurityNumber,
+            request.DateOfBirth);
+
+        Result result = await Sender.Send(
+            command,
+            cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return HandleFailure(result);
+        }
+
+        return NoContent();
+    }
 }
