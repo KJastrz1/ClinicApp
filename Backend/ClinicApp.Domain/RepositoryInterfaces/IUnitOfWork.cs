@@ -1,4 +1,4 @@
-﻿namespace ClinicApp.Domain.Repositories;
+﻿namespace ClinicApp.Domain.RepositoryInterfaces;
 
 public interface IUnitOfWork
 {

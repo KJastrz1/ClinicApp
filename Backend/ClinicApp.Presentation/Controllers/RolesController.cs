@@ -43,7 +43,7 @@ public sealed class RolesController : ApiController
             Filter = filter
         };
 
-        Result<PagedResult<RoleResponse>> response = await Sender.Send(query, cancellationToken);
+        Result<PagedItems<RoleResponse>> response = await Sender.Send(query, cancellationToken);
 
         return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
     }

@@ -1,5 +1,5 @@
 ﻿using ClinicApp.Domain.Primitives;
-using ClinicApp.Domain.Repositories;
+using ClinicApp.Domain.RepositoryInterfaces;
 using ClinicApp.Infrastructure.Database.Contexts;
 using ClinicApp.Infrastructure.Database.Outbox;
 using Microsoft.EntityFrameworkCore;

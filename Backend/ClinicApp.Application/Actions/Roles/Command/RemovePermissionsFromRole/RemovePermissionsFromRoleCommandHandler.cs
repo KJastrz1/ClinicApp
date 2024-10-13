@@ -5,7 +5,7 @@ using ClinicApp.Domain.Models.Permissions;
 using ClinicApp.Domain.Models.Permissions.ValueObjects;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Domain.Models.Roles.ValueObjects;
-using ClinicApp.Domain.Repositories;
+using ClinicApp.Domain.RepositoryInterfaces;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Application.Actions.Roles.Command.RemovePermissionsFromRole;

@@ -4,15 +4,15 @@ using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Domain.Models.Clinics.ValueObjects;
 
-public sealed class ClinicPhoneNumber : ValueObject
+public sealed class PhoneNumber : ValueObject
 {
-    private ClinicPhoneNumber(string value) => Value = value;
+    private PhoneNumber(string value) => Value = value;
 
-    private ClinicPhoneNumber() { }
+    private PhoneNumber() { }
 
     public string Value { get; private set; }
 
-    public static Result<ClinicPhoneNumber> Create(string phoneNumber) =>
+    public static Result<PhoneNumber> Create(string phoneNumber) =>
         Result.Create(phoneNumber)
             .Ensure(
                 p => !string.IsNullOrWhiteSpace(p),
@@ -20,7 +20,7 @@ public sealed class ClinicPhoneNumber : ValueObject
             .Ensure(
                 p => p.All(char.IsDigit),
                 ClinicErrors.PhoneNumberErrors.Invalid)
-            .Map(p => new ClinicPhoneNumber(p));
+            .Map(p => new PhoneNumber(p));
 
     public override IEnumerable<object> GetAtomicValues()
     {

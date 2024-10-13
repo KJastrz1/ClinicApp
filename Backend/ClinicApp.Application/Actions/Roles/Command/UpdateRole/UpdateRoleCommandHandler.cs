@@ -1,10 +1,10 @@
 using ClinicApp.Application.Abstractions.Messaging;
 using ClinicApp.Application.ReadRepositories;
 using ClinicApp.Domain.Errors;
-using ClinicApp.Domain.Repositories;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Domain.Models.Roles.ValueObjects;
+using ClinicApp.Domain.RepositoryInterfaces;
 
 namespace ClinicApp.Application.Actions.Roles.Command.UpdateRole;
 

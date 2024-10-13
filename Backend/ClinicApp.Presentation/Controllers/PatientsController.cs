@@ -50,7 +50,7 @@ public sealed class PatientsController : ApiController
             PageSize = pageSize
         };
 
-        Result<PagedResult<PatientResponse>> response = await Sender.Send(query, cancellationToken);
+        Result<PagedItems<PatientResponse>> response = await Sender.Send(query, cancellationToken);
 
         return response.IsSuccess ? Ok(response.Value) : BadRequest(response.Error);
     }

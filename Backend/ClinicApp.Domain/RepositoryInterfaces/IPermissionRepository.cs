@@ -1,9 +1,7 @@
 using ClinicApp.Domain.Models.Permissions;
 using ClinicApp.Domain.Models.Permissions.ValueObjects;
-using ClinicApp.Domain.Models.Roles;
-using ClinicApp.Domain.Models.Roles.ValueObjects;
 
-namespace ClinicApp.Domain.Repositories;
+namespace ClinicApp.Domain.RepositoryInterfaces;
 
 public interface IPermissionRepository
 {

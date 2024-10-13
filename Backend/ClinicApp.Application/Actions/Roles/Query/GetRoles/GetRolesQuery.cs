@@ -6,7 +6,7 @@ using Shared.Contracts.Role.Responses;
 
 namespace ClinicApp.Application.Actions.Roles.Query.GetRoles;
 
-public sealed record GetRolesQuery : IQuery<PagedResult<RoleResponse>>
+public sealed record GetRolesQuery : IQuery<PagedItems<RoleResponse>>
 {
     public RoleFilter Filter { get; init; } = new RoleFilter();
     public int PageNumber { get; init; } = 1;

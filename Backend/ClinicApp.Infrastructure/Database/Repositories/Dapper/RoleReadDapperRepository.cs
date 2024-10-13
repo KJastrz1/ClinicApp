@@ -55,7 +55,7 @@ public class RoleReadDapperRepository : IRoleReadDapperRepository
         return null;
     }
 
-    public async Task<PagedResult<RoleResponse>> GetByFilterAsync(
+    public async Task<PagedItems<RoleResponse>> GetByFilterAsync(
         RoleFilter filter,
         int pageNumber,
         int pageSize,
@@ -122,7 +122,7 @@ FROM ""{TableNames.Roles}"" r");
             rolesWithPermissions.Add(role);
         }
 
-        return new PagedResult<RoleResponse>
+        return new PagedItems<RoleResponse>
         {
             Items = rolesWithPermissions.Select(r => r.ToResponse()).ToList(),
             TotalCount = totalCount,

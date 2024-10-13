@@ -40,19 +40,6 @@ public class Patient : User
         return patient;
     }
 
-    public Result<Patient> Update(
-        FirstName newFirstName,
-        LastName newLastName,
-        SocialSecurityNumber newSsn,
-        DateOfBirth newDateOfBirth)
-    {
-        ChangeName(newFirstName, newLastName);
-        ChangeSocialSecurityNumber(newSsn);
-        ChangeDateOfBirth(newDateOfBirth);
-
-        return Result.Success(this);
-    }
-    
     public Result<Patient> ChangeSocialSecurityNumber(SocialSecurityNumber newSsn)
     {
         if (SocialSecurityNumber.Equals(newSsn))
@@ -61,7 +48,7 @@ public class Patient : User
         }
 
         SocialSecurityNumber = newSsn;
-        RaiseDomainEvent(new PatientSsnChangedDomainEvent(Id.Value, newSsn));
+        RaiseDomainEvent(new PatientSsnChangedDomainEvent(Id.Value, newSsn.Value));
         return Result.Success(this);
     }
 
@@ -73,10 +60,10 @@ public class Patient : User
         }
 
         DateOfBirth = newDateOfBirth;
-        RaiseDomainEvent(new PatientDateOfBirthChangedDomainEvent(Id, newDateOfBirth));
+        RaiseDomainEvent(new PatientDateOfBirthChangedDomainEvent(Id, newDateOfBirth.Value));
         return Result.Success(this);
     }
-    
+
     public Result<bool> Delete()
     {
         RaiseDomainEvent(new PatientDeletedDomainEvent(Id.Value));

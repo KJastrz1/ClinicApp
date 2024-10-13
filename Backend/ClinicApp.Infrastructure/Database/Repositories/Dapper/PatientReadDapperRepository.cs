@@ -39,7 +39,7 @@ public class PatientReadDapperRepository : IPatientReadDapperRepository
         return patient;
     }
 
-    public async Task<PagedResult<PatientResponse>> GetByFilterAsync(
+    public async Task<PagedItems<PatientResponse>> GetByFilterAsync(
         PatientFilter filter,
         int pageNumber,
         int pageSize,
@@ -135,7 +135,7 @@ public class PatientReadDapperRepository : IPatientReadDapperRepository
         IEnumerable<PatientResponse> items = await connection.QueryAsync<PatientResponse>(
             new CommandDefinition(queryBuilder.ToString(), parameters, cancellationToken: cancellationToken));
 
-        return new PagedResult<PatientResponse>
+        return new PagedItems<PatientResponse>
         {
             Items = items.ToList(),
             TotalCount = totalCount,

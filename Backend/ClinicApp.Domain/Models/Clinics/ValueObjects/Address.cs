@@ -4,17 +4,17 @@ using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Domain.Models.Clinics.ValueObjects;
 
-public sealed class ClinicAddress : ValueObject
+public sealed class Address : ValueObject
 {
     public const int MaxLength = 200;
 
-    private ClinicAddress(string value) => Value = value;
+    private Address(string value) => Value = value;
 
-    private ClinicAddress() { }
+    private Address() { }
 
     public string Value { get; private set; }
 
-    public static Result<ClinicAddress> Create(string address) =>
+    public static Result<Address> Create(string address) =>
         Result.Create(address)
             .Ensure(
                 a => !string.IsNullOrWhiteSpace(a),
@@ -22,7 +22,7 @@ public sealed class ClinicAddress : ValueObject
             .Ensure(
                 a => a.Length <= MaxLength,
                 ClinicErrors.AddressErrors.TooLong)
-            .Map(a => new ClinicAddress(a));
+            .Map(a => new Address(a));
 
     public override IEnumerable<object> GetAtomicValues()
     {

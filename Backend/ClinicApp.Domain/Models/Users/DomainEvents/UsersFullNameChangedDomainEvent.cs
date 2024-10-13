@@ -2,4 +2,4 @@
 
 namespace ClinicApp.Domain.Models.Users.DomainEvents;
 
-public sealed record UsersFullNameChangedDomainEvent(Guid Id, Guid UserId) : DomainEvent(Id);
+public sealed record UsersFullNameChangedDomainEvent(Guid UserId, string NewFullName) : DomainEvent(Guid.NewGuid());
