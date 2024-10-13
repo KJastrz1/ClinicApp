@@ -5,7 +5,7 @@ using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 using ClinicApp.Domain.Models.Users.ValueObjects;
-using ClinicApp.Domain.Repositories;
+using ClinicApp.Domain.RepositoryInterfaces;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Application.Actions.Patients.Command.RegisterPatient;

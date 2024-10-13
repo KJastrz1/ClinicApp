@@ -1,7 +1,7 @@
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 
-namespace ClinicApp.Domain.Repositories;
+namespace ClinicApp.Domain.RepositoryInterfaces;
 
 public interface IPatientRepository
 {

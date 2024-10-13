@@ -1,7 +1,7 @@
 using ClinicApp.Domain.Models.Accounts;
 using ClinicApp.Domain.Models.Accounts.ValueObjects;
 
-namespace ClinicApp.Domain.Repositories;
+namespace ClinicApp.Domain.RepositoryInterfaces;
 
 public interface IAccountRepository
 {

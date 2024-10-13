@@ -8,7 +8,7 @@ public interface IPatientReadDapperRepository
 {
     Task<PatientResponse?> GetByIdAsync(PatientId patientId, CancellationToken cancellationToken);
 
-    Task<PagedResult<PatientResponse>> GetByFilterAsync(
+    Task<PagedItems<PatientResponse>> GetByFilterAsync(
         PatientFilter filter,
         int pageNumber,
         int pageSize,

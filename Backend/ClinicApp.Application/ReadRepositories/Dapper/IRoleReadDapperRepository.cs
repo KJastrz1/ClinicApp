@@ -9,7 +9,7 @@ public interface IRoleReadDapperRepository
 {
     Task<RoleResponse?> GetByIdAsync(RoleId roleId, CancellationToken cancellationToken);
 
-    Task<PagedResult<RoleResponse>> GetByFilterAsync(
+    Task<PagedItems<RoleResponse>> GetByFilterAsync(
         RoleFilter filter,
         int pageNumber,
         int pageSize,

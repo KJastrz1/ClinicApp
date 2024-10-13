@@ -1,6 +1,6 @@
 using ClinicApp.Domain.Models.Permissions;
 using ClinicApp.Domain.Models.Permissions.ValueObjects;
-using ClinicApp.Domain.Repositories;
+using ClinicApp.Domain.RepositoryInterfaces;
 using ClinicApp.Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 

@@ -4,7 +4,7 @@ using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 using ClinicApp.Domain.Models.Users.ValueObjects;
-using ClinicApp.Domain.Repositories;
+using ClinicApp.Domain.RepositoryInterfaces;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Application.Actions.Patients.Command.UpdatePatient;
@@ -31,22 +31,34 @@ internal sealed class UpdatePatientCommandHandler : ICommandHandler<UpdatePatien
             return Result.Failure<Guid>(PatientErrors.NotFound(patientId));
         }
 
-        Result<FirstName> firstNameResult = FirstName.Create(request.FirstName);
-        Result<LastName> lastNameResult = LastName.Create(request.LastName);
-        Result<SocialSecurityNumber> ssnResult = SocialSecurityNumber.Create(request.SocialSecurityNumber);
-        Result<DateOfBirth> dobResult = DateOfBirth.Create(request.DateOfBirth);
+        if (!string.IsNullOrWhiteSpace(request.FirstName))
+        {
+            Result<FirstName> firstNameResult = FirstName.Create(request.FirstName);
+            patient.ChangeName(firstNameResult.Value, patient.LastName); 
+        }
 
-        patient.Update(
-            firstNameResult.Value,
-            lastNameResult.Value,
-            ssnResult.Value,
-            dobResult.Value
-        );
+        if (!string.IsNullOrWhiteSpace(request.LastName))
+        {
+            Result<LastName> lastNameResult = LastName.Create(request.LastName);
+            patient.ChangeName(patient.FirstName, lastNameResult.Value); 
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.SocialSecurityNumber))
+        {
+            Result<SocialSecurityNumber> ssnResult = SocialSecurityNumber.Create(request.SocialSecurityNumber);
+            patient.ChangeSocialSecurityNumber(ssnResult.Value);
+        }
+
+        if (request.DateOfBirth.HasValue)
+        {
+            Result<DateOfBirth> dobResult = DateOfBirth.Create(request.DateOfBirth.Value);
+            patient.ChangeDateOfBirth(dobResult.Value);
+        }
 
         _patientRepository.Update(patient);
-
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return patient.Id.Value;
     }
+
 }

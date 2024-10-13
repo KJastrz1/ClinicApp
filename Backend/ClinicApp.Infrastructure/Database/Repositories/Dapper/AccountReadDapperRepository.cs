@@ -80,7 +80,7 @@ public class AccountReadDapperRepository : IAccountReadDapperRepository
         return accountReadModel.MapToResponse();
     }
 
-    public async Task<PagedResult<AccountResponse>> GetByFilterAsync(
+    public async Task<PagedItems<AccountResponse>> GetByFilterAsync(
         AccountFilter filter,
         int pageNumber,
         int pageSize,
@@ -134,7 +134,7 @@ public class AccountReadDapperRepository : IAccountReadDapperRepository
 
         var accountResponses = accountReadModels.Select(a => a.MapToResponse()).ToList();
 
-        return new PagedResult<AccountResponse>
+        return new PagedItems<AccountResponse>
         {
             Items = accountResponses,
             TotalCount = totalCount,

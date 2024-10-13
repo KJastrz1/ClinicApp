@@ -9,7 +9,7 @@ public interface IAccountReadDapperRepository
 {
     Task<AccountResponse?> GetByIdAsync(AccountId accountId, CancellationToken cancellationToken);
 
-    Task<PagedResult<AccountResponse>> GetByFilterAsync(
+    Task<PagedItems<AccountResponse>> GetByFilterAsync(
         AccountFilter filter,
         int pageNumber,
         int pageSize,

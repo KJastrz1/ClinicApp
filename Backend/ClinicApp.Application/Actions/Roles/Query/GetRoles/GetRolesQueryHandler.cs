@@ -6,7 +6,7 @@ using Shared.Contracts.Role.Responses;
 
 namespace ClinicApp.Application.Actions.Roles.Query.GetRoles;
 
-internal sealed class GetRolesQueryHandler : IQueryHandler<GetRolesQuery, PagedResult<RoleResponse>>
+internal sealed class GetRolesQueryHandler : IQueryHandler<GetRolesQuery, PagedItems<RoleResponse>>
 {
     private readonly IRoleReadDapperRepository _roleReadRepository;
 
@@ -15,14 +15,14 @@ internal sealed class GetRolesQueryHandler : IQueryHandler<GetRolesQuery, PagedR
         _roleReadRepository = roleReadRepository;
     }
 
-    public async Task<Result<PagedResult<RoleResponse>>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
+    public async Task<Result<PagedItems<RoleResponse>>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
     {
-        PagedResult<RoleResponse> result = await _roleReadRepository.GetByFilterAsync(
+        PagedItems<RoleResponse> items = await _roleReadRepository.GetByFilterAsync(
             request.Filter,
             request.PageNumber,
             request.PageSize,
             cancellationToken);
 
-        return result;
+        return items;
     }
 }

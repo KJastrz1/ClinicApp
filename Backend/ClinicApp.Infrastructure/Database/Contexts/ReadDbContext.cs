@@ -1,4 +1,5 @@
 using ClinicApp.Domain.Models.Accounts;
+using ClinicApp.Domain.Models.Clinics;
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Permissions;
 using ClinicApp.Domain.Models.Roles;
@@ -12,11 +13,15 @@ public sealed class ReadDbContext : DbContext
 {
     private DbSet<Account> AccountsDbSet { get; set; } = null!;
     private DbSet<Patient> PatientsDbSet { get; set; } = null!;
+    private DbSet<Clinic> ClinicsDbSet { get; set; } = null!;
     private DbSet<Role> RolesDbSet { get; set; } = null!;
     private DbSet<Permission> PermissionsDbSet { get; set; } = null!;
+    
+    
 
     public IQueryable<Account> Accounts => AccountsDbSet.AsNoTracking();
     public IQueryable<Patient> Patients => PatientsDbSet.AsNoTracking();
+    public IQueryable<Clinic> Clinics => ClinicsDbSet.AsNoTracking();
     public IQueryable<Role> Roles => RolesDbSet.AsNoTracking();
     public IQueryable<Permission> Permissions => PermissionsDbSet.AsNoTracking();
 

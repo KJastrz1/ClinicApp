@@ -15,5 +15,13 @@ public enum PermissionEnum
     ReadDoctor = 11,
     CreateDoctor = 12,
     UpdateDoctor = 13,
-    DeleteDoctor = 14
+    DeleteDoctor = 14,
+    ReadClinic = 15,
+    CreateClinic = 16,
+    UpdateClinic = 17,
+    DeleteClinic = 18,
+    ReadAppointment = 19,
+    CreateAppointment = 20,
+    UpdateAppointment = 21,
+    DeleteAppointment = 22,
 }
