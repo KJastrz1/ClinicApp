@@ -22,6 +22,12 @@ public class AccountRepository : IAccountRepository
             .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
     }
 
+    public async Task<Account?> GetByEmailAsync(Email email, CancellationToken cancellationToken)
+    {
+        return await _writeContext.Accounts
+            .FirstOrDefaultAsync(a => a.Email.Equals(email), cancellationToken);
+    }
+
     public void Add(Account account)
     {
         _writeContext.Accounts.Add(account);

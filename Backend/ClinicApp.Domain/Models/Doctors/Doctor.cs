@@ -1,0 +1,151 @@
+using ClinicApp.Domain.Enums;
+using ClinicApp.Domain.Models.Accounts.ValueObjects;
+using ClinicApp.Domain.Models.Clinics;
+using ClinicApp.Domain.Models.Doctors.DomainEvents;
+using ClinicApp.Domain.Models.Doctors.ValueObjects;
+using ClinicApp.Domain.Models.Users;
+using ClinicApp.Domain.Models.Users.ValueObjects;
+using ClinicApp.Domain.Shared;
+using System;
+using System.Collections.Generic;
+using ClinicApp.Domain.Models.Accounts;
+using ClinicApp.Domain.Models.Clinics.ValueObjects;
+
+namespace ClinicApp.Domain.Models.Doctors;
+
+public class Doctor : User
+{
+    public MedicalLicenseNumber MedicalLicenseNumber { get; private set; }
+    
+    private List<Specialty> _specialties = new List<Specialty>();
+    public IReadOnlyList<Specialty> Specialties => _specialties.AsReadOnly();
+    public string SpecialtiesString
+    {
+        get => string.Join(',', _specialties.Select(s => s.Value));
+        private set => _specialties = value.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(v => Specialty.Create(v).Value)
+            .ToList();
+    }
+
+    public Bio? Bio { get; private set; }
+    public AcademicTitle? AcademicTitle { get; private set; }
+
+    public Clinic? Clinic { get; private set; }
+    public ClinicId? ClinicId { get; private set; }
+
+    private Doctor() { }
+
+    private Doctor(
+        UserId id,
+        FirstName firstName,
+        LastName lastName,
+        MedicalLicenseNumber medicalLicenseNumber,
+        List<Specialty>? specialties = null,
+        Bio? bio = null,
+        AcademicTitle? academicTitle = null,
+        Account? account = null,
+        Clinic? clinic = null)
+        : base(id, firstName, lastName, UserType.Doctor, account)
+    {
+        MedicalLicenseNumber = medicalLicenseNumber;
+        _specialties = specialties ?? new List<Specialty>();
+        Bio = bio;
+        AcademicTitle = academicTitle;
+        Clinic = clinic;
+        ClinicId = clinic?.Id;
+    }
+
+    public static Doctor Create(
+        UserId id,
+        FirstName firstName,
+        LastName lastName,
+        MedicalLicenseNumber medicalLicenseNumber,
+        List<Specialty>? specialties = null,
+        Bio? bio = null,
+        AcademicTitle? academicTitle = null,
+        Account? account = null,
+        Clinic? clinic = null)
+    {
+        var doctor = new Doctor(id, firstName, lastName, medicalLicenseNumber, specialties, bio, academicTitle,
+            account, clinic);
+        doctor.RaiseDomainEvent(new DoctorRegisteredDomainEvent(id.Value));
+        return doctor;
+    }
+
+    public Result<Doctor> ChangeMedicalLicenseNumber(MedicalLicenseNumber newLicenseNumber)
+    {
+        if (MedicalLicenseNumber.Equals(newLicenseNumber))
+        {
+            return Result.Success(this);
+        }
+
+        MedicalLicenseNumber = newLicenseNumber;
+        RaiseDomainEvent(new DoctorLicenseNumberChangedDomainEvent(Id.Value, newLicenseNumber.Value));
+        return Result.Success(this);
+    }
+
+    public Result<Doctor> UpdateSpecialties(List<Specialty> newSpecialties)
+    {
+        foreach (Specialty specialty in Specialties.ToList())
+        {
+            RemoveSpecialty(specialty);
+        }
+
+        foreach (Specialty specialty in newSpecialties)
+        {
+            AddSpecialty(specialty);
+        }
+
+        return Result.Success(this);
+    }
+
+    public Result<Doctor> AddSpecialty(Specialty specialty)
+    {
+        if (_specialties.Contains(specialty))
+        {
+            return Result.Success(this);
+        }
+
+        _specialties.Add(specialty);
+        RaiseDomainEvent(new DoctorSpecialtyAddedDomainEvent(Id.Value, specialty.Value));
+        return Result.Success(this);
+    }
+
+    public Result<Doctor> RemoveSpecialty(Specialty specialty)
+    {
+        if (!_specialties.Remove(specialty))
+        {
+            return Result.Success(this);
+        }
+
+        RaiseDomainEvent(new DoctorSpecialtyRemovedDomainEvent(Id.Value, specialty.Value));
+        return Result.Success(this);
+    }
+
+    public Result<Doctor> ChangeBio(Bio newBio)
+    {
+        Bio = newBio;
+        RaiseDomainEvent(new DoctorBioChangedDomainEvent(Id.Value, newBio.Value));
+        return Result.Success(this);
+    }
+
+    public Result<Doctor> ChangeAcademicTitle(AcademicTitle newAcademicTitle)
+    {
+        AcademicTitle = newAcademicTitle;
+        RaiseDomainEvent(new DoctorAcademicTitleChangedDomainEvent(Id.Value, newAcademicTitle.Value));
+        return Result.Success(this);
+    }
+
+    public Result<bool> Delete()
+    {
+        RaiseDomainEvent(new DoctorDeletedDomainEvent(Id.Value));
+        return Result.Success(true);
+    }
+
+    public void ChangeClinic(Clinic clinic)
+    {
+        Clinic = clinic;
+        ClinicId = clinic.Id;
+        RaiseDomainEvent(new DoctorClinicChangedDomainEvent(Id.Value, clinic.Id.Value));
+    }
+}

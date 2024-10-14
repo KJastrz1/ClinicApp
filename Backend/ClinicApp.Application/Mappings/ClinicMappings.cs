@@ -14,9 +14,7 @@ public static class ClinicMappings
             PhoneNumber: clinic.PhoneNumber.Value,
             Address: clinic.Address.Value,
             City: clinic.City.Value,
-            ZipCode: clinic.ZipCode.Value,
-            CreatedOnUtc: clinic.CreatedOnUtc,
-            ModifiedOnUtc: clinic.ModifiedOnUtc
+            ZipCode: clinic.ZipCode.Value
         );
     }
 }

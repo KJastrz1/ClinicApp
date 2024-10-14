@@ -1,5 +1,6 @@
 using ClinicApp.Application.Abstractions.Authentication;
 using ClinicApp.Application.Abstractions.Messaging;
+using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Accounts;
 using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Domain.RepositoryInterfaces;
@@ -28,6 +29,13 @@ internal sealed class RegisterAccountCommandHandler : ICommandHandler<RegisterAc
         Result<Email> emailResult = Email.Create(request.Email);
 
         string passwordHash = _passwordHasher.Hash(request.Password);
+
+        Account? existingAccount = await _accountRepository.GetByEmailAsync(emailResult.Value, cancellationToken);
+
+        if (existingAccount is not null)
+        {
+            return Result.Failure<Guid>(AccountErrors.EmailErrors.EmailAlreadyInUse);
+        }
 
         var account = Account.Create(
             AccountId.New(),

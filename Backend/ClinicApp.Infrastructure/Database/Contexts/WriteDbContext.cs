@@ -1,4 +1,6 @@
 ﻿using ClinicApp.Domain.Models.Accounts;
+using ClinicApp.Domain.Models.Clinics;
+using ClinicApp.Domain.Models.Doctors;
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Permissions;
 using ClinicApp.Domain.Models.Roles;
@@ -17,8 +19,10 @@ public sealed class WriteDbContext : DbContext
 
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Patient> Patients { get; set; }
-    public DbSet<Role> Roles { get; set; }
+    public DbSet<Doctor> Doctors { get; set; }
+    public DbSet<Clinic> Clinics { get; set; }
     
+    public DbSet<Role> Roles { get; set; }
     public DbSet<Permission> Permissions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

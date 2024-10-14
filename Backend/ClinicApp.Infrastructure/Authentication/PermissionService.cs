@@ -7,9 +7,9 @@ namespace ClinicApp.Infrastructure.Authentication;
 
 public class PermissionService : IPermissionService
 {
-    private readonly WriteDbContext _context;
+    private readonly ReadDbContext _context;
 
-    public PermissionService(WriteDbContext context)
+    public PermissionService(ReadDbContext context)
     {
         _context = context;
     }

@@ -9,4 +9,5 @@ public interface IAccountRepository
     void Add(Account account);
     void Update(Account account);
     void Remove(Account account);
+    Task<Account?> GetByEmailAsync(Email email, CancellationToken cancellationToken);
 }
