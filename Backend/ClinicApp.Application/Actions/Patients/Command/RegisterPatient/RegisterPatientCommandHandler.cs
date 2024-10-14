@@ -1,5 +1,7 @@
 using ClinicApp.Application.Abstractions.Authentication;
 using ClinicApp.Application.Abstractions.Messaging;
+using ClinicApp.Application.ReadRepositories;
+using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Accounts;
 using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Domain.Models.Patients;
@@ -37,6 +39,12 @@ internal sealed class RegisterPatientCommandHandler :
         Result<Email> emailResult = Email.Create(request.Email);
         Result<PasswordHash> passwordHashResult = PasswordHash.Create(passwordHash);
 
+        Account? exisitngAccount = await _accountRepository.GetByEmailAsync(emailResult.Value, cancellationToken);
+
+        if (exisitngAccount is not null)
+        {
+            return Result.Failure<Guid>(AccountErrors.EmailErrors.EmailAlreadyInUse);
+        }
 
         var account = Account.Create(
             accountId,
@@ -56,7 +64,7 @@ internal sealed class RegisterPatientCommandHandler :
             lastNameResult.Value,
             ssnResult.Value,
             dobResult.Value,
-            accountId
+            account
         );
 
         _patientRepository.Add(patient);

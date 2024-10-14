@@ -12,19 +12,13 @@ namespace ClinicApp.Application.Actions.Patients.Command.CreatePatient;
 internal sealed class CreatePatientCommandHandler : ICommandHandler<CreatePatientCommand, Guid>
 {
     private readonly IPatientRepository _patientRepository;
-    private readonly IPatientReadRepository _patientReadRepository;
-    private readonly IUserContext _userContext;
     private readonly IUnitOfWork _unitOfWork;
 
     public CreatePatientCommandHandler(
         IPatientRepository patientRepository,
-        IPatientReadRepository patientReadRepository,
-        IUserContext userContext,
         IUnitOfWork unitOfWork)
     {
         _patientRepository = patientRepository;
-        _patientReadRepository = patientReadRepository;
-        _userContext = userContext;
         _unitOfWork = unitOfWork;
     }
 

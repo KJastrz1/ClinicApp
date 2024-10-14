@@ -1,5 +1,7 @@
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
+using ClinicApp.Infrastructure.Database.Constants;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ClinicApp.Infrastructure.Database.Configurations.Write;
@@ -8,6 +10,8 @@ public class PatientConfiguration : IWriteEntityConfiguration<Patient>
 {
     public void Configure(EntityTypeBuilder<Patient> builder)
     {
+        builder.ToTable(TableNames.Patients);
+        
         builder.Property(p => p.SocialSecurityNumber)
             .HasConversion(ssn => ssn.Value, v => SocialSecurityNumber.Create(v).Value)
             .IsRequired();

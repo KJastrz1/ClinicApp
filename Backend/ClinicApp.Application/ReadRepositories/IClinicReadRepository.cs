@@ -1,9 +1,6 @@
-using ClinicApp.Domain.Models.Accounts;
-using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Domain.Models.Clinics;
 using ClinicApp.Domain.Models.Clinics.ValueObjects;
 using Shared.Contracts;
-using Shared.Contracts.Clinic;
 using Shared.Contracts.Clinic.Requests;
 
 

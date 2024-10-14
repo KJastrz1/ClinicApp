@@ -5,7 +5,5 @@ public record ClinicResponse(
     string PhoneNumber,
     string Address,
     string City,
-    string ZipCode,
-    DateTime CreatedOnUtc,
-    DateTime? ModifiedOnUtc
+    string ZipCode
 );

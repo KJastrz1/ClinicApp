@@ -26,21 +26,34 @@ internal sealed class UpdatePatientCommandHandler : ICommandHandler<UpdatePatien
     {
         PatientId patientId = PatientId.Create(request.PatientId).Value;
         Patient? patient = await _patientRepository.GetByIdAsync(patientId, cancellationToken);
+        
         if (patient == null)
         {
             return Result.Failure<Guid>(PatientErrors.NotFound(patientId));
         }
 
+        FirstName firstName = null;
+        LastName lastName = null;
         if (!string.IsNullOrWhiteSpace(request.FirstName))
         {
-            Result<FirstName> firstNameResult = FirstName.Create(request.FirstName);
-            patient.ChangeName(firstNameResult.Value, patient.LastName); 
+             firstName= FirstName.Create(request.FirstName).Value;
         }
-
         if (!string.IsNullOrWhiteSpace(request.LastName))
         {
-            Result<LastName> lastNameResult = LastName.Create(request.LastName);
-            patient.ChangeName(patient.FirstName, lastNameResult.Value); 
+             lastName= LastName.Create(request.LastName).Value;
+        }
+        
+        if(firstName is not null && lastName is not null)
+        {
+            patient.ChangeName(firstName, lastName);
+        }
+        else if(firstName is not null)
+        {
+            patient.ChangeName(firstName, patient.LastName);
+        }
+        else if (lastName is not null)
+        {
+            patient.ChangeName(patient.FirstName, lastName);
         }
 
         if (!string.IsNullOrWhiteSpace(request.SocialSecurityNumber))

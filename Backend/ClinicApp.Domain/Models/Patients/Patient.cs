@@ -1,4 +1,5 @@
 using ClinicApp.Domain.Enums;
+using ClinicApp.Domain.Models.Accounts;
 using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Domain.Models.Patients.DomainEvents;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
@@ -21,7 +22,7 @@ public class Patient : User
         LastName lastName,
         SocialSecurityNumber ssn,
         DateOfBirth dateOfBirth,
-        AccountId? accountid) : base(id, firstName, lastName, UserType.Patient, accountid)
+        Account? account) : base(id, firstName, lastName, UserType.Patient, account)
     {
         SocialSecurityNumber = ssn;
         DateOfBirth = dateOfBirth;
@@ -33,9 +34,9 @@ public class Patient : User
         LastName lastName,
         SocialSecurityNumber ssn,
         DateOfBirth dateOfBirth,
-        AccountId? accountId)
+        Account? account)
     {
-        var patient = new Patient(id, firstName, lastName, ssn, dateOfBirth, accountId);
+        var patient = new Patient(id, firstName, lastName, ssn, dateOfBirth, account);
         patient.RaiseDomainEvent(new PatientRegisteredDomainEvent(id.Value));
         return patient;
     }

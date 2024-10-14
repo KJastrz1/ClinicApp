@@ -1,6 +1,5 @@
 ﻿using ClinicApp.Domain.Enums;
 using ClinicApp.Domain.Models.Accounts.ValueObjects;
-using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Users;
 using ClinicApp.Domain.Models.Users.ValueObjects;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

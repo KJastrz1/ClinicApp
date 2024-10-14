@@ -14,13 +14,14 @@ public abstract class User : AggregateRoot<UserId>, IAuditableEntity
         FirstName firstName,
         LastName lastName,
         UserType userType,
-        AccountId? accountId) : base(id)
+        Account? account) : base(id)
     {
         FirstName = firstName;
         LastName = lastName;
         CreatedOnUtc = DateTime.UtcNow;
         UserType = userType;
-        AccountId = accountId;
+        Account = account;
+        AccountId = account?.Id;
     }
 
     protected User() { }
@@ -41,7 +42,6 @@ public abstract class User : AggregateRoot<UserId>, IAuditableEntity
             string newFullName = $"{firstName} {lastName}";
             RaiseDomainEvent(new UsersFullNameChangedDomainEvent(Id.Value, newFullName));
         }
-
         FirstName = firstName;
         LastName = lastName;
     }
