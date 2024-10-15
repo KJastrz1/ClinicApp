@@ -1,13 +1,10 @@
 using ClinicApp.Domain.Enums;
-using ClinicApp.Domain.Models.Accounts.ValueObjects;
 using ClinicApp.Domain.Models.Clinics;
 using ClinicApp.Domain.Models.Doctors.DomainEvents;
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
 using ClinicApp.Domain.Models.Users;
 using ClinicApp.Domain.Models.Users.ValueObjects;
 using ClinicApp.Domain.Shared;
-using System;
-using System.Collections.Generic;
 using ClinicApp.Domain.Models.Accounts;
 using ClinicApp.Domain.Models.Clinics.ValueObjects;
 
@@ -16,9 +13,10 @@ namespace ClinicApp.Domain.Models.Doctors;
 public class Doctor : User
 {
     public MedicalLicenseNumber MedicalLicenseNumber { get; private set; }
-    
+
     private List<Specialty> _specialties = new List<Specialty>();
     public IReadOnlyList<Specialty> Specialties => _specialties.AsReadOnly();
+
     public string SpecialtiesString
     {
         get => string.Join(',', _specialties.Select(s => s.Value));
@@ -29,6 +27,9 @@ public class Doctor : User
 
     public Bio? Bio { get; private set; }
     public AcademicTitle? AcademicTitle { get; private set; }
+
+    private readonly List<DoctorSchedule> _schedules = new List<DoctorSchedule>();
+    public IReadOnlyList<DoctorSchedule> Schedules => _schedules.AsReadOnly();
 
     public Clinic? Clinic { get; private set; }
     public ClinicId? ClinicId { get; private set; }
@@ -121,6 +122,35 @@ public class Doctor : User
         RaiseDomainEvent(new DoctorSpecialtyRemovedDomainEvent(Id.Value, specialty.Value));
         return Result.Success(this);
     }
+    
+    public Result<Doctor> AddSchedule(DoctorSchedule schedule)
+    {
+        if (_schedules.Contains(schedule))
+        {
+            return Result.Success(this);
+        }
+
+        _schedules.Add(schedule);
+        RaiseDomainEvent(new DoctorScheduleAddedDomainEvent(Id.Value, schedule.Day.Value, schedule.StartTime.Value, schedule.EndTime.Value));
+        return Result.Success(this);
+    }
+    
+    public Result<Doctor> RemoveSchedule(DoctorScheduleId scheduleId)
+    {
+        DoctorSchedule? scheduleToRemove = _schedules.FirstOrDefault(schedule => schedule.Id.Equals(scheduleId));
+    
+        if (scheduleToRemove == null)
+        {
+            return Result.Success(this);
+        }
+
+        _schedules.Remove(scheduleToRemove);
+  
+        RaiseDomainEvent(new DoctorScheduleRemovedDomainEvent(Id.Value, scheduleToRemove.Day.Value, scheduleToRemove.StartTime.Value, scheduleToRemove.EndTime.Value));
+    
+        return Result.Success(this);
+    }
+
 
     public Result<Doctor> ChangeBio(Bio newBio)
     {
@@ -136,16 +166,17 @@ public class Doctor : User
         return Result.Success(this);
     }
 
-    public Result<bool> Delete()
-    {
-        RaiseDomainEvent(new DoctorDeletedDomainEvent(Id.Value));
-        return Result.Success(true);
-    }
 
     public void ChangeClinic(Clinic clinic)
     {
         Clinic = clinic;
         ClinicId = clinic.Id;
         RaiseDomainEvent(new DoctorClinicChangedDomainEvent(Id.Value, clinic.Id.Value));
+    }
+
+    public Result<bool> Delete()
+    {
+        RaiseDomainEvent(new DoctorDeletedDomainEvent(Id.Value));
+        return Result.Success(true);
     }
 }
