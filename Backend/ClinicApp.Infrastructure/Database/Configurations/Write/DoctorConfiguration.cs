@@ -49,17 +49,20 @@ public class DoctorConfiguration : IWriteEntityConfiguration<Doctor>
             .WithMany()
             .HasForeignKey(d => d.ClinicId)
             .IsRequired(false);
-    }
-
-    private List<Specialty> ConvertToSpecialties(string? value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
+        
+        builder.OwnsMany(d => d.Schedules, schedule =>
         {
-            return new List<Specialty>();
-        }
+            schedule.WithOwner().HasForeignKey("DoctorId"); 
+            schedule.Property(s => s.Day).IsRequired();
+            schedule.Property(s => s.StartTime).IsRequired();
+            schedule.Property(s => s.EndTime).IsRequired();
+            schedule.Property(s => s.VisitDuration).IsRequired();
+            schedule.HasKey(s => s.Id);
 
-        return value.Split(',')
-            .Select(s => Specialty.Create(s).Value)
-            .ToList();
+            schedule.Property(s => s.Id)
+                .HasConversion(
+                    id => id.Value, 
+                    value => DoctorScheduleId.Create(value).Value);
+        });
     }
 }

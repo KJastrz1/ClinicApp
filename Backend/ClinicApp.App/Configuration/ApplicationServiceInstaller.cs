@@ -1,5 +1,5 @@
-﻿using FluentValidation;
-using ClinicApp.Application.Behaviors;
+﻿using ClinicApp.Application.Pipelines;
+using FluentValidation;
 using MediatR;
 
 namespace ClinicApp.App.Configuration;

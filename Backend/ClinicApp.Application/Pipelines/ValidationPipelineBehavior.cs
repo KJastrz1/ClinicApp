@@ -1,8 +1,8 @@
-﻿using FluentValidation;
-using ClinicApp.Domain.Shared;
+﻿using ClinicApp.Domain.Shared;
+using FluentValidation;
 using MediatR;
 
-namespace ClinicApp.Application.Behaviors;
+namespace ClinicApp.Application.Pipelines;
 
 public class ValidationPipelineBehavior<TRequest, TResponse>
     : IPipelineBehavior<TRequest, TResponse>
