@@ -26,7 +26,6 @@ public sealed class ClinicsController : ApiController
     }
 
     [HttpGet("{id:guid}")]
-    [HasPermission(PermissionEnum.ReadClinic)]
     public async Task<IActionResult> GetClinicById(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetClinicByIdQuery(id);
@@ -37,7 +36,6 @@ public sealed class ClinicsController : ApiController
     }
 
     [HttpGet]
-    [HasPermission(PermissionEnum.ReadClinic)]
     public async Task<IActionResult> GetClinics(
         [FromQuery] ClinicFilter filter,
         [FromQuery] int pageNumber = 1,
@@ -57,7 +55,6 @@ public sealed class ClinicsController : ApiController
     }
 
     [HttpPost]
-    [HasPermission(PermissionEnum.CreateClinic)]
     public async Task<IActionResult> CreateClinic(
         [FromBody] CreateClinicRequest request,
         CancellationToken cancellationToken)
@@ -82,7 +79,6 @@ public sealed class ClinicsController : ApiController
     }
 
     [HttpPut("{id:guid}")]
-    [HasPermission(PermissionEnum.UpdateClinic)]
     public async Task<IActionResult> UpdateClinic(
         Guid id,
         [FromBody] UpdateClinicRequest request,
@@ -106,7 +102,6 @@ public sealed class ClinicsController : ApiController
     }
 
     [HttpDelete("{id:guid}")]
-    [HasPermission(PermissionEnum.DeleteClinic)]
     public async Task<IActionResult> DeleteClinic(Guid id, CancellationToken cancellationToken)
     {
         var command = new DeleteClinicCommand(id);

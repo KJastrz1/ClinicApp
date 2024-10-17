@@ -23,8 +23,8 @@ if (app.Environment.IsDevelopment())
 
         try
         {
-            AccountSeeder userSeeder = services.GetRequiredService<AccountSeeder>();
-            await userSeeder.SeedAsync();
+            AccountSeeder accountSeeder = services.GetRequiredService<AccountSeeder>();
+            await accountSeeder.SeedAsync();
         }
         catch (Exception ex)
         {
@@ -35,9 +35,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// app.UseAuthentication();
-//
-// app.UseAuthorization();
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 

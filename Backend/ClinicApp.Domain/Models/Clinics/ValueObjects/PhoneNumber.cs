@@ -6,6 +6,8 @@ namespace ClinicApp.Domain.Models.Clinics.ValueObjects;
 
 public sealed class PhoneNumber : ValueObject
 {
+    public const int MaxLength = 15; 
+
     private PhoneNumber(string value) => Value = value;
 
     private PhoneNumber() { }
@@ -18,8 +20,8 @@ public sealed class PhoneNumber : ValueObject
                 p => !string.IsNullOrWhiteSpace(p),
                 ClinicErrors.PhoneNumberErrors.Required)
             .Ensure(
-                p => p.All(char.IsDigit),
-                ClinicErrors.PhoneNumberErrors.Invalid)
+                p => p.Length <= MaxLength,
+                ClinicErrors.PhoneNumberErrors.TooLong) 
             .Map(p => new PhoneNumber(p));
 
     public override IEnumerable<object> GetAtomicValues()

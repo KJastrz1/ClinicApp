@@ -14,7 +14,7 @@ public class AuthenticationAndAuthorizationServiceInstaller : IServiceInstaller
         services.ConfigureOptions<JwtBearerOptionsSetup>();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer();
-
+        
         services.AddAuthorization();
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();

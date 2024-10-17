@@ -7,4 +7,4 @@ public sealed record UpdateClinicCommand(
     string? PhoneNumber,
     string? Address,
     string? City,
-    string? ZipCode) : ICommand<Guid>;
+    string? ZipCode) : ICommand;

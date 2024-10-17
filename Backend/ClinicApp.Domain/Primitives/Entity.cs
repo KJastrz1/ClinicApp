@@ -19,8 +19,14 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
 
     public static bool operator ==(Entity<TId>? left, Entity<TId>? right)
     {
+        if (ReferenceEquals(left, right))
+        {
+            return true;
+        }
+
         return left is not null && right is not null && left.Equals(right);
     }
+
 
     public static bool operator !=(Entity<TId>? left, Entity<TId>? right)
     {

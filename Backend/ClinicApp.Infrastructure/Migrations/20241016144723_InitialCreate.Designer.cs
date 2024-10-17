@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ClinicApp.Infrastructure.Migrations
 {
     [DbContext(typeof(WriteDbContext))]
-    [Migration("20241013181332_InitialCreate")]
+    [Migration("20241016144723_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -85,7 +85,7 @@ namespace ClinicApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clinics");
+                    b.ToTable("Clinics", (string)null);
                 });
 
             modelBuilder.Entity("ClinicApp.Domain.Models.Permissions.Permission", b =>
@@ -600,7 +600,7 @@ namespace ClinicApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Specialties")
+                    b.Property<string>("SpecialtiesString")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -674,7 +674,57 @@ namespace ClinicApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsMany("ClinicApp.Domain.Models.Doctors.DoctorSchedule", "Schedules", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .HasColumnType("integer");
+
+                            b1.Property<DayOfWeek>("Day")
+                                .HasColumnType("integer");
+
+                            b1.Property<Guid>("DoctorId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<TimeSpan>("EndTime")
+                                .HasColumnType("interval");
+
+                            b1.Property<TimeSpan>("StartTime")
+                                .HasColumnType("interval");
+
+                            b1.Property<TimeSpan>("VisitDuration")
+                                .HasColumnType("interval");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("DoctorId");
+
+                            b1.ToTable("DoctorSchedule");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DoctorId");
+                        });
+
+                    b.OwnsMany("ClinicApp.Domain.Models.Doctors.ValueObjects.Specialty", "Specialties", b1 =>
+                        {
+                            b1.Property<Guid>("DoctorId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .HasColumnType("text");
+
+                            b1.HasKey("DoctorId", "Value");
+
+                            b1.ToTable("Specialty");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DoctorId");
+                        });
+
                     b.Navigation("Clinic");
+
+                    b.Navigation("Schedules");
+
+                    b.Navigation("Specialties");
                 });
 
             modelBuilder.Entity("ClinicApp.Domain.Models.Patients.Patient", b =>

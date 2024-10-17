@@ -20,7 +20,7 @@ public class Doctor : User
     public string SpecialtiesString
     {
         get => string.Join(',', _specialties.Select(s => s.Value));
-        private set => _specialties = value.Split(',', StringSplitOptions.RemoveEmptyEntries)
+        set => _specialties = value.Split(',', StringSplitOptions.RemoveEmptyEntries)
             .Select(v => Specialty.Create(v).Value)
             .ToList();
     }

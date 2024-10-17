@@ -24,4 +24,8 @@
     <ProjectReference Include="..\ClinicApp.Application\ClinicApp.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Database\ReadModels\Clinic\" />
+  </ItemGroup>
+
 </Project>

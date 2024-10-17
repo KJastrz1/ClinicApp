@@ -29,10 +29,10 @@ public static class ClinicErrors
         public static readonly Error Required = new(
             "Clinic.PhoneNumberRequired",
             "The clinic phone number is required.");
-
-        public static readonly Error Invalid = new(
-            "Clinic.InvalidPhoneNumber",
-            "The clinic phone number must contain only digits.");
+        
+        public static readonly Error TooLong = new(
+            "Clinic.PhoneNumberTooLong",
+            $"The clinic phone number must not exceed {PhoneNumber.MaxLength} characters.");
     }
 
     public static class CityErrors

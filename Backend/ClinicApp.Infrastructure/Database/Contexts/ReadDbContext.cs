@@ -12,13 +12,12 @@ namespace ClinicApp.Infrastructure.Database.Contexts;
 
 public sealed class ReadDbContext : DbContext
 {
-    private DbSet<Account> AccountsDbSet { get; set; } = null!;
-    private DbSet<Patient> PatientsDbSet { get; set; } = null!;
-    private DbSet<Clinic> ClinicsDbSet { get; set; } = null!;
-    private DbSet<Doctor> DoctorsDbSet { get; set; } = null!;
-    private DbSet<Role> RolesDbSet { get; set; } = null!;
-    private DbSet<Permission> PermissionsDbSet { get; set; } = null!;
-    
+    private DbSet<Account> AccountsDbSet { get; set; }
+    private DbSet<Patient> PatientsDbSet { get; set; } 
+    private DbSet<Clinic> ClinicsDbSet { get; set; } 
+    private DbSet<Doctor> DoctorsDbSet { get; set; } 
+    private DbSet<Role> RolesDbSet { get; set; } 
+    private DbSet<Permission> PermissionsDbSet { get; set; }
     
 
     public IQueryable<Account> Accounts => AccountsDbSet.AsNoTracking();

@@ -11,8 +11,9 @@ internal class CreateClinicCommandValidator : AbstractValidator<CreateClinicComm
         RuleFor(x => x.PhoneNumber)
             .NotEmpty()
             .WithMessage(ClinicErrors.PhoneNumberErrors.Required.Message)
-            .Must(value => PhoneNumber.Create(value).IsSuccess)
-            .WithMessage(ClinicErrors.PhoneNumberErrors.Invalid.Message);
+            .MaximumLength(PhoneNumber.MaxLength)
+            .WithMessage(ClinicErrors.PhoneNumberErrors.TooLong.Message);
+        ;
 
         RuleFor(x => x.Address)
             .NotEmpty()

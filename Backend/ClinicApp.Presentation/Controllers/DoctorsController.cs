@@ -26,7 +26,6 @@ public sealed class DoctorsController : ApiController
     }
 
     [HttpGet("{id:guid}")]
-    [HasPermission(PermissionEnum.ReadDoctor)]
     public async Task<IActionResult> GetDoctorById(Guid id, CancellationToken cancellationToken)
     {
         var query = new GetDoctorByIdQuery(id);
@@ -37,7 +36,6 @@ public sealed class DoctorsController : ApiController
     }
 
     [HttpGet]
-    [HasPermission(PermissionEnum.ReadDoctor)]
     public async Task<IActionResult> GetDoctors(
         [FromQuery] DoctorFilter filter,
         [FromQuery] int pageNumber = 1,
@@ -57,7 +55,6 @@ public sealed class DoctorsController : ApiController
     }
 
     [HttpPost]
-    [HasPermission(PermissionEnum.CreateDoctor)]
     public async Task<IActionResult> CreateDoctor(
         [FromBody] CreateDoctorRequest request,
         CancellationToken cancellationToken)
@@ -86,7 +83,6 @@ public sealed class DoctorsController : ApiController
     }
 
     [HttpPut("{id:guid}")]
-    [HasPermission(PermissionEnum.UpdateDoctor)]
     public async Task<IActionResult> UpdateDoctor(
         Guid id,
         [FromBody] UpdateDoctorRequest request,
@@ -113,7 +109,6 @@ public sealed class DoctorsController : ApiController
     }
 
     [HttpDelete("{id:guid}")]
-    [HasPermission(PermissionEnum.DeleteDoctor)]
     public async Task<IActionResult> DeleteDoctor(Guid id, CancellationToken cancellationToken)
     {
         var command = new DeleteDoctorCommand(id);
