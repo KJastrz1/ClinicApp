@@ -7,7 +7,7 @@ using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Application.Actions.Clinics.Command.DeleteClinic;
 
-internal sealed class DeleteClinicCommandHandler : ICommandHandler<DeleteClinicCommand, Guid>
+internal sealed class DeleteClinicCommandHandler : ICommandHandler<DeleteClinicCommand>
 {
     private readonly IClinicRepository _clinicRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -20,19 +20,20 @@ internal sealed class DeleteClinicCommandHandler : ICommandHandler<DeleteClinicC
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<Guid>> Handle(DeleteClinicCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeleteClinicCommand request, CancellationToken cancellationToken)
     {
         ClinicId clinicId = ClinicId.Create(request.ClinicId).Value;
         Clinic? clinic = await _clinicRepository.GetByIdAsync(clinicId, cancellationToken);
-        
+
         if (clinic == null)
         {
-            return Result.Failure<Guid>(ClinicErrors.NotFound(clinicId));
+            return Result.Failure(ClinicErrors.NotFound(clinicId));
         }
-
+        
+        clinic.Delete();
         _clinicRepository.Remove(clinic);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return clinic.Id.Value;
+        return Result.Success();
     }
 }

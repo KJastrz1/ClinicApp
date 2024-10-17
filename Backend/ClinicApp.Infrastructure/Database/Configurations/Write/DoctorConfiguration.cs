@@ -13,7 +13,7 @@ public class DoctorConfiguration : IWriteEntityConfiguration<Doctor>
     public void Configure(EntityTypeBuilder<Doctor> builder)
     {
         builder.ToTable(TableNames.Doctors);
-        
+
         builder.Property(d => d.MedicalLicenseNumber)
             .HasConversion(
                 licenseNumber => licenseNumber.Value,
@@ -32,9 +32,6 @@ public class DoctorConfiguration : IWriteEntityConfiguration<Doctor>
                 value => value == null ? null : AcademicTitle.Create(value).Value)
             .IsRequired(false);
 
-        builder.Property(d => d.SpecialtiesString)
-            .IsRequired();
-
         builder.Property(d => d.CreatedOnUtc)
             .IsRequired();
 
@@ -50,18 +47,33 @@ public class DoctorConfiguration : IWriteEntityConfiguration<Doctor>
             .HasForeignKey(d => d.ClinicId)
             .IsRequired(false);
         
+        builder.OwnsMany(d => d.Specialties, specialty =>
+        {
+            specialty.WithOwner().HasForeignKey("DoctorId");
+            
+            specialty.HasKey("DoctorId", "Value");
+        });
+        
         builder.OwnsMany(d => d.Schedules, schedule =>
         {
-            schedule.WithOwner().HasForeignKey("DoctorId"); 
-            schedule.Property(s => s.Day).IsRequired();
-            schedule.Property(s => s.StartTime).IsRequired();
-            schedule.Property(s => s.EndTime).IsRequired();
-            schedule.Property(s => s.VisitDuration).IsRequired();
+            schedule.WithOwner().HasForeignKey("DoctorId");
+            schedule.Property(s => s.Day).HasConversion(d => d.Value, value => ScheduleDay.Create(value).Value)
+                .IsRequired();
+
+
+            schedule.Property(s => s.StartTime).HasConversion(st => st.Value, value => StartTime.Create(value).Value)
+                .IsRequired();
+
+            schedule.Property(s => s.EndTime).HasConversion(et => et.Value, value => EndTime.Create(value).Value)
+                .IsRequired();
+            schedule.Property(s => s.VisitDuration)
+                .HasConversion(vd => vd.Value, value => VisitDuration.Create(value).Value).IsRequired();
+            
             schedule.HasKey(s => s.Id);
 
             schedule.Property(s => s.Id)
                 .HasConversion(
-                    id => id.Value, 
+                    id => id.Value,
                     value => DoctorScheduleId.Create(value).Value);
         });
     }

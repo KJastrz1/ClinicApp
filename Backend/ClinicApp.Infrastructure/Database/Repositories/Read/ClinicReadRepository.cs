@@ -36,7 +36,7 @@ public class ClinicReadRepository : IClinicReadRepository
 
         if (!string.IsNullOrWhiteSpace(filter.City))
         {
-            query = query.Where(c => c.City.Value.Contains(filter.City));
+            query = query.Where(c => c.City.Equals(City.Create(filter.City).Value));
         }
 
         if (!string.IsNullOrWhiteSpace(filter.ZipCode))

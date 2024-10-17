@@ -7,7 +7,7 @@ using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Application.Actions.Clinics.Command.UpdateClinic;
 
-internal sealed class UpdateClinicCommandHandler : ICommandHandler<UpdateClinicCommand, Guid>
+internal sealed class UpdateClinicCommandHandler : ICommandHandler<UpdateClinicCommand>
 {
     private readonly IClinicRepository _clinicRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -20,13 +20,13 @@ internal sealed class UpdateClinicCommandHandler : ICommandHandler<UpdateClinicC
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<Guid>> Handle(UpdateClinicCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateClinicCommand request, CancellationToken cancellationToken)
     {
         ClinicId clinicId = ClinicId.Create(request.ClinicId).Value;
         Clinic? clinic = await _clinicRepository.GetByIdAsync(clinicId, cancellationToken);
         if (clinic == null)
         {
-            return Result.Failure<Guid>(ClinicErrors.NotFound(clinicId));
+            return Result.Failure(ClinicErrors.NotFound(clinicId));
         }
 
         if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
@@ -56,6 +56,6 @@ internal sealed class UpdateClinicCommandHandler : ICommandHandler<UpdateClinicC
         _clinicRepository.Update(clinic);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return clinic.Id.Value;
+        return Result.Success();
     }
 }

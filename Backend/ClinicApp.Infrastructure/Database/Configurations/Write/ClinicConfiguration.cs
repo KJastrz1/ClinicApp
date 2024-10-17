@@ -1,5 +1,6 @@
 using ClinicApp.Domain.Models.Clinics.ValueObjects;
 using ClinicApp.Domain.Models.Clinics;
+using ClinicApp.Infrastructure.Database.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,6 +10,8 @@ public class ClinicConfiguration : IWriteEntityConfiguration<Clinic>
 {
     public void Configure(EntityTypeBuilder<Clinic> builder)
     {
+        builder.ToTable(TableNames.Clinics);
+        
         builder.HasKey(c => c.Id);
 
         builder.Property(c => c.Id)

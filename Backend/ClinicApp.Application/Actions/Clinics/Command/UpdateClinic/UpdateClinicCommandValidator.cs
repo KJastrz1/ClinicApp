@@ -12,15 +12,14 @@ internal class UpdateClinicCommandValidator : AbstractValidator<UpdateClinicComm
             .NotEmpty()
             .When(x => x.PhoneNumber != null)
             .WithMessage(ClinicErrors.PhoneNumberErrors.Required.Message)
-            .Must(value => value == null || PhoneNumber.Create(value).IsSuccess)
-            .WithMessage(ClinicErrors.PhoneNumberErrors.Invalid.Message);
+            .MaximumLength(PhoneNumber.MaxLength)
+            .WithMessage(ClinicErrors.PhoneNumberErrors.TooLong.Message);
 
         RuleFor(x => x.Address)
             .NotEmpty()
             .When(x => x.Address != null)
             .WithMessage(ClinicErrors.AddressErrors.Required.Message)
             .MaximumLength(Address.MaxLength)
-            .When(x => x.Address != null)
             .WithMessage(ClinicErrors.AddressErrors.TooLong.Message);
 
         RuleFor(x => x.City)
@@ -28,7 +27,6 @@ internal class UpdateClinicCommandValidator : AbstractValidator<UpdateClinicComm
             .When(x => x.City != null)
             .WithMessage(ClinicErrors.CityErrors.Required.Message)
             .MaximumLength(City.MaxLength)
-            .When(x => x.City != null)
             .WithMessage(ClinicErrors.CityErrors.TooLong.Message);
 
         RuleFor(x => x.ZipCode)

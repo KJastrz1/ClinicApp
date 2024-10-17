@@ -13,6 +13,8 @@ internal sealed class RolePermissionConfiguration
 {
     public void Configure(EntityTypeBuilder<RolePermission> builder)
     {
+        builder.ToTable(TableNames.RolePermissions);
+        
         builder.HasKey(x => new { x.RoleId, x.PermissionId });
 
         builder.Property(x => x.RoleId)
@@ -25,7 +27,5 @@ internal sealed class RolePermissionConfiguration
             .HasConversion(
                 id => id.Value,
                 value => PermissionId.Create(value).Value);
-
-        builder.ToTable(TableNames.RolePermissions);
     }
 }

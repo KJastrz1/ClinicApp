@@ -174,7 +174,7 @@ namespace ClinicApp.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     MedicalLicenseNumber = table.Column<string>(type: "text", nullable: false),
-                    Specialties = table.Column<string>(type: "text", nullable: false),
+                    SpecialtiesString = table.Column<string>(type: "text", nullable: false),
                     Bio = table.Column<string>(type: "text", nullable: true),
                     AcademicTitle = table.Column<string>(type: "text", nullable: true),
                     ClinicId = table.Column<Guid>(type: "uuid", nullable: true)
@@ -210,6 +210,46 @@ namespace ClinicApp.Infrastructure.Migrations
                         name: "FK_Patients_User_Id",
                         column: x => x.Id,
                         principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DoctorSchedule",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false),
+                    Day = table.Column<int>(type: "integer", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    VisitDuration = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    DoctorId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DoctorSchedule", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DoctorSchedule_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Specialty",
+                columns: table => new
+                {
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    DoctorId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Specialty", x => new { x.DoctorId, x.Value });
+                    table.ForeignKey(
+                        name: "FK_Specialty_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -322,6 +362,11 @@ namespace ClinicApp.Infrastructure.Migrations
                 column: "ClinicId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DoctorSchedule_DoctorId",
+                table: "DoctorSchedule",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RolePermissions_PermissionId",
                 table: "RolePermissions",
                 column: "PermissionId");
@@ -346,7 +391,7 @@ namespace ClinicApp.Infrastructure.Migrations
                 name: "AccountRoles");
 
             migrationBuilder.DropTable(
-                name: "Doctors");
+                name: "DoctorSchedule");
 
             migrationBuilder.DropTable(
                 name: "OutboxMessageConsumers");
@@ -361,16 +406,22 @@ namespace ClinicApp.Infrastructure.Migrations
                 name: "RolePermissions");
 
             migrationBuilder.DropTable(
-                name: "Clinics");
-
-            migrationBuilder.DropTable(
-                name: "User");
+                name: "Specialty");
 
             migrationBuilder.DropTable(
                 name: "Permissions");
 
             migrationBuilder.DropTable(
                 name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "Doctors");
+
+            migrationBuilder.DropTable(
+                name: "Clinics");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
