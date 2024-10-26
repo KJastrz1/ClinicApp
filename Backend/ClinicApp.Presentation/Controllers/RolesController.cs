@@ -1,10 +1,9 @@
-using ClinicApp.Application.Actions.Roles.Command.AddPermissionsToRole;
-using ClinicApp.Application.Actions.Roles.Command.CreateRole;
-using ClinicApp.Application.Actions.Roles.Command.RemovePermissionsFromRole;
-using ClinicApp.Application.Actions.Roles.Command.UpdateRole;
-using ClinicApp.Application.Actions.Roles.Query.GetPermissions;
-using ClinicApp.Application.Actions.Roles.Query.GetRoleById;
-using ClinicApp.Application.Actions.Roles.Query.GetRoles;
+using ClinicApp.Application.UseCases.Roles.Command.AddPermissionsToRole;
+using ClinicApp.Application.UseCases.Roles.Command.CreateRole;
+using ClinicApp.Application.UseCases.Roles.Command.RemovePermissionsFromRole;
+using ClinicApp.Application.UseCases.Roles.Command.UpdateRole;
+using ClinicApp.Application.UseCases.Roles.Query.GetRoleById;
+using ClinicApp.Application.UseCases.Roles.Query.GetRoles;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Presentation.Abstractions;
 using MediatR;
@@ -12,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shared.Contracts;
 using Shared.Contracts.Role.Requests;
 using Shared.Contracts.Role.Responses;
+using Shared.Contracts.Shared;
 
 namespace ClinicApp.Presentation.Controllers;
 
@@ -71,7 +71,7 @@ public sealed class RolesController : ApiController
             result.Value);
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPatch("{id:guid}")]
     public async Task<IActionResult> UpdateRole(
         Guid id,
         [FromBody] UpdateRoleRequest request,
@@ -95,7 +95,7 @@ public sealed class RolesController : ApiController
             result.Value);
     }
 
-    [HttpPost("{id:guid}/add-permissions")]
+    [HttpPatch("{id:guid}/add-permissions")]
     public async Task<IActionResult> AddPermissionsToRole(
         Guid id,
         [FromBody] AddPermissionsToRoleRequest request,
@@ -116,7 +116,7 @@ public sealed class RolesController : ApiController
         return NoContent();
     }
 
-    [HttpPost("{id:guid}/remove-permissions")]
+    [HttpPatch("{id:guid}/remove-permissions")]
     public async Task<IActionResult> RemovePermissionsFromRole(
         Guid id,
         [FromBody] RemovePermissionsFromRoleRequest request,

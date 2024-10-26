@@ -1,5 +1,5 @@
-using ClinicApp.Application.Actions.Accounts.Command.RegisterAccount;
-using ClinicApp.Application.Actions.Accounts.Command.AddRolesToAccount;
+using ClinicApp.Application.UseCases.Accounts.Command.AddRolesToAccount;
+using ClinicApp.Application.UseCases.Accounts.Command.RegisterAccount;
 using ClinicApp.Domain.Shared;
 using MediatR;
 using ClinicApp.Domain.Enums;

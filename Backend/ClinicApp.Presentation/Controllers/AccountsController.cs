@@ -1,6 +1,6 @@
-using ClinicApp.Application.Actions.Accounts.Query.GetAccountById;
-using ClinicApp.Application.Actions.Accounts.Command.AddRolesToAccount;
-using ClinicApp.Application.Actions.Accounts.Command.RemoveRolesFromAccount;
+using ClinicApp.Application.UseCases.Accounts.Command.AddRolesToAccount;
+using ClinicApp.Application.UseCases.Accounts.Command.RemoveRolesFromAccount;
+using ClinicApp.Application.UseCases.Accounts.Query.GetAccountById;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Presentation.Abstractions;
 using MediatR;
@@ -28,7 +28,7 @@ public sealed class AccountsController : ApiController
         return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
     }
 
-    [HttpPost("{id:guid}/add-roles")]
+    [HttpPatch("{id:guid}/add-roles")]
     public async Task<IActionResult> AddRolesToAccount(
         Guid id,
         [FromBody] AddRolesToAccountRequest request,
@@ -46,7 +46,7 @@ public sealed class AccountsController : ApiController
         return NoContent();
     }
 
-    [HttpPost("{id:guid}/remove-roles")]
+    [HttpPatch("{id:guid}/remove-roles")]
     public async Task<IActionResult> RemoveRolesFromAccount(
         Guid id,
         [FromBody] RemoveRolesFromAccountRequest request,

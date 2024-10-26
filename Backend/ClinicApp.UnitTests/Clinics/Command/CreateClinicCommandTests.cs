@@ -1,4 +1,4 @@
-using ClinicApp.Application.Actions.Clinics.Command.CreateClinic;
+using ClinicApp.Application.UseCases.Clinics.Command.CreateClinic;
 using ClinicApp.Domain.Models.Clinics;
 using ClinicApp.Domain.Models.Clinics.DomainEvents;
 using ClinicApp.Domain.Primitives;

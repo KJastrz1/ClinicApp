@@ -28,6 +28,14 @@ public class AccountRepository : IAccountRepository
             .FirstOrDefaultAsync(a => a.Email.Equals(email), cancellationToken);
     }
 
+    public async Task<Account?> GetByEmailWithRolesAsync(Email email, CancellationToken cancellationToken)
+    {
+        return await _writeContext.Accounts
+            .Include(a => a.Roles)
+            .ThenInclude(r => r.Permissions)
+            .FirstOrDefaultAsync(a => a.Email.Equals(email), cancellationToken);
+    }
+
     public void Add(Account account)
     {
         _writeContext.Accounts.Add(account);

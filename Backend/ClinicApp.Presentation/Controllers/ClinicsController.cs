@@ -1,8 +1,8 @@
-using ClinicApp.Application.Actions.Clinics.Command.CreateClinic;
-using ClinicApp.Application.Actions.Clinics.Command.DeleteClinic;
-using ClinicApp.Application.Actions.Clinics.Command.UpdateClinic;
-using ClinicApp.Application.Actions.Clinics.Query.GetClinicById;
-using ClinicApp.Application.Actions.Clinics.Query.GetClinics;
+using ClinicApp.Application.UseCases.Clinics.Command.CreateClinic;
+using ClinicApp.Application.UseCases.Clinics.Command.DeleteClinic;
+using ClinicApp.Application.UseCases.Clinics.Command.UpdateClinic;
+using ClinicApp.Application.UseCases.Clinics.Query.GetClinicById;
+using ClinicApp.Application.UseCases.Clinics.Query.GetClinics;
 using ClinicApp.Domain.Enums;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Infrastructure.Authentication;
@@ -14,6 +14,7 @@ using Shared.Contracts;
 using Shared.Contracts.Clinic;
 using Shared.Contracts.Clinic.Requests;
 using Shared.Contracts.Clinic.Responses;
+using Shared.Contracts.Shared;
 
 namespace ClinicApp.Presentation.Controllers;
 
@@ -78,7 +79,7 @@ public sealed class ClinicsController : ApiController
             result.Value);
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPatch("{id:guid}")]
     public async Task<IActionResult> UpdateClinic(
         Guid id,
         [FromBody] UpdateClinicRequest request,

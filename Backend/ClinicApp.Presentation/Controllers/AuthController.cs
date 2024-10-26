@@ -1,6 +1,5 @@
-using ClinicApp.Application.Actions.Accounts.Command.RegisterAccount;
-using ClinicApp.Application.Actions.Accounts.Query.GetAccountById;
-using ClinicApp.Application.Actions.Accounts.Query.LoginAccount;
+using ClinicApp.Application.UseCases.Accounts.Command.RegisterAccount;
+using ClinicApp.Application.UseCases.Accounts.Query.LoginAccount;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Presentation.Abstractions;
 using MediatR;

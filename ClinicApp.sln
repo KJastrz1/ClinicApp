@@ -6,7 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicApp.App", "Backend\ClinicApp.App\ClinicApp.App.csproj", "{4560716A-3784-4AE1-A1EC-379E116472FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{60C87940-3B5C-49DE-9429-C869B4B52DE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiContracts", "ApiContracts\ApiContracts.csproj", "{60C87940-3B5C-49DE-9429-C869B4B52DE0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicApp.Application", "Backend\ClinicApp.Application\ClinicApp.Application.csproj", "{24CBA7AB-7556-439E-8691-4B94BC7F4028}"
 EndProject

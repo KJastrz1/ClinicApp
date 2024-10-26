@@ -9,6 +9,17 @@ namespace ClinicApp.Domain.Models.Users;
 
 public abstract class User : AggregateRoot<UserId>, IAuditableEntity
 {
+    public FirstName FirstName { get; private set; }
+    public LastName LastName { get; private set; }
+    public UserType UserType { get; private set; }
+    public DateTime CreatedOnUtc { get; set; }
+    public DateTime? ModifiedOnUtc { get; set; }
+
+    public AccountId? AccountId { get; set; }
+    public Account? Account { get; private set; }
+
+    protected User() { }
+
     protected User(
         UserId id,
         FirstName firstName,
@@ -24,16 +35,6 @@ public abstract class User : AggregateRoot<UserId>, IAuditableEntity
         AccountId = account?.Id;
     }
 
-    protected User() { }
-
-    public FirstName FirstName { get; private set; }
-    public LastName LastName { get; private set; }
-    public UserType UserType { get; private set; }
-    public DateTime CreatedOnUtc { get; set; }
-    public DateTime? ModifiedOnUtc { get; set; }
-
-    public AccountId? AccountId { get; set; }
-    public Account? Account { get; private set; }
 
     public void ChangeName(FirstName firstName, LastName lastName)
     {
@@ -42,6 +43,7 @@ public abstract class User : AggregateRoot<UserId>, IAuditableEntity
             string newFullName = $"{firstName} {lastName}";
             RaiseDomainEvent(new UsersFullNameChangedDomainEvent(Id.Value, newFullName));
         }
+
         FirstName = firstName;
         LastName = lastName;
     }

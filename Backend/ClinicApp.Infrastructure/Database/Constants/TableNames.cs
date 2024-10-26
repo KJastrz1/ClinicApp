@@ -17,6 +17,10 @@ internal static class TableNames
     internal const string Clinics = nameof(Clinics);
 
     internal const string Appointments = nameof(Appointments);
+    
+    internal const string Employees = nameof(Employees);
+    
+    internal const string EmployeeLeaves = nameof(EmployeeLeaves);
 
     internal const string OutboxMessages = nameof(OutboxMessages);
 

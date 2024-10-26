@@ -1,5 +1,5 @@
-using ClinicApp.Application.Actions.Doctors.Command.AddDoctorsSchedules;
-using ClinicApp.Application.Actions.Doctors.Command.DeleteDoctorSchedule;
+using ClinicApp.Application.UseCases.Doctors.Command.AddDoctorsSchedules;
+using ClinicApp.Application.UseCases.Doctors.Command.DeleteDoctorSchedule;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Presentation.Abstractions;
 using MediatR;

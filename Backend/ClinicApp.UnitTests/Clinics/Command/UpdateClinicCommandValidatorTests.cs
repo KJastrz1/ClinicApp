@@ -1,4 +1,4 @@
-using ClinicApp.Application.Actions.Clinics.Command.UpdateClinic;
+using ClinicApp.Application.UseCases.Clinics.Command.UpdateClinic;
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Clinics.ValueObjects;
 using FluentValidation.TestHelper;

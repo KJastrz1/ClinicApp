@@ -11,7 +11,7 @@ public static class ScheduleErrors
 
     public static Error InvalidVisitDuration = new(
         "Schedule.InvalidVisitDuration",
-        $"Visit duration must be between {VisitDuration.MinDuration.TotalMinutes} and {VisitDuration.MaxDuration.TotalMinutes} minutes.");
+        $"Visit durationMinutes must be between {ScheduleVisitDuration.MinDurationMinutes} and {ScheduleVisitDuration.MaxDurationMinutes} minutes.");
 
     public static readonly Error InvalidScheduleId = new(
         "Schedule.InvalidScheduleId",

@@ -35,6 +35,8 @@ public class ClinicConfiguration : IWriteEntityConfiguration<Clinic>
             .HasConversion(
                 city => city.Value,
                 value => City.Create(value).Value)
+            .HasColumnName("City")
+            .HasMaxLength(City.MaxLength)
             .IsRequired();
 
         builder.Property(c => c.ZipCode)

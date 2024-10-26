@@ -7,32 +7,21 @@ using ClinicApp.Domain.Models.Users.ValueObjects;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Domain.Models.Accounts;
 using ClinicApp.Domain.Models.Clinics.ValueObjects;
+using ClinicApp.Domain.Models.Employees;
 
 namespace ClinicApp.Domain.Models.Doctors;
 
-public class Doctor : User
+public class Doctor : Employee
 {
     public MedicalLicenseNumber MedicalLicenseNumber { get; private set; }
+    public Bio? Bio { get; private set; }
+    public AcademicTitle? AcademicTitle { get; private set; }
 
     private List<Specialty> _specialties = new List<Specialty>();
     public IReadOnlyList<Specialty> Specialties => _specialties.AsReadOnly();
 
-    public string SpecialtiesString
-    {
-        get => string.Join(',', _specialties.Select(s => s.Value));
-        set => _specialties = value.Split(',', StringSplitOptions.RemoveEmptyEntries)
-            .Select(v => Specialty.Create(v).Value)
-            .ToList();
-    }
-
-    public Bio? Bio { get; private set; }
-    public AcademicTitle? AcademicTitle { get; private set; }
-
     private readonly List<DoctorSchedule> _schedules = new List<DoctorSchedule>();
     public IReadOnlyList<DoctorSchedule> Schedules => _schedules.AsReadOnly();
-
-    public Clinic? Clinic { get; private set; }
-    public ClinicId? ClinicId { get; private set; }
 
     private Doctor() { }
 
@@ -44,16 +33,13 @@ public class Doctor : User
         List<Specialty>? specialties = null,
         Bio? bio = null,
         AcademicTitle? academicTitle = null,
-        Account? account = null,
-        Clinic? clinic = null)
+        Account? account = null)
         : base(id, firstName, lastName, UserType.Doctor, account)
     {
         MedicalLicenseNumber = medicalLicenseNumber;
         _specialties = specialties ?? new List<Specialty>();
         Bio = bio;
         AcademicTitle = academicTitle;
-        Clinic = clinic;
-        ClinicId = clinic?.Id;
     }
 
     public static Doctor Create(
@@ -64,11 +50,10 @@ public class Doctor : User
         List<Specialty>? specialties = null,
         Bio? bio = null,
         AcademicTitle? academicTitle = null,
-        Account? account = null,
-        Clinic? clinic = null)
+        Account? account = null)
     {
         var doctor = new Doctor(id, firstName, lastName, medicalLicenseNumber, specialties, bio, academicTitle,
-            account, clinic);
+            account);
         doctor.RaiseDomainEvent(new DoctorRegisteredDomainEvent(id.Value));
         return doctor;
     }
@@ -122,7 +107,7 @@ public class Doctor : User
         RaiseDomainEvent(new DoctorSpecialtyRemovedDomainEvent(Id.Value, specialty.Value));
         return Result.Success(this);
     }
-    
+
     public Result<Doctor> AddSchedule(DoctorSchedule schedule)
     {
         if (_schedules.Contains(schedule))
@@ -131,23 +116,25 @@ public class Doctor : User
         }
 
         _schedules.Add(schedule);
-        RaiseDomainEvent(new DoctorScheduleAddedDomainEvent(Id.Value, schedule.Day.Value, schedule.StartTime.Value, schedule.EndTime.Value));
+        RaiseDomainEvent(new DoctorScheduleAddedDomainEvent(Id.Value, schedule.Day.Value, schedule.StartTime.Value,
+            schedule.EndTime.Value));
         return Result.Success(this);
     }
-    
+
     public Result<Doctor> RemoveSchedule(DoctorScheduleId scheduleId)
     {
         DoctorSchedule? scheduleToRemove = _schedules.FirstOrDefault(schedule => schedule.Id.Equals(scheduleId));
-    
+
         if (scheduleToRemove == null)
         {
             return Result.Success(this);
         }
 
         _schedules.Remove(scheduleToRemove);
-  
-        RaiseDomainEvent(new DoctorScheduleRemovedDomainEvent(Id.Value, scheduleToRemove.Day.Value, scheduleToRemove.StartTime.Value, scheduleToRemove.EndTime.Value));
-    
+
+        RaiseDomainEvent(new DoctorScheduleRemovedDomainEvent(Id.Value, scheduleToRemove.Day.Value,
+            scheduleToRemove.StartTime.Value, scheduleToRemove.EndTime.Value));
+
         return Result.Success(this);
     }
 
@@ -164,14 +151,6 @@ public class Doctor : User
         AcademicTitle = newAcademicTitle;
         RaiseDomainEvent(new DoctorAcademicTitleChangedDomainEvent(Id.Value, newAcademicTitle.Value));
         return Result.Success(this);
-    }
-
-
-    public void ChangeClinic(Clinic clinic)
-    {
-        Clinic = clinic;
-        ClinicId = clinic.Id;
-        RaiseDomainEvent(new DoctorClinicChangedDomainEvent(Id.Value, clinic.Id.Value));
     }
 
     public Result<bool> Delete()

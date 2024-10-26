@@ -8,7 +8,7 @@ internal class RoleReadModel
     public string Name { get; set; }
     public List<PermissionReadModel> Permissions { get; set; }
 
-    public RoleResponse ToResponse()
+    internal RoleResponse ToResponse()
     {
         return new RoleResponse(
             Id,

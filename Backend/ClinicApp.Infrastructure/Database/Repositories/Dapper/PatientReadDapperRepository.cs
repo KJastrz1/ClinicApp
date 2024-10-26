@@ -8,6 +8,7 @@ using Dapper;
 using Npgsql;
 using Shared.Contracts;
 using Shared.Contracts.Patient;
+using Shared.Contracts.Shared;
 
 namespace ClinicApp.Infrastructure.Database.Repositories.Dapper;
 
@@ -56,12 +57,6 @@ public class PatientReadDapperRepository : IPatientReadDapperRepository
 
         var parameters = new DynamicParameters();
         parameters.Add("@PatientType", nameof(UserType.Patient));
-
-        if (!string.IsNullOrEmpty(filter.Email))
-        {
-            queryBuilder.Append(" AND Email ILIKE @Email");
-            parameters.Add("@Email", $"%{filter.Email}%");
-        }
 
         if (!string.IsNullOrEmpty(filter.FirstName))
         {
@@ -143,7 +138,7 @@ public class PatientReadDapperRepository : IPatientReadDapperRepository
             CurrentPage = pageNumber
         };
     }
-    
+
     public async Task<PatientResponse?> GetByAccountIdAsync(Guid accountId, CancellationToken cancellationToken)
     {
         await using var connection = new NpgsqlConnection(_connectionString);
