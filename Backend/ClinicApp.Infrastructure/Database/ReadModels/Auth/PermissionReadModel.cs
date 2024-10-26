@@ -7,7 +7,7 @@ internal class PermissionReadModel
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public PermissionResponse ToResponse()
+    internal PermissionResponse ToResponse()
     {
         return new PermissionResponse(Id, Name);
     }

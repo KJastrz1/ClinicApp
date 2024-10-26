@@ -13,8 +13,6 @@ public class Clinic : AggregateRoot<ClinicId>, IAuditableEntity
     public DateTime CreatedOnUtc { get; }
     public DateTime? ModifiedOnUtc { get; }
 
-    public string CityValue => City.Value; 
-    public string ZipCodeValue => ZipCode.Value;
     private Clinic() { }
 
     private Clinic(
@@ -29,7 +27,6 @@ public class Clinic : AggregateRoot<ClinicId>, IAuditableEntity
         City = city;
         ZipCode = zipCode;
         PhoneNumber = phoneNumber;
-        CreatedOnUtc = DateTime.UtcNow;
     }
 
     public static Clinic Create(

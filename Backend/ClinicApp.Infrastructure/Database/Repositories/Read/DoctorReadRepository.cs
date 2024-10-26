@@ -1,10 +1,16 @@
-using ClinicApp.Domain.Models.Doctors;
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
 using ClinicApp.Infrastructure.Database.Contexts;
 using ClinicApp.Application.ReadRepositories;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.Threading.Tasks;
 using Shared.Contracts;
+using Shared.Contracts.Doctor.Responses;
+using System.Collections.Generic;
+using System.Linq;
+using ClinicApp.Infrastructure.Database.ReadModels;
 using Shared.Contracts.Doctor.Requests;
+using Shared.Contracts.Shared;
 
 namespace ClinicApp.Infrastructure.Database.Repositories.Read;
 
@@ -17,42 +23,45 @@ public class DoctorReadRepository : IDoctorReadRepository
         _context = context;
     }
 
-    public async Task<Doctor?> GetByIdAsync(DoctorId doctorId, CancellationToken cancellationToken)
+    public async Task<DoctorResponse?> GetByIdAsync(DoctorId doctorId, CancellationToken cancellationToken)
     {
-        return await _context.Doctors
+        DoctorReadModel? doctorReadModel = await _context.Doctors
             .FirstOrDefaultAsync(d => d.Id.Equals(doctorId), cancellationToken);
+
+        return doctorReadModel?.MapToResponse();
     }
 
-    public async Task<PagedItems<Doctor>> GetByFilterAsync(DoctorFilter filter,
+    public async Task<PagedItems<DoctorResponse>> GetByFilterAsync(DoctorFilter filter,
         int pageNumber,
         int pageSize,
         CancellationToken cancellationToken)
     {
-        IQueryable<Doctor> query = _context.Doctors;
+        IQueryable<DoctorReadModel> query = _context.Doctors;
 
         if (!string.IsNullOrWhiteSpace(filter.FirstName))
         {
-            query = query.Where(d => d.FirstName.Value.Contains(filter.FirstName));
+            query = query.Where(d => d.FirstName.Contains(filter.FirstName));
         }
 
         if (!string.IsNullOrWhiteSpace(filter.LastName))
         {
-            query = query.Where(d => d.LastName.Value.Contains(filter.LastName));
+            query = query.Where(d => d.LastName.Contains(filter.LastName));
         }
 
         if (!string.IsNullOrWhiteSpace(filter.Specialty))
         {
-            query = query.Where(d => d.SpecialtiesString.Contains(filter.Specialty));
+            query = query.Where(d => d.Specialties.Contains(filter.Specialty));
         }
 
         int totalCount = await query.CountAsync(cancellationToken);
 
-        List<Doctor> doctors = await query
+        List<DoctorResponse> doctors = await query
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
+            .Select(d => d.MapToResponse())
             .ToListAsync(cancellationToken);
 
-        return new PagedItems<Doctor>
+        return new PagedItems<DoctorResponse>
         {
             Items = doctors,
             TotalCount = totalCount,

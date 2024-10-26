@@ -6,26 +6,35 @@ using ClinicApp.Domain.Models.Permissions;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Infrastructure.Database.Configurations.Read;
 using ClinicApp.Infrastructure.Database.Configurations.Write;
+using ClinicApp.Infrastructure.Database.ReadModels;
+using ClinicApp.Infrastructure.Database.ReadModels.Auth;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicApp.Infrastructure.Database.Contexts;
 
 public sealed class ReadDbContext : DbContext
 {
-    private DbSet<Account> AccountsDbSet { get; set; }
-    private DbSet<Patient> PatientsDbSet { get; set; } 
-    private DbSet<Clinic> ClinicsDbSet { get; set; } 
-    private DbSet<Doctor> DoctorsDbSet { get; set; } 
-    private DbSet<Role> RolesDbSet { get; set; } 
-    private DbSet<Permission> PermissionsDbSet { get; set; }
+    private DbSet<AccountReadModel> AccountsDbSet { get; set; }
+    private DbSet<PatientReadModel> PatientsDbSet { get; set; } 
+    private DbSet<ClinicReadModel> ClinicsDbSet { get; set; } 
+    private DbSet<DoctorReadModel> DoctorsDbSet { get; set; } 
+    private DbSet<AppointmentReadModel> AppointmentsDbSet { get; set; }
+    private DbSet<EmployeeLeaveReadModel> EmployeeLeavesDbSet { get; set; }
     
+    private DbSet<RoleReadModel> RolesDbSet { get; set; } 
+    private DbSet<PermissionReadModel> PermissionsDbSet { get; set; }
+    
+    
+    internal IQueryable<AccountReadModel> Accounts => AccountsDbSet.AsNoTracking();
+    internal IQueryable<PatientReadModel> Patients => PatientsDbSet.AsNoTracking();
+    internal IQueryable<ClinicReadModel> Clinics => ClinicsDbSet.AsNoTracking();
+    internal IQueryable<DoctorReadModel> Doctors => DoctorsDbSet.AsNoTracking();
+    internal IQueryable<AppointmentReadModel> Appointments => AppointmentsDbSet.AsNoTracking();
+    internal IQueryable<EmployeeLeaveReadModel> EmployeeLeaves => EmployeeLeavesDbSet.AsNoTracking();
+    
+    internal IQueryable<RoleReadModel> Roles => RolesDbSet.AsNoTracking();
+    internal IQueryable<PermissionReadModel> Permissions => PermissionsDbSet.AsNoTracking();
 
-    public IQueryable<Account> Accounts => AccountsDbSet.AsNoTracking();
-    public IQueryable<Patient> Patients => PatientsDbSet.AsNoTracking();
-    public IQueryable<Clinic> Clinics => ClinicsDbSet.AsNoTracking();
-    public IQueryable<Doctor> Doctors => DoctorsDbSet.AsNoTracking();
-    public IQueryable<Role> Roles => RolesDbSet.AsNoTracking();
-    public IQueryable<Permission> Permissions => PermissionsDbSet.AsNoTracking();
 
     public ReadDbContext(DbContextOptions<ReadDbContext> options)
         : base(options)

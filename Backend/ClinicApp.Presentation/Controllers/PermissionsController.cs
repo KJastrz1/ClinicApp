@@ -1,4 +1,4 @@
-using ClinicApp.Application.Actions.Roles.Query.GetPermissions;
+using ClinicApp.Application.UseCases.Roles.Query.GetPermissions;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Presentation.Abstractions;
 using MediatR;

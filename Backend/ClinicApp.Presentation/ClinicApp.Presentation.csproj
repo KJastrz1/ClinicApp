@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\ApiContracts\ApiContracts.csproj" />
     <ProjectReference Include="..\ClinicApp.Application\ClinicApp.Application.csproj" />
     <ProjectReference Include="..\ClinicApp.Infrastructure\ClinicApp.Infrastructure.csproj" />
 

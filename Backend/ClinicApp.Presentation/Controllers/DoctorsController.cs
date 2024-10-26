@@ -1,8 +1,9 @@
-using ClinicApp.Application.Actions.Doctors.Command.CreateDoctor;
-using ClinicApp.Application.Actions.Doctors.Command.DeleteDoctor;
-using ClinicApp.Application.Actions.Doctors.Command.UpdateDoctor;
-using ClinicApp.Application.Actions.Doctors.Query.GetDoctorById;
-using ClinicApp.Application.Actions.Doctors.Query.GetDoctors;
+using ClinicApp.Application.UseCases.Doctors.Command.CreateDoctor;
+using ClinicApp.Application.UseCases.Doctors.Command.DeleteDoctor;
+using ClinicApp.Application.UseCases.Doctors.Command.UpdateDoctor;
+using ClinicApp.Application.UseCases.Doctors.Query.GetAvailableAppointments;
+using ClinicApp.Application.UseCases.Doctors.Query.GetDoctorById;
+using ClinicApp.Application.UseCases.Doctors.Query.GetDoctors;
 using ClinicApp.Domain.Enums;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Infrastructure.Authentication;
@@ -11,9 +12,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Contracts;
+using Shared.Contracts.Appointment.Responses;
 using Shared.Contracts.Doctor;
 using Shared.Contracts.Doctor.Requests;
 using Shared.Contracts.Doctor.Responses;
+using Shared.Contracts.Shared;
 
 namespace ClinicApp.Presentation.Controllers;
 
@@ -66,8 +69,7 @@ public sealed class DoctorsController : ApiController
             request.Specialties,
             request.Bio,
             request.AcademicTitle,
-            request.AccountId,
-            request.ClinicId);
+            request.AccountId);
 
         Result<Guid> result = await Sender.Send(command, cancellationToken);
 
@@ -82,7 +84,7 @@ public sealed class DoctorsController : ApiController
             result.Value);
     }
 
-    [HttpPut("{id:guid}")]
+    [HttpPatch("{id:guid}")]
     public async Task<IActionResult> UpdateDoctor(
         Guid id,
         [FromBody] UpdateDoctorRequest request,
@@ -95,8 +97,7 @@ public sealed class DoctorsController : ApiController
             request.MedicalLicenseNumber,
             request.Specialties,
             request.Bio,
-            request.AcademicTitle,
-            request.ClinicId);
+            request.AcademicTitle);
 
         Result result = await Sender.Send(command, cancellationToken);
 
@@ -122,6 +123,18 @@ public sealed class DoctorsController : ApiController
 
         return NoContent();
     }
-    
-    
+
+    [HttpGet("{doctorId:guid}/available-appointments")]
+    public async Task<IActionResult> GetAvailableAppointments(
+        Guid doctorId,
+        [FromQuery] DateTime startDate,
+        [FromQuery] DateTime endDate,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetAvailableAppointmentsQuery(doctorId, startDate, endDate);
+
+        Result<List<AvailableAppointmentsResponse>> response = await Sender.Send(query, cancellationToken);
+
+        return response.IsSuccess ? Ok(response.Value) : BadRequest(response.Error);
+    }
 }

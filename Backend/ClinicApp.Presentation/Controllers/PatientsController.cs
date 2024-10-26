@@ -1,9 +1,9 @@
-﻿using ClinicApp.Application.Actions.Patients.Command.CreatePatient;
-using ClinicApp.Application.Actions.Patients.Command.DeletePatient;
-using ClinicApp.Application.Actions.Patients.Command.RegisterPatient;
-using ClinicApp.Application.Actions.Patients.Command.UpdatePatient;
-using ClinicApp.Application.Actions.Patients.Query.GetPatientById;
-using ClinicApp.Application.Actions.Patients.Query.GetPatients;
+﻿using ClinicApp.Application.UseCases.Patients.Command.CreatePatient;
+using ClinicApp.Application.UseCases.Patients.Command.DeletePatient;
+using ClinicApp.Application.UseCases.Patients.Command.RegisterPatient;
+using ClinicApp.Application.UseCases.Patients.Command.UpdatePatient;
+using ClinicApp.Application.UseCases.Patients.Query.GetPatientById;
+using ClinicApp.Application.UseCases.Patients.Query.GetPatients;
 using ClinicApp.Domain.Enums;
 using ClinicApp.Domain.Shared;
 using ClinicApp.Infrastructure.Authentication;
@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Contracts;
 using Shared.Contracts.Patient;
+using Shared.Contracts.Shared;
 
 namespace ClinicApp.Presentation.Controllers;
 
@@ -106,7 +107,7 @@ public sealed class PatientsController : ApiController
     }
 
 
-    [HttpPut("{id:guid}")]
+    [HttpPatch("{id:guid}")]
     public async Task<IActionResult> UpdatePatient(
         Guid id,
         [FromBody] UpdatePatientRequest request,

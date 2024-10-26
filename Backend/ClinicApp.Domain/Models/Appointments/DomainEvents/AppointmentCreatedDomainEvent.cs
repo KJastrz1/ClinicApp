@@ -2,4 +2,4 @@ using ClinicApp.Domain.Primitives;
 
 namespace ClinicApp.Domain.Models.Appointments.DomainEvents;
 
-public record AppointmentCreatedDomainEvent(Guid Id) : IDomainEvent;
+public sealed record AppointmentCreatedDomainEvent(Guid AppointmentId) : DomainEvent(Guid.NewGuid());

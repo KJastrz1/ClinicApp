@@ -17,9 +17,10 @@ public sealed class AppointmentNotes : ValueObject
     public static Result<AppointmentNotes> Create(string notes) =>
         Result.Create(notes)
             .Ensure(
-                n => n?.Length <= MaxLength,
-                AppointmentErrors.NotesTooLong)
-            .Map(n => new AppointmentNotes(n ?? string.Empty));
+                n => n.Length <= MaxLength,
+                AppointmentErrors.NotesErrors.TooLong)
+            .Ensure(n => !string.IsNullOrWhiteSpace(n), AppointmentErrors.NotesErrors.Empty)
+            .Map(n => new AppointmentNotes(n));
 
     public static AppointmentNotes Empty => new(string.Empty);
 

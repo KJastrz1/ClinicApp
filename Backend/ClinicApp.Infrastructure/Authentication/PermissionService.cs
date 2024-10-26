@@ -1,6 +1,7 @@
 ﻿using ClinicApp.Domain.Models.Accounts;
 using ClinicApp.Domain.Models.Roles;
 using ClinicApp.Infrastructure.Database.Contexts;
+using ClinicApp.Infrastructure.Database.ReadModels.Auth;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicApp.Infrastructure.Authentication;
@@ -16,10 +17,10 @@ public class PermissionService : IPermissionService
 
     public async Task<HashSet<string>> GetPermissionsAsync(Guid accountId)
     {
-        Account? account = await _context.Accounts
+        AccountReadModel? account = await _context.Accounts
             .Include(x => x.Roles)
             .ThenInclude(x => x.Permissions)
-            .FirstOrDefaultAsync(x => x.Id.Value == accountId);
+            .FirstOrDefaultAsync(x => x.Id == accountId);
 
 
         if (account == null)

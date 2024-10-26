@@ -9,7 +9,15 @@ namespace ClinicApp.Domain.Models.Accounts;
 public class Account : AggregateRoot<AccountId>, IAuditableEntity
 {
     private List<Role> _roles;
+    public IReadOnlyCollection<Role> Roles => _roles.AsReadOnly();
 
+    public Email Email { get; private set; }
+    public PasswordHash PasswordHash { get; private set; }
+    public bool IsActivated { get; private set; }
+    public User User { get; private set; }
+    
+    public DateTime CreatedOnUtc { get; set; }
+    public DateTime? ModifiedOnUtc { get; set; }
     private Account() { }
 
     private Account(
@@ -23,16 +31,6 @@ public class Account : AggregateRoot<AccountId>, IAuditableEntity
         CreatedOnUtc = DateTime.UtcNow;
         _roles = new List<Role>();
     }
-
-    public Email Email { get; private set; }
-    public PasswordHash PasswordHash { get; private set; }
-    public bool IsActivated { get; private set; }
-    public IReadOnlyCollection<Role> Roles => _roles.AsReadOnly();
-
-    public User User { get; private set; }
-
-    public DateTime CreatedOnUtc { get; set; }
-    public DateTime? ModifiedOnUtc { get; set; }
 
     public static Account Create(AccountId id, Email email, PasswordHash passwordHash)
     {

@@ -6,6 +6,8 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Shared.Contracts;
 using Shared.Contracts.Clinic.Requests;
+using Shared.Contracts.Clinic.Responses;
+using Shared.Contracts.Shared;
 
 namespace ClinicApp.IntegrationTests;
 
@@ -53,32 +55,32 @@ public class ClinicReadRepositoryTests : IAsyncLifetime
         await _writeContext.Clinics.AddRangeAsync(clinics);
 
         // Act
-        PagedItems<Clinic> result = await _repository.GetByFilterAsync(filter, 1, 10, CancellationToken.None);
+        PagedItems<ClinicResponse> result = await _repository.GetByFilterAsync(filter, 1, 10, CancellationToken.None);
 
         // Assert
         result.Items.Should().HaveCount(expectedCount);
         
         if (expectedCount > 0)
         {
-            Clinic clinicForVerification = result.Items.First();
+            ClinicResponse clinicForVerification = result.Items.First();
             if (filter.City != null)
             {
-                clinicForVerification.City.Value.Should().Be(filter.City);
+                clinicForVerification.City.Should().Be(filter.City);
             }
 
             if (filter.ZipCode != null)
             {
-                clinicForVerification.ZipCode.Value.Should().Be(filter.ZipCode);
+                clinicForVerification.ZipCode.Should().Be(filter.ZipCode);
             }
 
             if (filter.Address != null)
             {
-                clinicForVerification.Address.Value.Should().Be(filter.Address);
+                clinicForVerification.Address.Should().Be(filter.Address);
             }
 
             if (filter.PhoneNumber != null)
             {
-                clinicForVerification.PhoneNumber.Value.Should().Be(filter.PhoneNumber);
+                clinicForVerification.PhoneNumber.Should().Be(filter.PhoneNumber);
             }
         }
     }

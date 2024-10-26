@@ -1,4 +1,4 @@
-using ClinicApp.Application.Actions.Clinics.Command.DeleteClinic;
+using ClinicApp.Application.UseCases.Clinics.Command.DeleteClinic;
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Clinics;
 using ClinicApp.Domain.Models.Clinics.DomainEvents;

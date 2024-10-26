@@ -1,3 +1,4 @@
+using ClinicApp.Application.RepositoryInterfaces;
 using ClinicApp.Domain.Models.Doctors;
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
 using ClinicApp.Domain.RepositoryInterfaces;
@@ -18,6 +19,7 @@ public class DoctorRepository : IDoctorRepository
     public async Task<Doctor?> GetByIdAsync(DoctorId id, CancellationToken cancellationToken)
     {
         return await _writeContext.Doctors
+            .Include(d => d.Specialties)
             .FirstOrDefaultAsync(d => d.Id.Value == id.Value, cancellationToken);
     }
 
