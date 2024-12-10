@@ -1,6 +1,6 @@
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
-using ClinicApp.Domain.Models.Users.ValueObjects;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using FluentValidation;
 
 namespace ClinicApp.Application.UseCases.Patients.Command.UpdatePatient;
@@ -14,18 +14,18 @@ internal class UpdatePatientCommandValidator : AbstractValidator<UpdatePatientCo
         RuleFor(x => x.FirstName)
             .NotEmpty()
             .When(x => x.FirstName != null)
-            .WithMessage(UserBaseErrors.FirstNameErrors.Empty.Message)
+            .WithMessage(UserProfileErrors.FirstNameErrors.Empty.Message)
             .MaximumLength(FirstName.MaxLength)
             .When(x => x.FirstName != null)
-            .WithMessage(UserBaseErrors.FirstNameErrors.TooLong.Message);
+            .WithMessage(UserProfileErrors.FirstNameErrors.TooLong.Message);
 
         RuleFor(x => x.LastName)
             .NotEmpty()
             .When(x => x.LastName != null)
-            .WithMessage(UserBaseErrors.LastNameErrors.Empty.Message)
+            .WithMessage(UserProfileErrors.LastNameErrors.Empty.Message)
             .MaximumLength(LastName.MaxLength)
             .When(x => x.LastName != null)
-            .WithMessage(UserBaseErrors.LastNameErrors.TooLong.Message);
+            .WithMessage(UserProfileErrors.LastNameErrors.TooLong.Message);
 
         RuleFor(x => x.SocialSecurityNumber)
             .NotEmpty()

@@ -1,5 +1,5 @@
 // using ClinicApp.Application.Abstractions.Messaging;
-// using ClinicApp.Application.ReadRepositories;
+// using ClinicApp.Application.Read;
 // using ClinicApp.Domain.ApiContracts;
 // using ApiContracts.Contracts.Doctor.Responses;
 // using System;

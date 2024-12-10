@@ -1,7 +1,7 @@
+using ClinicApp.Application.RepositoryInterfaces.Write;
 using ClinicApp.Domain.Models.EmployeeLeaves;
 using ClinicApp.Domain.Models.EmployeeLeaves.ValueObjects;
-using ClinicApp.Domain.Models.Users.ValueObjects;
-using ClinicApp.Domain.RepositoryInterfaces;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using ClinicApp.Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 

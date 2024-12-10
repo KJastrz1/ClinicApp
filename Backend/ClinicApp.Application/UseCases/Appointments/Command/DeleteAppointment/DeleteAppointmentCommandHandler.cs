@@ -1,8 +1,8 @@
 using ClinicApp.Application.Abstractions.Messaging;
+using ClinicApp.Application.RepositoryInterfaces.Write;
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Appointments;
 using ClinicApp.Domain.Models.Appointments.ValueObjects;
-using ClinicApp.Domain.RepositoryInterfaces;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Application.UseCases.Appointments.Command.DeleteAppointment;

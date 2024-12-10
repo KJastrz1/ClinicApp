@@ -1,13 +1,9 @@
 using ClinicApp.Domain.Enums;
-using ClinicApp.Domain.Models.Clinics;
 using ClinicApp.Domain.Models.Doctors.DomainEvents;
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
-using ClinicApp.Domain.Models.Users;
-using ClinicApp.Domain.Models.Users.ValueObjects;
 using ClinicApp.Domain.Shared;
-using ClinicApp.Domain.Models.Accounts;
-using ClinicApp.Domain.Models.Clinics.ValueObjects;
 using ClinicApp.Domain.Models.Employees;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 
 namespace ClinicApp.Domain.Models.Doctors;
 
@@ -32,9 +28,9 @@ public class Doctor : Employee
         MedicalLicenseNumber medicalLicenseNumber,
         List<Specialty>? specialties = null,
         Bio? bio = null,
-        AcademicTitle? academicTitle = null,
-        Account? account = null)
-        : base(id, firstName, lastName, UserType.Doctor, account)
+        AcademicTitle? academicTitle = null
+    )
+        : base(id, firstName, lastName, UserType.Doctor)
     {
         MedicalLicenseNumber = medicalLicenseNumber;
         _specialties = specialties ?? new List<Specialty>();
@@ -49,11 +45,11 @@ public class Doctor : Employee
         MedicalLicenseNumber medicalLicenseNumber,
         List<Specialty>? specialties = null,
         Bio? bio = null,
-        AcademicTitle? academicTitle = null,
-        Account? account = null)
+        AcademicTitle? academicTitle = null
+    )
     {
-        var doctor = new Doctor(id, firstName, lastName, medicalLicenseNumber, specialties, bio, academicTitle,
-            account);
+        var doctor = new Doctor(id, firstName, lastName, medicalLicenseNumber, specialties, bio, academicTitle
+        );
         doctor.RaiseDomainEvent(new DoctorRegisteredDomainEvent(id.Value));
         return doctor;
     }

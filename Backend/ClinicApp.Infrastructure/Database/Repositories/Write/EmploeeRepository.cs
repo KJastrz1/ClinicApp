@@ -1,7 +1,8 @@
 using ClinicApp.Application.RepositoryInterfaces;
+using ClinicApp.Application.RepositoryInterfaces.Write;
 using ClinicApp.Domain.Models.Doctors;
 using ClinicApp.Domain.Models.Employees;
-using ClinicApp.Domain.Models.Users.ValueObjects;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using ClinicApp.Infrastructure.Database.Contexts;
 using Microsoft.EntityFrameworkCore;
 

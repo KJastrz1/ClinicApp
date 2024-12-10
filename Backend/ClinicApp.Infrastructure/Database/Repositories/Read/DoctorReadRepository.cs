@@ -1,6 +1,5 @@
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
 using ClinicApp.Infrastructure.Database.Contexts;
-using ClinicApp.Application.ReadRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +7,7 @@ using Shared.Contracts;
 using Shared.Contracts.Doctor.Responses;
 using System.Collections.Generic;
 using System.Linq;
+using ClinicApp.Application.RepositoryInterfaces.Read;
 using ClinicApp.Infrastructure.Database.ReadModels;
 using Shared.Contracts.Doctor.Requests;
 using Shared.Contracts.Shared;

@@ -1,5 +1,5 @@
 using ClinicApp.Application.Abstractions.Messaging;
-using ClinicApp.Application.ReadRepositories;
+using ClinicApp.Application.RepositoryInterfaces.Read;
 using ClinicApp.Domain.Shared;
 using Shared.Contracts.EmployeeLeave.Requests;
 using Shared.Contracts.EmployeeLeave.Responses;

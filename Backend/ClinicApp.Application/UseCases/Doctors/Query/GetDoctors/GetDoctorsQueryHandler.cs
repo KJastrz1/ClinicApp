@@ -1,5 +1,5 @@
 using ClinicApp.Application.Abstractions.Messaging;
-using ClinicApp.Application.ReadRepositories;
+using ClinicApp.Application.RepositoryInterfaces.Read;
 using ClinicApp.Domain.Shared;
 using Shared.Contracts.Doctor.Responses;
 using Shared.Contracts.Shared;

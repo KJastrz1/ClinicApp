@@ -1,6 +1,6 @@
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
-using ClinicApp.Domain.Models.Users;
+using ClinicApp.Domain.Models.UserProfiles;
 using ClinicApp.Infrastructure.Database.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,7 +13,7 @@ public class PatientConfiguration : IWriteEntityConfiguration<Patient>
     {
         builder.ToTable(TableNames.Patients);
         
-        builder.HasBaseType<User>();
+        builder.HasBaseType<UserProfile>();
         
         builder.Property(p => p.SocialSecurityNumber)
             .HasConversion(ssn => ssn.Value, v => SocialSecurityNumber.Create(v).Value)

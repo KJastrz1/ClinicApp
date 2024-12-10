@@ -16,7 +16,7 @@ public class DoctorId : ValueObject
     public static Result<DoctorId> Create(Guid value)
     {
         return Result.Create(value)
-            .Ensure(id => id != Guid.Empty, UserBaseErrors.EmptyId)
+            .Ensure(id => id != Guid.Empty, UserProfileErrors.EmptyId)
             .Map(id => new DoctorId(id));
     }
 

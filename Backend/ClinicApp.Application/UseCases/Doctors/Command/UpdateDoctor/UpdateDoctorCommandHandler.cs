@@ -1,9 +1,9 @@
 using ClinicApp.Application.Abstractions.Messaging;
+using ClinicApp.Application.RepositoryInterfaces.Write;
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Doctors;
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
-using ClinicApp.Domain.Models.Users.ValueObjects;
-using ClinicApp.Domain.RepositoryInterfaces;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Application.UseCases.Doctors.Command.UpdateDoctor;

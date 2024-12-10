@@ -1,17 +1,17 @@
-using ClinicApp.Domain.Models.Accounts.ValueObjects;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Domain.Errors;
 
 public static class AccountErrors
 {
-    public static Error NotFound(Guid id) => new(
-        "Accounts.NotFound",
-        $"Accounts with ID {id} was not found.");
+    public static Error NotFound(UserId id) => new(
+        "Users.NotFound",
+        $"User with ID {id.Value} was not found.");
 
     public static readonly Error EmptyId = new(
-        "Accounts.EmptyId",
-        "Accounts ID is empty");
+        "Users.EmptyId",
+        "User ID is empty");
 
     public static class EmailErrors
     {
@@ -21,7 +21,7 @@ public static class AccountErrors
 
         public static readonly Error TooLong = new(
             "Email.TooLong",
-            $"Email is too long. Maximum length is {Email.MaxLength} characters.");
+            $"Email is too long. Maximum length is 255 characters.");
 
         public static readonly Error InvalidFormat = new(
             "Email.InvalidFormat",

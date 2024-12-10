@@ -1,7 +1,7 @@
 using ClinicApp.Domain.Models.Appointments;
 using ClinicApp.Domain.Models.Appointments.ValueObjects;
 
-namespace ClinicApp.Domain.RepositoryInterfaces;
+namespace ClinicApp.Application.RepositoryInterfaces.Write;
 
 public interface IAppointmentRepository
 {

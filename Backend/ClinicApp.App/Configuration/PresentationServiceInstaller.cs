@@ -10,6 +10,8 @@ public class PresentationServiceInstaller : IServiceInstaller
             .AddControllers()
             .AddApplicationPart(Presentation.AssemblyReference.Assembly);
 
+        services.AddEndpointsApiExplorer();
+        
         services.AddSwaggerGen(c =>
         {
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

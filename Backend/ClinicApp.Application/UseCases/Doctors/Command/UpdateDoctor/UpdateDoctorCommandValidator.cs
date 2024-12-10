@@ -1,6 +1,6 @@
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
-using ClinicApp.Domain.Models.Users.ValueObjects;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using FluentValidation;
 
 namespace ClinicApp.Application.UseCases.Doctors.Command.UpdateDoctor;
@@ -15,12 +15,12 @@ internal class UpdateDoctorCommandValidator : AbstractValidator<UpdateDoctorComm
 
         RuleFor(x => x.FirstName)
             .MaximumLength(FirstName.MaxLength)
-            .WithMessage(UserBaseErrors.FirstNameErrors.TooLong.Message)
+            .WithMessage(UserProfileErrors.FirstNameErrors.TooLong.Message)
             .When(x => x.FirstName != null);
 
         RuleFor(x => x.LastName)
             .MaximumLength(LastName.MaxLength)
-            .WithMessage(UserBaseErrors.LastNameErrors.TooLong.Message)
+            .WithMessage(UserProfileErrors.LastNameErrors.TooLong.Message)
             .When(x => x.LastName != null);
 
         RuleFor(x => x.MedicalLicenseNumber)
