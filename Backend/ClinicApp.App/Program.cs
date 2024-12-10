@@ -1,5 +1,5 @@
 using ClinicApp.App.Configuration;
-using ClinicApp.Infrastructure.Database.DataSeeders;
+using ClinicApp.Infrastructure.Authentication.IdentityCore;
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -17,20 +17,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
     
-    using (IServiceScope scope = app.Services.CreateScope())
-    {
-        IServiceProvider services = scope.ServiceProvider;
-
-        try
-        {
-            AccountSeeder accountSeeder = services.GetRequiredService<AccountSeeder>();
-            await accountSeeder.SeedAsync();
-        }
-        catch (Exception ex)
-        {
-     
-        }
-    }
+    // using (IServiceScope scope = app.Services.CreateScope())
+    // {
+    //     IServiceProvider services = scope.ServiceProvider;
+    //
+    //     try
+    //     {
+    //         AccountSeeder accountSeeder = services.GetRequiredService<AccountSeeder>();
+    //         await accountSeeder.SeedAsync();
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //  
+    //     }
+    // }
 }
 
 app.UseHttpsRedirection();
@@ -38,6 +38,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.MapIdentityApi<User>();
 
 app.MapControllers();
 

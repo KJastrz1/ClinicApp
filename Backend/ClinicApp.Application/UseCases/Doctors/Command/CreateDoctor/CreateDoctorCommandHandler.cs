@@ -1,12 +1,10 @@
+using ClinicApp.Application.Abstractions.Authentication;
 using ClinicApp.Application.Abstractions.Messaging;
-using ClinicApp.Domain.Models.Accounts;
-using ClinicApp.Domain.Models.Accounts.ValueObjects;
-using ClinicApp.Domain.Models.Clinics;
-using ClinicApp.Domain.Models.Clinics.ValueObjects;
+using ClinicApp.Application.RepositoryInterfaces.Write;
+using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Doctors;
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
-using ClinicApp.Domain.Models.Users.ValueObjects;
-using ClinicApp.Domain.RepositoryInterfaces;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Application.UseCases.Doctors.Command.CreateDoctor;
@@ -14,24 +12,35 @@ namespace ClinicApp.Application.UseCases.Doctors.Command.CreateDoctor;
 internal sealed class CreateDoctorCommandHandler : ICommandHandler<CreateDoctorCommand, Guid>
 {
     private readonly IDoctorRepository _doctorRepository;
+    private readonly IUserProfileRepository _userProfileRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IAccountRepository _accountRepository;
     private readonly IClinicRepository _clinicRepository;
+    private readonly IUserContext _userContext;
 
     public CreateDoctorCommandHandler(
         IDoctorRepository doctorRepository,
+        IUserProfileRepository userProfileRepository,
         IUnitOfWork unitOfWork,
-        IAccountRepository accountRepository,
-        IClinicRepository clinicRepository)
+        IClinicRepository clinicRepository,
+        IUserContext userContext)
     {
         _doctorRepository = doctorRepository;
+        _userProfileRepository = userProfileRepository;
         _unitOfWork = unitOfWork;
-        _accountRepository = accountRepository;
         _clinicRepository = clinicRepository;
+        _userContext = userContext;
     }
 
     public async Task<Result<Guid>> Handle(CreateDoctorCommand request, CancellationToken cancellationToken)
     {
+        Result<UserId> userIdResult = UserId.Create(Guid.Parse(_userContext.Id));
+
+        bool userProfileExists = await _userProfileRepository.ExistsAsync(userIdResult.Value, cancellationToken);
+        if (userProfileExists)
+        {
+            return Result.Failure<Guid>(UserProfileErrors.AlreadyExists(userIdResult.Value));
+        }
+
         Result<FirstName> firstNameResult = FirstName.Create(request.FirstName);
         Result<LastName> lastNameResult = LastName.Create(request.LastName);
         Result<MedicalLicenseNumber> licenseNumberResult = MedicalLicenseNumber.Create(request.MedicalLicenseNumber);
@@ -59,23 +68,14 @@ internal sealed class CreateDoctorCommandHandler : ICommandHandler<CreateDoctorC
             academicTitle = AcademicTitle.Create(request.AcademicTitle).Value;
         }
 
-        Account? account = null;
-        if (request.AccountId != null && request.AccountId != Guid.Empty)
-        {
-            AccountId accountId = AccountId.Create(request.AccountId.Value).Value;
-            account = await _accountRepository.GetByIdAsync(accountId, cancellationToken);
-        }
-
         var doctor = Doctor.Create(
-            UserId.New(),
+            userIdResult.Value,
             firstNameResult.Value,
             lastNameResult.Value,
             licenseNumberResult.Value,
             specialties,
             bio,
-            academicTitle,
-            account
-        );
+            academicTitle);
 
         _doctorRepository.Add(doctor);
 

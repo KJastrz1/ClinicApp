@@ -1,8 +1,6 @@
 using ClinicApp.Domain.Models.Doctors;
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
 using ClinicApp.Domain.Models.Employees;
-using ClinicApp.Domain.Models.Users.ValueObjects;
-using ClinicApp.Domain.Shared;
 using ClinicApp.Infrastructure.Database.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -39,11 +37,6 @@ public class DoctorConfiguration : IWriteEntityConfiguration<Doctor>
             .IsRequired();
 
         builder.Property(d => d.ModifiedOnUtc);
-
-        builder.HasOne(d => d.Account)
-            .WithOne()
-            .HasForeignKey<Doctor>(d => d.AccountId)
-            .IsRequired(false);
 
         builder.OwnsMany(d => d.Specialties, specialty =>
         {

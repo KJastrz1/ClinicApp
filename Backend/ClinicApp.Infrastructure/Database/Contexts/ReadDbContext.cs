@@ -1,20 +1,14 @@
-using ClinicApp.Domain.Models.Accounts;
-using ClinicApp.Domain.Models.Clinics;
-using ClinicApp.Domain.Models.Doctors;
-using ClinicApp.Domain.Models.Patients;
-using ClinicApp.Domain.Models.Permissions;
-using ClinicApp.Domain.Models.Roles;
-using ClinicApp.Infrastructure.Database.Configurations.Read;
 using ClinicApp.Infrastructure.Database.Configurations.Write;
 using ClinicApp.Infrastructure.Database.ReadModels;
 using ClinicApp.Infrastructure.Database.ReadModels.Auth;
 using Microsoft.EntityFrameworkCore;
+using UserReadModel = ClinicApp.Infrastructure.Database.ReadModels.Auth.UserReadModel;
 
 namespace ClinicApp.Infrastructure.Database.Contexts;
 
 public sealed class ReadDbContext : DbContext
 {
-    private DbSet<AccountReadModel> AccountsDbSet { get; set; }
+    private DbSet<UserReadModel> UsersDbSet { get; set; }
     private DbSet<PatientReadModel> PatientsDbSet { get; set; } 
     private DbSet<ClinicReadModel> ClinicsDbSet { get; set; } 
     private DbSet<DoctorReadModel> DoctorsDbSet { get; set; } 
@@ -25,7 +19,7 @@ public sealed class ReadDbContext : DbContext
     private DbSet<PermissionReadModel> PermissionsDbSet { get; set; }
     
     
-    internal IQueryable<AccountReadModel> Accounts => AccountsDbSet.AsNoTracking();
+    internal IQueryable<UserReadModel> Users => UsersDbSet.AsNoTracking();
     internal IQueryable<PatientReadModel> Patients => PatientsDbSet.AsNoTracking();
     internal IQueryable<ClinicReadModel> Clinics => ClinicsDbSet.AsNoTracking();
     internal IQueryable<DoctorReadModel> Doctors => DoctorsDbSet.AsNoTracking();

@@ -1,4 +1,4 @@
-using ClinicApp.Domain.Models.Users.ValueObjects;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Domain.Errors;

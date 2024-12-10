@@ -1,6 +1,5 @@
 ﻿using ClinicApp.Application.UseCases.Patients.Command.CreatePatient;
 using ClinicApp.Application.UseCases.Patients.Command.DeletePatient;
-using ClinicApp.Application.UseCases.Patients.Command.RegisterPatient;
 using ClinicApp.Application.UseCases.Patients.Command.UpdatePatient;
 using ClinicApp.Application.UseCases.Patients.Query.GetPatientById;
 using ClinicApp.Application.UseCases.Patients.Query.GetPatients;
@@ -9,7 +8,6 @@ using ClinicApp.Domain.Shared;
 using ClinicApp.Infrastructure.Authentication;
 using ClinicApp.Presentation.Abstractions;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Contracts;
 using Shared.Contracts.Patient;
@@ -52,34 +50,6 @@ public sealed class PatientsController : ApiController
         Result<PagedItems<PatientResponse>> response = await Sender.Send(query, cancellationToken);
 
         return response.IsSuccess ? Ok(response.Value) : BadRequest(response.Error);
-    }
-
-
-    [HttpPost("register")]
-    [AllowAnonymous]
-    public async Task<IActionResult> RegisterPatient(
-        [FromBody] RegisterPatientRequest request,
-        CancellationToken cancellationToken)
-    {
-        var command = new RegisterPatientCommand(
-            request.Email,
-            request.Password,
-            request.FirstName,
-            request.LastName,
-            request.SocialSecurityNumber,
-            request.DateOfBirth);
-
-        Result<Guid> result = await Sender.Send(command, cancellationToken);
-
-        if (result.IsFailure)
-        {
-            return HandleFailure(result);
-        }
-
-        return CreatedAtAction(
-            nameof(GetPatientById),
-            new { id = result.Value },
-            result.Value);
     }
 
     [HttpPost]

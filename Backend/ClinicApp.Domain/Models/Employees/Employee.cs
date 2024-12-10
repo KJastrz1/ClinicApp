@@ -1,13 +1,11 @@
 using ClinicApp.Domain.Enums;
-using ClinicApp.Domain.Models.Accounts;
 using ClinicApp.Domain.Models.EmployeeLeaves;
-using ClinicApp.Domain.Models.Users;
-using ClinicApp.Domain.Models.Users.ValueObjects;
-using ClinicApp.Domain.Shared;
+using ClinicApp.Domain.Models.UserProfiles;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 
 namespace ClinicApp.Domain.Models.Employees;
 
-public class Employee : User
+public abstract class Employee : UserProfile
 {
     private List<EmployeeLeave> _leaves = new List<EmployeeLeave>();
     public IReadOnlyList<EmployeeLeave> Leaves => _leaves.AsReadOnly();
@@ -18,9 +16,9 @@ public class Employee : User
         UserId id,
         FirstName firstName,
         LastName lastName,
-        UserType userType,
-        Account? account = null) 
-        : base(id, firstName, lastName, userType, account)
+        UserType userType
+      ) 
+        : base(id, firstName, lastName, userType)
     {
     }
 }

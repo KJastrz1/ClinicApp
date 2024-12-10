@@ -1,12 +1,11 @@
 using ClinicApp.Application.Abstractions.Messaging;
-using ClinicApp.Application.ReadRepositories;
 using ClinicApp.Application.RepositoryInterfaces;
+using ClinicApp.Application.RepositoryInterfaces.Write;
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.EmployeeLeaves;
 using ClinicApp.Domain.Models.EmployeeLeaves.ValueObjects;
 using ClinicApp.Domain.Models.Employees;
-using ClinicApp.Domain.Models.Users.ValueObjects;
-using ClinicApp.Domain.RepositoryInterfaces;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Application.UseCases.EmployeeLeaves.Command.CreateEmployeeLeave;

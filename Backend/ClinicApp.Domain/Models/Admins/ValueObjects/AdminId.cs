@@ -16,7 +16,7 @@ public class AdminId : ValueObject
     public static Result<AdminId> Create(Guid value)
     {
         return Result.Create(value)
-            .Ensure(id => id != Guid.Empty, UserBaseErrors.EmptyId)
+            .Ensure(id => id != Guid.Empty, UserProfileErrors.EmptyId)
             .Map(id => new AdminId(id));
     }
 

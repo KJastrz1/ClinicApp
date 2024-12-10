@@ -1,13 +1,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ClinicApp.Application.RepositoryInterfaces.Write;
 using ClinicApp.Application.UseCases.Clinics.Command.UpdateClinic;
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Clinics;
 using ClinicApp.Domain.Models.Clinics.DomainEvents;
 using ClinicApp.Domain.Models.Clinics.ValueObjects;
 using ClinicApp.Domain.Primitives;
-using ClinicApp.Domain.RepositoryInterfaces;
 using ClinicApp.Domain.Shared;
 using FluentAssertions;
 using Moq;

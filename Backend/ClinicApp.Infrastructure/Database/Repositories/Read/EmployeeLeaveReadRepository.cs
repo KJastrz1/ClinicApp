@@ -1,6 +1,5 @@
 using ClinicApp.Domain.Models.EmployeeLeaves.ValueObjects;
 using ClinicApp.Infrastructure.Database.Contexts;
-using ClinicApp.Application.ReadRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,7 +7,8 @@ using Shared.Contracts;
 using Shared.Contracts.EmployeeLeave.Responses;
 using System.Collections.Generic;
 using System.Linq;
-using ClinicApp.Domain.Models.Users.ValueObjects;
+using ClinicApp.Application.RepositoryInterfaces.Read;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using ClinicApp.Infrastructure.Database.ReadModels;
 using Shared.Contracts.Employee;
 using Shared.Contracts.EmployeeLeave.Requests;

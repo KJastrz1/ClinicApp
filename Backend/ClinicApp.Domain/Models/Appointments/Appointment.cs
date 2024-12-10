@@ -7,7 +7,7 @@ using ClinicApp.Domain.Models.Clinics;
 using ClinicApp.Domain.Models.Clinics.ValueObjects;
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
-using ClinicApp.Domain.Models.Users.ValueObjects;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 using ClinicApp.Domain.Primitives;
 using ClinicApp.Domain.Shared;
 

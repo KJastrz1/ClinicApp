@@ -1,8 +1,8 @@
 using ClinicApp.Domain.Models.EmployeeLeaves;
 using ClinicApp.Domain.Models.EmployeeLeaves.ValueObjects;
-using ClinicApp.Domain.Models.Users.ValueObjects;
+using ClinicApp.Domain.Models.UserProfiles.ValueObjects;
 
-namespace ClinicApp.Domain.RepositoryInterfaces;
+namespace ClinicApp.Application.RepositoryInterfaces.Write;
 
 public interface IEmployeeLeaveRepository
 {

@@ -1,7 +1,7 @@
 using ClinicApp.Application.Abstractions.Messaging;
+using ClinicApp.Application.RepositoryInterfaces.Write;
 using ClinicApp.Domain.Models.Clinics;
 using ClinicApp.Domain.Models.Clinics.ValueObjects;
-using ClinicApp.Domain.RepositoryInterfaces;
 using ClinicApp.Domain.Shared;
 
 namespace ClinicApp.Application.UseCases.Clinics.Command.CreateClinic;

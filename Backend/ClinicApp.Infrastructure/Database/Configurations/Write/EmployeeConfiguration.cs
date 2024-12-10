@@ -1,6 +1,5 @@
 using ClinicApp.Domain.Models.Employees;
-using ClinicApp.Domain.Models.Users;
-using ClinicApp.Domain.Models.Users.ValueObjects;
+using ClinicApp.Domain.Models.UserProfiles;
 using ClinicApp.Infrastructure.Database.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,16 +10,13 @@ public class EmployeeConfiguration : IWriteEntityConfiguration<Employee>
 {
     public void Configure(EntityTypeBuilder<Employee> builder)
     {
-        builder.HasBaseType<User>();
-   
-        builder.HasKey(e => e.Id);
+        builder.ToTable(TableNames.Employees);
+        
+        builder.HasBaseType<UserProfile>();
       
         builder.HasMany(e => e.Leaves)
-            .WithOne()
+            .WithOne(el=> el.Employee)
             .HasForeignKey(el => el.EmployeeId)
-            .OnDelete(DeleteBehavior.Cascade); 
-    
-        builder.Ignore(e => e.Leaves);
-    
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

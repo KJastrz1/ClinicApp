@@ -1,5 +1,5 @@
 using ClinicApp.Application.Abstractions.Messaging;
-using ClinicApp.Application.ReadRepositories;
+using ClinicApp.Application.RepositoryInterfaces.Read;
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Doctors.ValueObjects;
 using ClinicApp.Domain.Shared;
