@@ -22,6 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicApp.UnitTests", "Back
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E2065D5A-C9FC-409F-8A84-B7A71C8A85F6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{C1E22C9C-0DDE-489B-B624-3C11448004E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend", "Frontend\Frontend.csproj", "{21A681A1-F436-451A-91D6-09EDDE3E9D6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +96,10 @@ Global
 		{05431AB0-99C0-4E8C-88D1-31A0570DACB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05431AB0-99C0-4E8C-88D1-31A0570DACB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05431AB0-99C0-4E8C-88D1-31A0570DACB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21A681A1-F436-451A-91D6-09EDDE3E9D6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A681A1-F436-451A-91D6-09EDDE3E9D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A681A1-F436-451A-91D6-09EDDE3E9D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A681A1-F436-451A-91D6-09EDDE3E9D6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +107,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B94E1A4A-4673-4946-9CF0-2CAB2CB01A6A} = {E2065D5A-C9FC-409F-8A84-B7A71C8A85F6}
 		{05431AB0-99C0-4E8C-88D1-31A0570DACB9} = {E2065D5A-C9FC-409F-8A84-B7A71C8A85F6}
+		{21A681A1-F436-451A-91D6-09EDDE3E9D6C} = {C1E22C9C-0DDE-489B-B624-3C11448004E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C8D46A31-FFE1-4C92-B344-FADBAD683E6E}

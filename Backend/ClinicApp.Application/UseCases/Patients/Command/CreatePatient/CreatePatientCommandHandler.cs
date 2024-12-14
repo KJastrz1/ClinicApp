@@ -1,6 +1,7 @@
 using ClinicApp.Application.Abstractions.Authentication;
 using ClinicApp.Application.Abstractions.Messaging;
 using ClinicApp.Application.RepositoryInterfaces.Write;
+using ClinicApp.Domain.Enums;
 using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Patients;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
@@ -15,18 +16,21 @@ internal sealed class CreatePatientCommandHandler : ICommandHandler<CreatePatien
     private readonly IUserProfileRepository _userProfileRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IUserContext _userContext;
+    private readonly IUserRoleService _userRoleService;
 
     public CreatePatientCommandHandler(
         IPatientRepository patientRepository,
         IUserProfileRepository userProfileRepository,
         IUnitOfWork unitOfWork,
-        IUserContext userContext
+        IUserContext userContext,
+        IUserRoleService userRoleService
     )
     {
         _patientRepository = patientRepository;
         _userProfileRepository = userProfileRepository;
         _unitOfWork = unitOfWork;
         _userContext = userContext;
+        _userRoleService = userRoleService;
     }
 
     public async Task<Result<Guid>> Handle(CreatePatientCommand request, CancellationToken cancellationToken)
@@ -53,6 +57,14 @@ internal sealed class CreatePatientCommandHandler : ICommandHandler<CreatePatien
         );
 
         _patientRepository.Add(patient);
+
+        bool roleAssigned =
+            await _userRoleService.AssignRoleToUserAsync(Guid.Parse(_userContext.Id), UserRole.Patient.ToString(),
+                cancellationToken);
+        if (!roleAssigned)
+        {
+            return Result.Failure<Guid>(UserProfileErrors.RoleAssignmentFailed(userIdResult.Value));
+        }
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

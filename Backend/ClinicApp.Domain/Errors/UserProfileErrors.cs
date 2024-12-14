@@ -7,15 +7,19 @@ public static class UserProfileErrors
 {
     public static Error NotFound(UserId id) => new(
         "UserProfiles.NotFound",
-        $"UserProfiles with ID {id.Value} was not found.");
+        $"User Profile with ID {id.Value} was not found.");
 
     public static Error EmptyId = new(
         "UserProfiles.EmptyId",
-        "UserProfiles ID is empty");
+        "User Profile ID is empty");
 
     public static Error AlreadyExists(UserId userId) => new(
         "UserProfiles.AlreadyExists",
-        $"UserProfiles with ID {userId.Value} already exists.");
+        $"User Profile with ID {userId.Value} already exists.");
+
+    public static Error RoleAssignmentFailed(UserId userId) => new(
+        "UserProfiles.RoleAssignmentFailed",
+        $"Failed to assign role to User Profile with ID {userId.Value}.");
 
     public static class FirstNameErrors
     {

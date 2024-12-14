@@ -157,7 +157,7 @@ namespace ClinicApp.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOnUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserType")
+                    b.Property<string>("UserRole")
                         .IsRequired()
                         .HasColumnType("text");
 

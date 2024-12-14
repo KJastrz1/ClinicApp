@@ -32,6 +32,8 @@ public class InfrastructureServiceInstaller : IServiceInstaller
                     .AsMatchingInterface()
                     .WithScopedLifetime());
 
+        services.AddScoped<IDataSeeder, RoleSeeder>();
+        
         services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
 
         services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
