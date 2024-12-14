@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ClinicApp.Infrastructure.Migrations
 {
     [DbContext(typeof(WriteDbContext))]
-    [Migration("20241118125624_InitialCreate")]
+    [Migration("20241210175424_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -160,7 +160,7 @@ namespace ClinicApp.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOnUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserType")
+                    b.Property<string>("UserRole")
                         .IsRequired()
                         .HasColumnType("text");
 

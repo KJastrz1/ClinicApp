@@ -16,9 +16,9 @@ public abstract class Employee : UserProfile
         UserId id,
         FirstName firstName,
         LastName lastName,
-        UserType userType
+        UserRole userRole
       ) 
-        : base(id, firstName, lastName, userType)
+        : base(id, firstName, lastName, userRole)
     {
     }
 }

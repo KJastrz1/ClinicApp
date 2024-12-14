@@ -12,7 +12,7 @@ internal class EmployeeReadModel
             Id: User.Id,
             FirstName: User.FirstName,
             LastName: User.LastName,
-            UserType: User.UserType
+            UserRole: User.UserRole
         );
     }
 }

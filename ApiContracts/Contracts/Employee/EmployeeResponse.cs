@@ -6,5 +6,5 @@ public record EmployeeResponse(
     Guid Id,
     string FirstName,
     string LastName,
-    UserType UserType
+    UserRole UserRole
 );
