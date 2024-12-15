@@ -1,4 +1,4 @@
-namespace Shared.Contracts.Account.Responses;
+namespace Shared.Contracts.Auth.Responses;
 
 public record UserResponse(
     Guid Id,

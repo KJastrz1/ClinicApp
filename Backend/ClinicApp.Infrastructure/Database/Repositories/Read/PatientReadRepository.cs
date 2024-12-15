@@ -10,6 +10,8 @@ using System.Linq;
 using ClinicApp.Application.RepositoryInterfaces.Read;
 using ClinicApp.Infrastructure.Database.ReadModels;
 using Shared.Contracts.Patient;
+using Shared.Contracts.Patient.Requests;
+using Shared.Contracts.Patient.Responses;
 using Shared.Contracts.Shared;
 
 namespace ClinicApp.Infrastructure.Database.Repositories.Read;

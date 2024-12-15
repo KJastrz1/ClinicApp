@@ -1,5 +1,7 @@
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 using Shared.Contracts.Patient;
+using Shared.Contracts.Patient.Requests;
+using Shared.Contracts.Patient.Responses;
 using Shared.Contracts.Shared;
 
 namespace ClinicApp.Application.RepositoryInterfaces.Read;

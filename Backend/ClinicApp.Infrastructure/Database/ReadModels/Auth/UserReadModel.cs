@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using Shared.Contracts.Account.Responses;
+using Shared.Contracts.Auth.Responses;
 
 namespace ClinicApp.Infrastructure.Database.ReadModels.Auth;
 

@@ -1,4 +1,5 @@
 using Shared.Contracts.Patient;
+using Shared.Contracts.Patient.Responses;
 
 namespace ClinicApp.Infrastructure.Database.ReadModels;
 

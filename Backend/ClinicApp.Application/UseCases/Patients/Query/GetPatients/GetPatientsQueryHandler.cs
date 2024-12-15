@@ -2,6 +2,7 @@ using ClinicApp.Application.Abstractions.Messaging;
 using ClinicApp.Application.RepositoryInterfaces.Read;
 using ClinicApp.Domain.Shared;
 using Shared.Contracts.Patient;
+using Shared.Contracts.Patient.Responses;
 using Shared.Contracts.Shared;
 
 namespace ClinicApp.Application.UseCases.Patients.Query.GetPatients;

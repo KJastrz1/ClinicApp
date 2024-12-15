@@ -1,6 +1,6 @@
 using Shared.Contracts.Shared;
 
-namespace Shared.Contracts.Patient;
+namespace Shared.Contracts.Patient.Requests;
 
 public record PatientFilter : AuditableFilter
 {

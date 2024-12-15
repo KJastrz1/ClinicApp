@@ -1,4 +1,4 @@
-namespace Shared.Contracts.Patient;
+namespace Shared.Contracts.Patient.Requests;
 
 public sealed record RegisterPatientRequest
 (

@@ -11,6 +11,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Contracts;
 using Shared.Contracts.Patient;
+using Shared.Contracts.Patient.Requests;
+using Shared.Contracts.Patient.Responses;
 using Shared.Contracts.Shared;
 
 namespace ClinicApp.Presentation.Controllers;
