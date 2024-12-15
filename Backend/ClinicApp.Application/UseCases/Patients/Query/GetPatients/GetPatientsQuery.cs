@@ -1,5 +1,7 @@
 using ClinicApp.Application.Abstractions.Messaging;
 using Shared.Contracts.Patient;
+using Shared.Contracts.Patient.Requests;
+using Shared.Contracts.Patient.Responses;
 using Shared.Contracts.Shared;
 
 namespace ClinicApp.Application.UseCases.Patients.Query.GetPatients;

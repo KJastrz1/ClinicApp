@@ -4,6 +4,7 @@ using ClinicApp.Domain.Errors;
 using ClinicApp.Domain.Models.Patients.ValueObjects;
 using ClinicApp.Domain.Shared;
 using Shared.Contracts.Patient;
+using Shared.Contracts.Patient.Responses;
 
 namespace ClinicApp.Application.UseCases.Patients.Query.GetPatientById;
 

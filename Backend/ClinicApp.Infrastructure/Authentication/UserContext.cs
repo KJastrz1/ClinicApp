@@ -1,6 +1,8 @@
-using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using ClinicApp.Application.Abstractions.Authentication;
+using Microsoft.AspNetCore.Http;
+
+namespace ClinicApp.Infrastructure.Authentication;
 
 public class UserContext : IUserContext
 {

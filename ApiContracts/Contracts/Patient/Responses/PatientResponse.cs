@@ -1,4 +1,4 @@
-namespace Shared.Contracts.Patient;
+namespace Shared.Contracts.Patient.Responses;
 
 public sealed record PatientResponse(
     Guid Id,  
