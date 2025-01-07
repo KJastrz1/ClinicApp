@@ -21,10 +21,10 @@ public class UserProfileConfiguration : IWriteEntityConfiguration<UserProfile>
                 id => id.Value,
                 value => UserId.Create(value).Value);
 
-        builder.Property(u => u.UserRole)
+        builder.Property(u => u.UserRoleEnum)
             .HasConversion(
                 userType => userType.ToString(),
-                value => Enum.Parse<UserRole>(value))
+                value => Enum.Parse<UserRoleEnum>(value))
             .IsRequired();
 
         builder.Property(u => u.FirstName)

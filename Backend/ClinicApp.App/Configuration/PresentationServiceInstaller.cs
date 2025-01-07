@@ -11,7 +11,30 @@ public class PresentationServiceInstaller : IServiceInstaller
             .AddApplicationPart(Presentation.AssemblyReference.Assembly);
 
         services.AddEndpointsApiExplorer();
-        
+
+        string[]? frontendUrls = configuration.GetSection("Frontend:Urls").Get<string[]>();
+
+        if (frontendUrls != null)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyCorsPolicy", builder =>
+                {
+                    builder.WithOrigins(frontendUrls)
+                        .AllowCredentials()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+        }
+
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            options.Cookie.SameSite = SameSiteMode.Strict;
+        });
+
         services.AddSwaggerGen(c =>
         {
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

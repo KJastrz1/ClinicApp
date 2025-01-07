@@ -27,7 +27,7 @@ public class EmployeeLeaveReadRepository : IEmployeeLeaveReadRepository
 
     public async Task<EmployeeLeaveResponse?> GetByIdAsync(EmployeeLeaveId leaveId, CancellationToken cancellationToken)
     {
-        EmployeeLeaveReadModel? leaveReadModel = await _context.EmployeeLeaves
+        EmployeeLeaveReadModel? leaveReadModel = await _context.EmployeeLeavesSet
             .Include(el => el.Employee)
             .FirstOrDefaultAsync(l => l.Id == leaveId, cancellationToken);
 
@@ -39,18 +39,18 @@ public class EmployeeLeaveReadRepository : IEmployeeLeaveReadRepository
         int pageSize,
         CancellationToken cancellationToken)
     {
-        IQueryable<EmployeeLeaveReadModel> query = _context.EmployeeLeaves
+        IQueryable<EmployeeLeaveReadModel> query = _context.EmployeeLeavesSet
             .Include(l => l.Employee);
 
         if (filter.EmployeeId.HasValue)
         {
-            query = query.Where(l => l.Employee.User.Id == filter.EmployeeId.Value);
+            query = query.Where(l => l.Employee.Id == filter.EmployeeId.Value);
         }
 
         if (!string.IsNullOrWhiteSpace(filter.EmployeeLastName))
         {
             query = query.Where(l =>
-                l.Employee.User.LastName.ToLower().Contains(filter.EmployeeLastName.ToLower()));
+                l.Employee.LastName.ToLower().Contains(filter.EmployeeLastName.ToLower()));
         }
 
         if (filter.StartOfLeaveInRange != null && filter.StartOfLeaveInRange.StartRange.HasValue)
@@ -83,7 +83,7 @@ public class EmployeeLeaveReadRepository : IEmployeeLeaveReadRepository
     public async Task<bool> HasOverlappingLeavesAsync(UserId employeeId, LeaveStartDate startDate, LeaveEndDate endDate,
         CancellationToken cancellationToken)
     {
-        return await _context.EmployeeLeaves
+        return await _context.EmployeeLeavesSet
             .AnyAsync(el => el.EmployeeId == employeeId.Value &&
                             el.StartDate < endDate.Value &&
                             el.EndDate > startDate.Value,

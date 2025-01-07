@@ -2,28 +2,35 @@ using Shared.Contracts.Doctor.Responses;
 
 namespace ClinicApp.Infrastructure.Database.ReadModels;
 
-internal class DoctorReadModel
+internal class DoctorReadModel : EmployeeReadModel
 {
-    public Guid Id { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
     public string MedicalLicenseNumber { get; set; }
     public string? Bio { get; set; }
     public string? AcademicTitle { get; set; }
-    public List<string> Specialties { get; set; } = new List<string>();
+    public List<SpecialtyReadModel> Specialties { get; set; } = new List<SpecialtyReadModel>();
     public List<DoctorScheduleReadModel> Schedules { get; set; } = new List<DoctorScheduleReadModel>();
-    public DateTime CreatedOnUtc { get; set; }
-    public DateTime? ModifiedOnUtc { get; set; }
 
-    internal DoctorResponse MapToResponse()
+    internal new DoctorResponse MapToResponse()
     {
         return new DoctorResponse(
             Id: Id,
             FirstName: FirstName,
             LastName: LastName,
             MedicalLicenseNumber: MedicalLicenseNumber,
-            Specialties: Specialties,
+            Specialties: Specialties.Select(s => s.Value).ToList(),
             Bio: Bio,
+            AcademicTitle: AcademicTitle
+        );
+    }
+
+    internal DoctorBriefResponse MapToBriefResponse()
+    {
+        return new DoctorBriefResponse(
+            Id: Id,
+            FirstName: FirstName,
+            LastName: LastName,
+            MedicalLicenseNumber: MedicalLicenseNumber,
+            Specialties: Specialties.Select(s => s.Value).ToList(),
             AcademicTitle: AcademicTitle
         );
     }

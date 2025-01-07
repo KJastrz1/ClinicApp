@@ -5,7 +5,7 @@ using Shared.Contracts.Shared;
 
 namespace ClinicApp.Application.UseCases.Doctors.Query.GetDoctors;
 
-public sealed record GetDoctorsQuery : IQuery<PagedItems<DoctorResponse>>
+public sealed record GetDoctorsQuery : IQuery<PagedItems<DoctorBriefResponse>>
 {
     public DoctorFilter Filter { get; init; } = new DoctorFilter();
     public int PageNumber { get; init; } = 1;

@@ -15,7 +15,7 @@ public class RoleSeeder : IDataSeeder
 
     public async Task SeedAsync()
     {
-        foreach (UserRole roleName in Enum.GetValues<UserRole>())
+        foreach (UserRoleEnum roleName in Enum.GetValues<UserRoleEnum>())
         {
             if (!await _roleManager.RoleExistsAsync(roleName.ToString()))
             {

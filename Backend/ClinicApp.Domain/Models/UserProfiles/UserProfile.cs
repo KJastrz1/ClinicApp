@@ -9,7 +9,7 @@ public abstract class UserProfile : AggregateRoot<UserId>, IAuditableEntity
 {
     public FirstName FirstName { get; private set; }
     public LastName LastName { get; private set; }
-    public UserRole UserRole { get; private set; }
+    public UserRoleEnum UserRoleEnum { get; private set; }
     public DateTime CreatedOnUtc { get; set; }
     public DateTime? ModifiedOnUtc { get; set; }
 
@@ -19,13 +19,13 @@ public abstract class UserProfile : AggregateRoot<UserId>, IAuditableEntity
         UserId id,
         FirstName firstName,
         LastName lastName,
-        UserRole userRole
+        UserRoleEnum userRoleEnum
      ) : base(id)
     {
         FirstName = firstName;
         LastName = lastName;
         CreatedOnUtc = DateTime.UtcNow;
-        UserRole = userRole;
+        UserRoleEnum = userRoleEnum;
     }
 
 

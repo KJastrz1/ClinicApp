@@ -30,7 +30,7 @@ public class Doctor : Employee
         Bio? bio = null,
         AcademicTitle? academicTitle = null
     )
-        : base(id, firstName, lastName, UserRole.Doctor)
+        : base(id, firstName, lastName, UserRoleEnum.Doctor)
     {
         MedicalLicenseNumber = medicalLicenseNumber;
         _specialties = specialties ?? new List<Specialty>();

@@ -25,7 +25,7 @@ public class ClinicReadRepository : IClinicReadRepository
 
     public async Task<ClinicResponse?> GetByIdAsync(ClinicId clinicId, CancellationToken cancellationToken)
     {
-        ClinicReadModel? clinicReadModel = await _context.Clinics
+        ClinicReadModel? clinicReadModel = await _context.ClinicsSet
             .FirstOrDefaultAsync(c => c.Id.Equals(clinicId), cancellationToken);
 
         return clinicReadModel?.MapToResponse();
@@ -36,7 +36,7 @@ public class ClinicReadRepository : IClinicReadRepository
         int pageSize,
         CancellationToken cancellationToken)
     {
-        IQueryable<ClinicReadModel> query = _context.Clinics;
+        IQueryable<ClinicReadModel> query = _context.ClinicsSet;
 
         if (!string.IsNullOrWhiteSpace(filter.City))
         {

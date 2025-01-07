@@ -1,0 +1,145 @@
+@namespace Frontend.Components.Pages
+
+@page "/doctors"
+@attribute [AllowAnonymous]
+
+@using Frontend.Api
+@using Shared.Contracts.Doctor.Requests
+@using Shared.Contracts.Doctor.Responses
+@using Shared.Contracts.Shared
+
+@inject IDoctorsApi DoctorsApi
+
+<PageTitle>DoctorsPage List</PageTitle>
+
+<div class="container mx-auto">
+    <h1 class="text-2xl font-bold mb-6">DoctorsPage List</h1>
+
+    <!-- Filtr -->
+    <div class="mb-6 p-4 border rounded shadow">
+        <h2 class="text-lg font-semibold mb-4">Filter DoctorsPage</h2>
+        <form class="flex flex-wrap gap-4">
+            <div>
+                <label for="firstName" class="block text-sm font-medium">First Name</label>
+                <Input
+                    Id="firstName"
+                    @bind-Value="Filter.FirstName"
+                    Class="border rounded px-2 py-1 w-60"
+                />
+            </div>
+            <div>
+                <label for="lastName" class="block text-sm font-medium">Last Name</label>
+                <Input
+                    Id="lastName"
+                    @bind-Value="Filter.LastName"
+                    Class="border rounded px-2 py-1 w-60"
+                />
+            </div>
+            <div>
+                <label for="specialty" class="block text-sm font-medium">Specialty</label>
+                <Input
+                    Id="specialty"
+                    @bind-Value="Filter.Specialty"
+                    Class="border rounded px-2 py-1 w-60"
+                />
+            </div>
+            <div class="flex items-end">
+                <Button @onclick="ApplyFilter" Disabled="IsLoading" IsLoading="IsLoading">Apply Filter</Button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Lista lekarzy -->
+    @if (IsLoading)
+    {
+        <div>Loading doctors...</div>
+    }
+    else if (Doctors.Items.Any())
+    {
+        <div>
+            <ul>
+                @foreach (var doctor in Doctors.Items)
+                {
+                    <li class="mb-4">
+                        <div class="p-4 border rounded shadow">
+                            <h3 class="text-lg font-semibold">@doctor.FirstName @doctor.LastName</h3>
+                            <p>License: @doctor.MedicalLicenseNumber</p>
+                            <p>Specialties: @string.Join(", ", doctor.Specialties)</p>
+                            @if (!string.IsNullOrEmpty(doctor.AcademicTitle))
+                            {
+                                <p>Title: @doctor.AcademicTitle</p>
+                            }
+                        </div>
+                    </li>
+                }
+            </ul>
+
+            <div class="mt-6 flex justify-between">
+                <button @onclick="PreviousPage" disabled="@IsFirstPage">Previous</button>
+                <button @onclick="NextPage" disabled="@IsLastPage">Next</button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div>No doctors found.</div>
+    }
+</div>
+
+@code {
+    private DoctorFilter Filter = new();
+    private PagedItems<DoctorBriefResponse> Doctors = new();
+    private bool IsLoading = false;
+    private int CurrentPage = 1;
+    private const int PageSize = 20;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDoctors();
+    }
+
+    private async Task LoadDoctors()
+    {
+        IsLoading = true;
+
+        try
+        {
+            Doctors = await DoctorsApi.GetDoctorsAsync(Filter, CurrentPage, PageSize);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to load doctors: {ex.Message}");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private async Task ApplyFilter()
+    {
+        CurrentPage = 1; 
+        await LoadDoctors();
+    }
+
+    private async Task NextPage()
+    {
+        if (!IsLastPage)
+        {
+            CurrentPage++;
+            await LoadDoctors();
+        }
+    }
+
+    private async Task PreviousPage()
+    {
+        if (!IsFirstPage)
+        {
+            CurrentPage--;
+            await LoadDoctors();
+        }
+    }
+
+    private bool IsFirstPage => CurrentPage == 1;
+    private bool IsLastPage => CurrentPage >= Doctors.TotalPages;
+}

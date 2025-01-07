@@ -31,9 +31,15 @@ public class InfrastructureServiceInstaller : IServiceInstaller
                     .UsingRegistrationStrategy(RegistrationStrategy.Skip)
                     .AsMatchingInterface()
                     .WithScopedLifetime());
+        services
+            .Scan(
+                selector => selector
+                    .FromAssemblies(AssemblyReference.Assembly)
+                    .AddClasses(classes => classes.AssignableTo<IDataSeeder>(), publicOnly: false)
+                    .UsingRegistrationStrategy(RegistrationStrategy.Append)
+                    .As<IDataSeeder>()
+                    .WithScopedLifetime());
 
-        services.AddScoped<IDataSeeder, RoleSeeder>();
-        
         services.AddSingleton<ConvertDomainEventsToOutboxMessagesInterceptor>();
 
         services.AddSingleton<UpdateAuditableEntitiesInterceptor>();

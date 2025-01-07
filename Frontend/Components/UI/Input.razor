@@ -1,0 +1,39 @@
+@namespace Frontend.Components.UI
+
+<style>
+    .no-spinners-number::-webkit-inner-spin-button,
+    .no-spinners-number::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .no-spinners-number {
+        -moz-appearance: textfield;
+    }
+</style>
+
+<input
+    class="block px-4 py-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @Class @NoSpinnersClass"
+    id="@Id"
+    type="@Type"
+    placeholder="@Placeholder"
+    disabled="@Disabled"
+    value="@Value"
+    @onchange="@(e => ValueChanged.InvokeAsync(e.Value?.ToString()))"
+    @attributes="Attributes"/>
+
+@code {
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public string? Type { get; set; } = "text";
+    [Parameter] public string Class { get; set; } = string.Empty;
+    [Parameter] public string Placeholder { get; set; } = string.Empty;
+    [Parameter] public bool Disabled { get; set; }
+
+    [Parameter] public string Value { get; set; }
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? Attributes { get; set; }
+
+    private string NoSpinnersClass => Type == "number" ? "no-spinners-number" : "";
+}

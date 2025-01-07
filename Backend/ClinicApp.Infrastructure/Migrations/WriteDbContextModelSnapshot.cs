@@ -157,7 +157,7 @@ namespace ClinicApp.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOnUtc")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserRole")
+                    b.Property<string>("UserRoleEnum")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -610,7 +610,7 @@ namespace ClinicApp.Infrastructure.Migrations
 
                             b1.HasKey("DoctorId", "Value");
 
-                            b1.ToTable("Specialty");
+                            b1.ToTable("Specialties", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("DoctorId");

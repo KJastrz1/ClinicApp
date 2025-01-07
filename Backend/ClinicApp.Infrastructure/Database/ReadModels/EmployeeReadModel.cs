@@ -2,17 +2,17 @@ using Shared.Contracts.Employee;
 
 namespace ClinicApp.Infrastructure.Database.ReadModels;
 
-internal class EmployeeReadModel
+internal class EmployeeReadModel : UserProfileReadModel
 {
-    internal UserReadModel User { get; set; }
+    public List<EmployeeLeaveReadModel> Leaves { get; set; } = new List<EmployeeLeaveReadModel>();
 
-    internal EmployeeResponse MapToResponse()
+    internal new EmployeeResponse MapToResponse()
     {
         return new EmployeeResponse(
-            Id: User.Id,
-            FirstName: User.FirstName,
-            LastName: User.LastName,
-            UserRole: User.UserRole
+            Id: Id,
+            FirstName: FirstName,
+            LastName: LastName,
+            UserRoleEnum: UserRoleEnum
         );
     }
 }

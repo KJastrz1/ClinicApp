@@ -28,6 +28,9 @@
     <ProjectReference Include="..\ClinicApp.Presentation\ClinicApp.Presentation.csproj" />
   </ItemGroup>
 
-
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
 
 </Project>

@@ -1,0 +1,123 @@
+@namespace Frontend.Components.Pages
+
+@page "/register"
+@attribute [AllowAnonymous]
+
+@using Shared.Contracts.Auth.Requests
+
+@inject IAuthApi AuthApi
+@inject NavigationManager NavigationManager
+@inject ICustomAuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>RegisterPage</PageTitle>
+<div class="max-w-sm mx-auto">
+    <h3 class="text-2xl font-bold mb-6">RegisterPage</h3>
+
+    <EditForm Model="@registrationModel" OnValidSubmit="@HandleRegister">
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+
+        <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <Input
+                Class="w-full"
+                Id="email"
+                @bind-Value="registrationModel.Email"
+                Type="email"
+                Disabled="IsSubmitting"/>
+            <ValidationMessage For="@(() => registrationModel.Email)" class="text-sm text-red-500 mt-1"/>
+        </div>
+
+        <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <Input
+                Class="w-full"
+                Id="password"
+                @bind-Value="registrationModel.Password"
+                Type="password"
+                Disabled="IsSubmitting"/>
+            <ValidationMessage For="@(() => registrationModel.Password)" class="text-sm text-red-500 mt-1"/>
+        </div>
+
+        <div class="flex justify-center">
+            <Button Type="submit" IsLoading="IsSubmitting" Disabled="IsSubmitting">
+                RegisterPage
+            </Button>
+        </div>
+    </EditForm>
+
+    <div class="mt-4 text-sm">
+        <span>Already have an account? </span>
+        <a href="/login" class="text-primary-500 hover:text-secondary-600 underline">Log in</a>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Message))
+    {
+        <div class="mt-4 p-3 bg-red-100 text-red-700 rounded-md">@Message</div>
+    }
+</div>
+
+@code {
+    private RegistrationModel registrationModel = new();
+    private string Message = string.Empty;
+    private bool IsSubmitting = false;
+    private bool IsAuthenticated => AuthenticationStateProvider.Identity != null;
+
+    protected override void OnInitialized()
+    {
+        CheckAuthentication();
+    }
+
+    private void CheckAuthentication()
+    {
+        if (IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+
+    private async Task HandleRegister()
+    {
+        try
+        {
+            IsSubmitting = true;
+
+            var request = new RegisterRequest(
+                registrationModel.Email,
+                registrationModel.Password
+            );
+
+            bool isSuccess = await AuthApi.RegisterAsync(request);
+
+            if (isSuccess)
+            {
+                NavigationManager.NavigateTo("/login");
+            }
+            else
+            {
+                Message = "Registration failed. Please try again.";
+            }
+        }
+        catch (Exception)
+        {
+            Message = "Something went wrong, please try again.";
+        }
+        finally
+        {
+            IsSubmitting = false;
+        }
+    }
+
+    public class RegistrationModel
+    {
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Password is required.")]
+        [MinLength(8, ErrorMessage = "Password must be at least 8 characters long.")]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$",
+            ErrorMessage = "Password must be at least 8 characters long, contain at least one uppercase letter, one digit, and one special character.")]
+        public string Password { get; set; } = string.Empty;
+    }
+}

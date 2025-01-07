@@ -6,7 +6,7 @@ using Shared.Contracts.Shared;
 
 namespace ClinicApp.Application.UseCases.Doctors.Query.GetDoctors;
 
-internal sealed class GetDoctorsQueryHandler : IQueryHandler<GetDoctorsQuery, PagedItems<DoctorResponse>>
+internal sealed class GetDoctorsQueryHandler : IQueryHandler<GetDoctorsQuery, PagedItems<DoctorBriefResponse>>
 {
     private readonly IDoctorReadRepository _doctorReadRepository;
 
@@ -15,9 +15,9 @@ internal sealed class GetDoctorsQueryHandler : IQueryHandler<GetDoctorsQuery, Pa
         _doctorReadRepository = doctorReadRepository;
     }
 
-    public async Task<Result<PagedItems<DoctorResponse>>> Handle(GetDoctorsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<PagedItems<DoctorBriefResponse>>> Handle(GetDoctorsQuery request, CancellationToken cancellationToken)
     {
-        PagedItems<DoctorResponse> items = await _doctorReadRepository.GetByFilterAsync(
+        PagedItems<DoctorBriefResponse> items = await _doctorReadRepository.GetByFilterAsync(
             request.Filter,
             request.PageNumber, 
             request.PageSize, 

@@ -9,7 +9,7 @@ public interface IDoctorReadRepository
 {
     Task<DoctorResponse?> GetByIdAsync(DoctorId doctorId, CancellationToken cancellationToken);
 
-    Task<PagedItems<DoctorResponse>> GetByFilterAsync(
+    Task<PagedItems<DoctorBriefResponse>> GetByFilterAsync(
         DoctorFilter filter,
         int pageNumber,
         int pageSize,

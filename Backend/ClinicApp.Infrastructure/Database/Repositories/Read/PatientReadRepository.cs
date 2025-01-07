@@ -27,7 +27,7 @@ public class PatientReadRepository : IPatientReadRepository
 
     public async Task<PatientResponse?> GetByIdAsync(PatientId patientId, CancellationToken cancellationToken)
     {
-        PatientReadModel? patientReadModel = await _context.Patients
+        PatientProfileReadModel? patientReadModel = await _context.PatientsSet
             .FirstOrDefaultAsync(p => p.Id.Equals(patientId), cancellationToken);
 
         return patientReadModel?.MapToResponse();
@@ -38,7 +38,7 @@ public class PatientReadRepository : IPatientReadRepository
         int pageSize,
         CancellationToken cancellationToken)
     {
-        IQueryable<PatientReadModel> query = _context.Patients;
+        IQueryable<PatientProfileReadModel> query = _context.PatientsSet;
 
         if (!string.IsNullOrWhiteSpace(filter.FirstName))
         {

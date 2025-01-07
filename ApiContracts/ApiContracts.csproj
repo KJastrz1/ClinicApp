@@ -10,4 +10,8 @@
     <ItemGroup>
       <ProjectReference Include="..\Backend\ClinicApp.Domain\ClinicApp.Domain.csproj" />
     </ItemGroup> 
+
+    <ItemGroup>
+      <Folder Include="Contracts\UserProfile\Requests\" />
+    </ItemGroup> 
 </Project>

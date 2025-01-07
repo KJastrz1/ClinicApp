@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:css": "npx tailwindcss -i ./tailwind.css -o ./wwwroot/css/app.css --watch"
+    "watch:css": "npx tailwindcss -i ./inputTailwind.css -o ./wwwroot/css/tailwind.css --watch",
+    "build:css": "npx tailwindcss -i ./inputTailwind.css -o ./wwwroot/css/tailwind.css --minify"
   },
   "keywords": [],
   "author": "",

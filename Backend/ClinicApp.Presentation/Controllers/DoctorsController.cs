@@ -52,7 +52,7 @@ public sealed class DoctorsController : ApiController
             PageSize = pageSize
         };
 
-        Result<PagedItems<DoctorResponse>> response = await Sender.Send(query, cancellationToken);
+        Result<PagedItems<DoctorBriefResponse>> response = await Sender.Send(query, cancellationToken);
 
         return response.IsSuccess ? Ok(response.Value) : BadRequest(response.Error);
     }

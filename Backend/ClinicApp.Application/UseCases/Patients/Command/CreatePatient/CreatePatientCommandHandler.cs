@@ -35,12 +35,12 @@ internal sealed class CreatePatientCommandHandler : ICommandHandler<CreatePatien
 
     public async Task<Result<Guid>> Handle(CreatePatientCommand request, CancellationToken cancellationToken)
     {
-        Result<UserId> userIdResult = UserId.Create(Guid.Parse(_userContext.Id));
+        UserId userId = _userContext.Id;
 
-        bool userProfileExists = await _userProfileRepository.ExistsAsync(userIdResult.Value, cancellationToken);
+        bool userProfileExists = await _userProfileRepository.ExistsAsync(userId, cancellationToken);
         if (userProfileExists)
         {
-            return Result.Failure<Guid>(UserProfileErrors.AlreadyExists(userIdResult.Value));
+            return Result.Failure<Guid>(UserProfileErrors.AlreadyExists(userId));
         }
 
         Result<FirstName> firstNameResult = FirstName.Create(request.FirstName);
@@ -49,7 +49,7 @@ internal sealed class CreatePatientCommandHandler : ICommandHandler<CreatePatien
         Result<DateOfBirth> dobResult = DateOfBirth.Create(request.DateOfBirth);
 
         var patient = Patient.Create(
-            userIdResult.Value,
+            userId,
             firstNameResult.Value,
             lastNameResult.Value,
             ssnResult.Value,
@@ -59,11 +59,11 @@ internal sealed class CreatePatientCommandHandler : ICommandHandler<CreatePatien
         _patientRepository.Add(patient);
 
         bool roleAssigned =
-            await _userRoleService.AssignRoleToUserAsync(Guid.Parse(_userContext.Id), UserRole.Patient.ToString(),
+            await _userRoleService.AssignRoleToUserAsync(userId.Value, UserRoleEnum.Patient.ToString(),
                 cancellationToken);
         if (!roleAssigned)
         {
-            return Result.Failure<Guid>(UserProfileErrors.RoleAssignmentFailed(userIdResult.Value));
+            return Result.Failure<Guid>(UserProfileErrors.RoleAssignmentFailed(userId));
         }
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

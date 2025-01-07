@@ -1,7 +1,8 @@
 namespace ClinicApp.Domain.Enums;
 
-public enum UserRole
+public enum UserRoleEnum
 {
     Patient,
     Doctor,
+    Admin
 }

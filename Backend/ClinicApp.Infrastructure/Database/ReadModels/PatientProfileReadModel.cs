@@ -3,12 +3,12 @@ using Shared.Contracts.Patient.Responses;
 
 namespace ClinicApp.Infrastructure.Database.ReadModels;
 
-internal class PatientReadModel : UserReadModel
+internal class PatientProfileReadModel : UserProfileReadModel
 {
     public string SocialSecurityNumber { get; set; }
     public DateTime DateOfBirth { get; set; }
 
-    internal PatientResponse MapToResponse()
+    internal new PatientResponse MapToResponse()
     {
         return new PatientResponse(
             Id: Id,

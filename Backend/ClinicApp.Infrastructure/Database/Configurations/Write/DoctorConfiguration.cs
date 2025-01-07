@@ -43,6 +43,8 @@ public class DoctorConfiguration : IWriteEntityConfiguration<Doctor>
             specialty.WithOwner().HasForeignKey("DoctorId");
 
             specialty.HasKey("DoctorId", "Value");
+
+            specialty.ToTable(TableNames.Specialties);
         });
 
         builder.OwnsMany(d => d.Schedules, schedule =>

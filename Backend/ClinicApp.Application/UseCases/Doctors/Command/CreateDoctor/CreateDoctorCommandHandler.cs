@@ -33,12 +33,12 @@ internal sealed class CreateDoctorCommandHandler : ICommandHandler<CreateDoctorC
 
     public async Task<Result<Guid>> Handle(CreateDoctorCommand request, CancellationToken cancellationToken)
     {
-        Result<UserId> userIdResult = UserId.Create(Guid.Parse(_userContext.Id));
+        UserId userId = _userContext.Id;
 
-        bool userProfileExists = await _userProfileRepository.ExistsAsync(userIdResult.Value, cancellationToken);
+        bool userProfileExists = await _userProfileRepository.ExistsAsync(userId, cancellationToken);
         if (userProfileExists)
         {
-            return Result.Failure<Guid>(UserProfileErrors.AlreadyExists(userIdResult.Value));
+            return Result.Failure<Guid>(UserProfileErrors.AlreadyExists(userId));
         }
 
         Result<FirstName> firstNameResult = FirstName.Create(request.FirstName);
@@ -69,7 +69,7 @@ internal sealed class CreateDoctorCommandHandler : ICommandHandler<CreateDoctorC
         }
 
         var doctor = Doctor.Create(
-            userIdResult.Value,
+            userId,
             firstNameResult.Value,
             lastNameResult.Value,
             licenseNumberResult.Value,

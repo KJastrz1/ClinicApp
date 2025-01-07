@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>   
+    <PackageReference Include="Bogus" Version="35.6.1" />   
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
@@ -29,5 +30,6 @@
       <_Parameter1>ClinicApp.IntegrationTests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+
 
 </Project>

@@ -103,7 +103,7 @@ namespace ClinicApp.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    UserRole = table.Column<string>(type: "text", nullable: false),
+                    UserRoleEnum = table.Column<string>(type: "text", nullable: false),
                     CreatedOnUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedOnUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -367,7 +367,7 @@ namespace ClinicApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Specialty",
+                name: "Specialties",
                 columns: table => new
                 {
                     Value = table.Column<string>(type: "text", nullable: false),
@@ -375,9 +375,9 @@ namespace ClinicApp.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Specialty", x => new { x.DoctorId, x.Value });
+                    table.PrimaryKey("PK_Specialties", x => new { x.DoctorId, x.Value });
                     table.ForeignKey(
-                        name: "FK_Specialty_Doctors_DoctorId",
+                        name: "FK_Specialties_Doctors_DoctorId",
                         column: x => x.DoctorId,
                         principalTable: "Doctors",
                         principalColumn: "Id",
@@ -486,7 +486,7 @@ namespace ClinicApp.Infrastructure.Migrations
                 name: "OutboxMessages");
 
             migrationBuilder.DropTable(
-                name: "Specialty");
+                name: "Specialties");
 
             migrationBuilder.DropTable(
                 name: "Patients");

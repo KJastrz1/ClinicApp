@@ -10,6 +10,8 @@ internal static class TableNames
     
     internal const string Doctors = nameof(Doctors);
     
+    internal const string Specialties = nameof(Specialties);
+    
     internal const string Admins = nameof(Admins);
     
     internal const string Clinics = nameof(Clinics);

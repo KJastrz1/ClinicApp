@@ -8,6 +8,7 @@ using ClinicApp.Domain.Shared;
 using ClinicApp.Infrastructure.Authentication;
 using ClinicApp.Presentation.Abstractions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Contracts;
 using Shared.Contracts.Patient;
@@ -18,6 +19,7 @@ using Shared.Contracts.Shared;
 namespace ClinicApp.Presentation.Controllers;
 
 [Route("api/patients")]
+[Authorize]
 public sealed class PatientsController : ApiController
 {
     public PatientsController(ISender sender)

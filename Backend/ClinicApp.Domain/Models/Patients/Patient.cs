@@ -20,7 +20,7 @@ public class Patient : UserProfile
         LastName lastName,
         SocialSecurityNumber ssn,
         DateOfBirth dateOfBirth
-    ) : base(id, firstName, lastName, UserRole.Patient)
+    ) : base(id, firstName, lastName, UserRoleEnum.Patient)
     {
         SocialSecurityNumber = ssn;
         DateOfBirth = dateOfBirth;
